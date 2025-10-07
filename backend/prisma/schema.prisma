@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String      @id @default(uuid())
+  firstName  String?
+  lastName   String?
+  userName   String      @unique
+  email      String      @unique
+  password   String
+  posts      Post[]      @relation("UserPosts") //Posts created by the user
+  volunteers Volunteer[] // volunteer actions by this user
+  createdAt  DateTime    @default(now())
+}
+
+model Post {
+  id              String      @id @default(uuid())
+  name            String
+  description     String?
+  locApprox       String //Approximate location of the post
+  locAccurate     String //Accurate location of the post, only shown to a volunteer who accepts
+  taskTime        DateTime
+  creator         User        @relation("UserPosts", fields: [userId], references: [id])
+  userId          String
+  volunteers      Volunteer[] // volunteers on this post
+  volunteerAmount Int         @default(1) //Amount of volunteers needed by the post
+  status          PostStatus
+  createdAt       DateTime    @default(now())
+}
+
+model Volunteer {
+  id        String   @id @default(uuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  post      Post     @relation(fields: [postId], references: [id])
+  postId    String
+  accepted  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, postId]) // prevent duplicate volunteering
+}
+
+enum PostStatus {
+  OPEN
+  ACCEPTED
+  COMPLETED
+}
