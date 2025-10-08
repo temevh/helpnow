@@ -1,15 +1,14 @@
-import {ApolloServer} from "apollo-server"
-import {typeDefs} from "./schema/typeDefs.js"
-import {resolvers} from "./schema/resolvers.js"
-import {context} from "./context"
-
+import { ApolloServer } from "apollo-server";
+import { typeDefs } from "./schema/typeDefs.js";
+import { resolvers } from "./schema/resolvers/index.js";
+import { context } from "./context.js";
 
 const server = new ApolloServer({
-    typeDefs,
-    resolvers,
-    context
-})
+  typeDefs,
+  resolvers,
+  context,
+});
 
-server.listen({post: 5000}).then(({url} => {
-    console.log(`🚀 Server ready at: ${url}`);
-}))
+server.listen({ port: 5000 }).then(({ url }) => {
+  console.log(`🚀 Server ready at ${url}`);
+});
