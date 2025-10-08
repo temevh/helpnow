@@ -1,0 +1,11 @@
+Frontend: React Next.js Typescript Chakra UI Tailwind
+API: GraphQL, Apollo server
+Backend: Next.js routing 
+Database: Postgresql with prisma 
+Mobile: Flutter
+Hosting: AWS, vercel
+
+Utils:
+Input validation: ZOD
+Authentication: next auth
+Password hashing: bcrypt
