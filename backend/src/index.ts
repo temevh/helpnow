@@ -1,7 +1,7 @@
 import { ApolloServer } from "apollo-server";
-import { typeDefs } from "./schema/typeDefs.js";
-import { resolvers } from "./schema/resolvers/index.js";
-import { context } from "./context.js";
+import { typeDefs } from "./schema/typeDefs";
+import { resolvers } from "./schema/resolvers/index";
+import { context } from "./context";
 
 const server = new ApolloServer({
   typeDefs,
