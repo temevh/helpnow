@@ -31,3 +31,6 @@ mobile/.flutter-plugins
 mobile/.flutter-plugins-dependencies
 mobile/.packages
 mobile/pubspec.lock
+
+# Misc
+**/prisma/migrations
