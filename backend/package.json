@@ -5,7 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "npx ts-node src/index.ts"
+    "server": "npx ts-node src/index.ts",
+    "dev:db": "docker compose up -d",
+    "dev:studio": "npx prisma studio",
+    "dev:server": "npx ts-node src/index.ts",
+    "dev": "npm run dev:db && npx prisma generate && concurrently \"npm run dev:server\" \"npm run dev:studio\"",
+    "stop": "docker compose down"
   },
   "keywords": [],
   "author": "",
@@ -18,6 +23,7 @@
   },
   "devDependencies": {
     "@types/node": "^24.7.0",
+    "concurrently": "^9.2.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
   }
