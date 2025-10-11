@@ -29,6 +29,7 @@ export const typeDefs = gql`
     volunteerAmount: Int!
     volunteers: [Volunteer!]!
     createdAt: String!
+    reward: Int!
   }
 
   type Volunteer {

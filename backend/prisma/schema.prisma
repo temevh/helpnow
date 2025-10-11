@@ -1,3 +1,6 @@
+//To update after changes -> npx prisma migrate dev --name [migration name]
+//If not wanting to migrate but just push database changes -> npx prisma db push
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -32,6 +35,7 @@ model Post {
   volunteerAmount Int         @default(1) //Amount of volunteers needed by the post
   status          PostStatus
   createdAt       DateTime    @default(now())
+  reward          Int         @default(0)
 }
 
 model Volunteer {
