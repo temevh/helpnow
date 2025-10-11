@@ -1,0 +1,31 @@
+import { Box, Flex } from "@chakra-ui/react";
+import Logo from "./Logo";
+import MenuLinks from "./MenuLinks";
+import MobileDrawer from "./MobileDrawer";
+
+export const Navbar = () => {
+  return (
+    <Flex
+      as={"nav"}
+      align={"center"}
+      justify={"space-between"}
+      wrap={"wrap"}
+      gap={{ base: 8, lg: 16 }}
+      px={{ base: 6, lg: 12 }}
+      py={3}
+      maxW={{ base: "full", xl: "1440pxp" }}
+      mx={"auto"}
+    >
+      <Logo />
+      {/*Desktop Menu*/}
+      <Box display={{ base: "none", md: "block" }}>
+        <MenuLinks />
+      </Box>
+
+      {/*Mobile Menu*/}
+      <Box display={{ base: "block", md: "none" }}>
+        <MobileDrawer />
+      </Box>
+    </Flex>
+  );
+};
