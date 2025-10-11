@@ -27,7 +27,7 @@ const MenuLinks = ({ isMobile = false }) => {
           aria-label={link.name}
         >
           <HStack>
-            <link.icon size={20} style={{ marginRight: 4 }} />
+            <link.icon size={30} style={{ marginRight: 4 }} />
             {isMobile && link.name}
           </HStack>
         </Link>
@@ -36,11 +36,11 @@ const MenuLinks = ({ isMobile = false }) => {
       <Button
         bg={"blue.600"}
         color={"white"}
-        size={"sm"}
+        size={"lg"}
         borderRadius={"full"}
-        px={6}
+        px={4}
         _hover={{
-          transform: "translateY(-2px)",
+          transform: "translateY(-4px)",
           shadow: "lg",
         }}
         transition={"all 0.2s ease"}
