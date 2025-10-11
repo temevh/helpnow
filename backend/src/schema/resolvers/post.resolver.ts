@@ -5,7 +5,7 @@ export const postResolvers = {
     posts: async (_parent: unknown, _args: unknown, context: Context) => {
       try {
         const posts = await context.prisma.post.findMany({
-          include: { creator: true, volunteers: true },
+          include: { creator: true },
         });
         return posts;
       } catch (err) {

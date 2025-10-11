@@ -1,5 +1,4 @@
 import { userResolvers } from "./user.resolver";
-//import { postResolvers } from "./post.resolver.js";
-//import { volunteerResolvers } from "./volunteer.resolver";
+import { postResolvers } from "./post.resolver";
 
-export const resolvers = [userResolvers];
+export const resolvers = [userResolvers, postResolvers];
