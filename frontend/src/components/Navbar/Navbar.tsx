@@ -13,8 +13,11 @@ export const Navbar = () => {
       gap={{ base: 8, lg: 16 }}
       px={{ base: 6, lg: 12 }}
       py={3}
-      maxW={{ base: "full", xl: "1440pxp" }}
       mx={"auto"}
+      position="sticky"
+      top={0}
+      bg="white"
+      zIndex={1000}
     >
       <Logo />
       {/*Desktop Menu*/}

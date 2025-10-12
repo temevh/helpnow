@@ -1,36 +1,67 @@
-import { Card, Button } from "@chakra-ui/react";
-import { Post } from "../../types";
+import { CardRoot, CardHeader, CardBody, CardFooter } from "@chakra-ui/react";
+import { Box, Text, Flex, Badge, Button } from "@chakra-ui/react";
+
+import { Post } from "@/types";
 
 export const Postcard = ({ post }: { post: Post }) => {
   return (
-    <Card.Root
-      width="280px"
-      maxWidth="280px"
-      bg="gray.50"
-      borderRadius="lg"
+    <CardRoot
+      width="300px"
+      maxW="300px"
+      borderRadius="2xl"
+      bg="whiteAlpha.800"
       boxShadow="md"
       border="1px solid"
       borderColor="gray.200"
+      backdropFilter="blur(8px)"
+      transition="all 0.25s ease"
+      _hover={{
+        transform: "translateY(-4px)",
+        boxShadow: "xl",
+        borderColor: "blue.300",
+      }}
     >
-      <Card.Body gap="2" p="4">
-        <Card.Title
-          mt="2"
-          fontSize="lg"
-          lineHeight="1.3"
-          overflow="hidden"
-          color="gray.600"
-        >
+      <CardHeader
+        bgGradient="linear(to-r, blue.500, blue.400)"
+        color="white"
+        borderTopRadius="2xl"
+        p="3"
+      >
+        <Text fontWeight="semibold" fontSize="lg" noOfLines={1}>
           {post.name}
-        </Card.Title>
-        <Card.Description fontSize="sm" lineHeight="1.4" color="gray.600">
-          {post.description}
-        </Card.Description>
-      </Card.Body>
-      <Card.Footer justifyContent="flex-end" p="4" pt="0">
-        <Button size="sm" colorScheme="blue">
+        </Text>
+      </CardHeader>
+
+      <CardBody p="4">
+        <Text fontSize="sm" color="gray.700" noOfLines={3} mb="3">
+          {post.description || "No description provided."}
+        </Text>
+
+        <Flex justify="space-between" align="center" mb="3">
+          <Badge colorScheme="blue" px="2" py="1" borderRadius="md">
+            {post.status}
+          </Badge>
+          <Text fontSize="xs" color="gray.500">
+            Reward: <b>{post.reward}</b>
+          </Text>
+        </Flex>
+
+        <Text fontSize="sm" color="gray.600">
+          By <b>{post.creator.userName}</b>
+        </Text>
+      </CardBody>
+
+      <CardFooter p="4" pt="0">
+        <Button
+          width="100%"
+          size="sm"
+          colorScheme="blue"
+          borderRadius="md"
+          fontWeight="medium"
+        >
           Join
         </Button>
-      </Card.Footer>
-    </Card.Root>
+      </CardFooter>
+    </CardRoot>
   );
 };
