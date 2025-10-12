@@ -9,3 +9,6 @@ Utils:
 Input validation: ZOD
 Authentication: next auth
 Password hashing: bcrypt
+
+FEATURES:
+- chat between (potential) volunteers and post creator
