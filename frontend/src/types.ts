@@ -23,8 +23,9 @@ export type Post = {
   id: string;
   name: string;
   description?: string | null;
-  locApprox: string;
-  locAccurate: string;
+  address: string;
+  latitude: number;
+  longitude: number;
   taskTime: string; // ISO date string
   creator: User;
   userId: string;

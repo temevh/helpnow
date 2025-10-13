@@ -3,16 +3,15 @@ import { Box } from "@chakra-ui/react";
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
+import { Post } from "@/types";
 
 interface MapProps {
-  position?: [number, number];
-  zoom?: number;
+  posts: Post[];
 }
 
-export default function Map({
-  position = [60.1699, 24.9384],
-  zoom = 13,
-}: MapProps) {
+export default function Map({ posts }: MapProps) {
+  const defaultPosition: [number, number] = [60.1699, 24.9384]; //TODO: change to users location
+
   return (
     <Box
       h="700px"
@@ -23,8 +22,8 @@ export default function Map({
       flex={1}
     >
       <MapContainer
-        center={position}
-        zoom={zoom}
+        center={defaultPosition}
+        zoom={10}
         scrollWheelZoom={true}
         style={{ height: "100%", width: "100%" }}
       >
@@ -32,7 +31,10 @@ export default function Map({
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <Marker position={position}></Marker>
+        {posts.map((post) => (
+          <Marker key={post.id} position={[post.latitude, post.longitude]} />
+        ))}
+        <Marker position={defaultPosition}></Marker>
       </MapContainer>
     </Box>
   );

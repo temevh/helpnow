@@ -7,6 +7,8 @@ export const GET_POSTS = gql`
       name
       description
       status
+      latitude
+      longitude
       creator {
         userName
       }
