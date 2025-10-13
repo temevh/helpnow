@@ -1,6 +1,6 @@
 "use client";
 
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, Circle } from "react-leaflet";
 import { Box } from "@chakra-ui/react";
 import { Post } from "@/types";
 import "leaflet/dist/leaflet.css";
@@ -35,9 +35,19 @@ const PostMap = ({ posts }: PostMapProps) => {
 
         {posts.map((post) =>
           post.latitude && post.longitude ? (
-            <Marker key={post.id} position={[post.latitude, post.longitude]}>
+            <Circle
+              key={post.id}
+              center={[post.latitude, post.longitude]}
+              radius={150}
+              pathOptions={{
+                color: "#3182ce",
+                fillColor: "#3182ce",
+                fillOpacity: 0.3,
+                weight: 2,
+              }}
+            >
               <MapPopUp post={post} />
-            </Marker>
+            </Circle>
           ) : null
         )}
       </MapContainer>
