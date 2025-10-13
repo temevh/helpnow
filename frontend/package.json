@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "-": "^0.0.1",
+    "@apollo/client": "^4.0.7",
     "@chakra-ui/react": "^3.27.1",
     "@emotion/react": "^11.14.0",
     "leaflet": "^1.9.4",
