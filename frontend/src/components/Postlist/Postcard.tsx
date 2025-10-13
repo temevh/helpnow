@@ -1,13 +1,34 @@
-import { CardRoot, CardHeader, CardBody, CardFooter } from "@chakra-ui/react";
-import { Box, Text, Flex, Badge, Button } from "@chakra-ui/react";
+import {
+  Text,
+  Badge,
+  Button,
+  CardRoot,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  HStack,
+} from "@chakra-ui/react";
 
 import { Post } from "@/types";
+
+const getStatusBadgeColor = (status: string) => {
+  switch (status) {
+    case "OPEN":
+      return "green";
+    case "ACCEPTED":
+      return "yellow";
+    case "COMPLETED":
+      return "lightblue";
+    default:
+      return "gray";
+  }
+};
 
 export const Postcard = ({ post }: { post: Post }) => {
   return (
     <CardRoot
-      width="300px"
-      maxW="300px"
+      width="500px"
+      maxW="500px"
       borderRadius="2xl"
       bg="whiteAlpha.800"
       boxShadow="md"
@@ -27,40 +48,50 @@ export const Postcard = ({ post }: { post: Post }) => {
         borderTopRadius="2xl"
         p="3"
       >
-        <Text fontWeight="semibold" fontSize="lg" noOfLines={1}>
-          {post.name}
-        </Text>
-      </CardHeader>
-
-      <CardBody p="4">
-        <Text fontSize="sm" color="gray.700" noOfLines={3} mb="3">
-          {post.description || "No description provided."}
-        </Text>
-
-        <Flex justify="space-between" align="center" mb="3">
-          <Badge colorScheme="blue" px="2" py="1" borderRadius="md">
+        <HStack>
+          <Text fontWeight="semibold" fontSize="lg" color={"black"}>
+            {post.name}
+          </Text>
+          <Badge
+            backgroundColor={getStatusBadgeColor(post.status)}
+            px="2"
+            py="1"
+            borderRadius="md"
+            color={"black"}
+            fontWeight={"bold"}
+          >
             {post.status}
           </Badge>
-          <Text fontSize="xs" color="gray.500">
-            Reward: <b>{post.reward}</b>
-          </Text>
-        </Flex>
+        </HStack>
+      </CardHeader>
 
-        <Text fontSize="sm" color="gray.600">
-          By <b>{post.creator.userName}</b>
+      <CardBody p="2">
+        <Text fontSize="sm" color="gray.700" mb="3">
+          {post.description || "No description provided."}
         </Text>
       </CardBody>
 
       <CardFooter p="4" pt="0">
-        <Button
-          width="100%"
-          size="sm"
-          colorScheme="blue"
-          borderRadius="md"
-          fontWeight="medium"
-        >
-          Join
-        </Button>
+        <HStack>
+          <Button
+            width="100%"
+            size="sm"
+            colorScheme="blue"
+            borderRadius="md"
+            fontWeight="medium"
+          >
+            Show
+          </Button>
+          <Button
+            width="100%"
+            size="sm"
+            colorScheme="blue"
+            borderRadius="md"
+            fontWeight="medium"
+          >
+            Join
+          </Button>
+        </HStack>
       </CardFooter>
     </CardRoot>
   );
