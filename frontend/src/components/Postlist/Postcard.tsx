@@ -52,9 +52,6 @@ export const Postcard = ({ post }: { post: Post }) => {
           <Text fontWeight="semibold" fontSize="lg" color={"black"}>
             {post.name}
           </Text>
-          <Text fontWeight="semibold" fontSize="lg" color={"black"}>
-            {post.latitude} {post.longitude}
-          </Text>
           <Badge
             backgroundColor={getStatusBadgeColor(post.status)}
             px="2"

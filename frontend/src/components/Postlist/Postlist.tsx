@@ -8,7 +8,7 @@ interface PostListProps {
 
 export const Postlist = ({ posts }: PostListProps) => {
   return (
-    <ScrollArea.Root flex="0.4" h="700px">
+    <ScrollArea.Root>
       <ScrollArea.Viewport>
         <VStack align="stretch" gap={3}>
           {posts.map((post) => (
