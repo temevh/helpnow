@@ -71,8 +71,9 @@ async function main() {
         name: "Help with grocery shopping",
         description:
           "Need someone to help me carry groceries from the store to my apartment. I have mobility issues and would really appreciate the help.",
-        locApprox: "Helsinki City Center",
-        locAccurate: "Aleksanterinkatu 15, 00100 Helsinki",
+        address: "Aleksanterinkatu 15, 00100 Helsinki",
+        latitude: 60.169029,
+        longitude: 24.94478,
         taskTime: new Date("2024-10-15T14:00:00Z"),
         userId: users[0].id,
         volunteerAmount: 1,
@@ -85,8 +86,9 @@ async function main() {
         name: "Dog walking assistance",
         description:
           "My dog needs a walk but I'm stuck at work. Looking for someone who loves dogs to help out!",
-        locApprox: "Punavuori, Helsinki",
-        locAccurate: "Bulevardi 25, 00120 Helsinki",
+        address: "Bulevardi 25, 00120 Helsinki",
+        latitude: 60.161835,
+        longitude: 24.929994,
         taskTime: new Date("2024-10-16T16:30:00Z"),
         userId: users[1].id,
         volunteerAmount: 1,
@@ -99,8 +101,9 @@ async function main() {
         name: "Move furniture to new apartment",
         description:
           "Need 2-3 people to help move some furniture to my new place. Will provide pizza and drinks!",
-        locApprox: "Kallio, Helsinki",
-        locAccurate: "Hämeentie 50, 00550 Helsinki",
+        address: "Hämeentie 50, 00550 Helsinki",
+        latitude: 60.198924,
+        longitude: 24.962745,
         taskTime: new Date("2024-10-17T10:00:00Z"),
         userId: users[2].id,
         volunteerAmount: 3,
@@ -112,12 +115,14 @@ async function main() {
         name: "Tech support for elderly",
         description:
           "Help setting up a new smartphone and teaching basic functions. Must be patient and kind.",
-        locApprox: "Töölö, Helsinki",
-        locAccurate: "Mannerheimintie 30, 00100 Helsinki",
+        address: "Mannerheimintie 30, 00100 Helsinki",
+        latitude: 60.172619,
+        longitude: 24.93298,
         taskTime: new Date("2024-10-18T13:00:00Z"),
         userId: users[3].id,
         volunteerAmount: 1,
         status: PostStatus.OPEN,
+        reward: 25,
       },
     }),
     prisma.post.create({
@@ -125,52 +130,14 @@ async function main() {
         name: "Garden cleanup help",
         description:
           "Need help cleaning up my backyard before winter. Raking leaves, basic yard work.",
-        locApprox: "Espoo Center",
-        locAccurate: "Keskustori 5, 02100 Espoo",
+        address: "Keskustori 5, 02100 Espoo",
+        latitude: 60.205489,
+        longitude: 24.655899,
         taskTime: new Date("2024-10-19T11:00:00Z"),
         userId: users[4].id,
         volunteerAmount: 2,
         status: PostStatus.COMPLETED,
         reward: 30,
-      },
-    }),
-    prisma.post.create({
-      data: {
-        name: "Tutoring in mathematics",
-        description:
-          "High school student needs help with algebra and geometry. 2-hour session.",
-        locApprox: "Vantaa",
-        locAccurate: "Martinlaaksontie 10, 01300 Vantaa",
-        taskTime: new Date("2024-10-20T15:00:00Z"),
-        userId: users[0].id,
-        volunteerAmount: 1,
-        status: PostStatus.OPEN,
-      },
-    }),
-    prisma.post.create({
-      data: {
-        name: "Baby sitting for 3 hours",
-        description:
-          "Need a responsible person to watch my 5-year-old while I attend a meeting. Child is well-behaved.",
-        locApprox: "Kamppi, Helsinki",
-        locAccurate: "Urho Kekkosen katu 8, 00100 Helsinki",
-        taskTime: new Date("2024-10-21T18:00:00Z"),
-        userId: users[1].id,
-        volunteerAmount: 1,
-        status: PostStatus.OPEN,
-      },
-    }),
-    prisma.post.create({
-      data: {
-        name: "Translation help Finnish to English",
-        description:
-          "Need help translating some official documents. Must be fluent in both languages.",
-        locApprox: "Helsinki University area",
-        locAccurate: "Yliopistonkatu 3, 00100 Helsinki",
-        taskTime: new Date("2024-10-22T12:00:00Z"),
-        userId: users[2].id,
-        volunteerAmount: 1,
-        status: PostStatus.ACCEPTED,
       },
     }),
   ]);
@@ -219,7 +186,7 @@ async function main() {
         accepted: false,
       },
     }),
-    // John and Jane volunteer for Alex's garden cleanup (completed task)
+    // John and Jane volunteer for garden cleanup (completed task)
     prisma.volunteer.create({
       data: {
         userId: users[0].id,
@@ -231,14 +198,6 @@ async function main() {
       data: {
         userId: users[1].id,
         postId: posts[4].id,
-        accepted: true,
-      },
-    }),
-    // Sarah volunteers for the translation task (accepted)
-    prisma.volunteer.create({
-      data: {
-        userId: users[3].id,
-        postId: posts[7].id,
         accepted: true,
       },
     }),

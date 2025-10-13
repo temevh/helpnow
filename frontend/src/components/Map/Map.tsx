@@ -25,7 +25,7 @@ export default function Map({
       <MapContainer
         center={position}
         zoom={zoom}
-        scrollWheelZoom={false}
+        scrollWheelZoom={true}
         style={{ height: "100%", width: "100%" }}
       >
         <TileLayer

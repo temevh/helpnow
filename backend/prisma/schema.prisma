@@ -26,8 +26,9 @@ model Post {
   id              String      @id @default(uuid())
   name            String
   description     String?
-  locApprox       String //Approximate location of the post
-  locAccurate     String //Accurate location of the post, only shown to a volunteer who accepts
+  address         String //Address of the post
+  latitude        Float
+  longitude       Float
   taskTime        DateTime
   creator         User        @relation("UserPosts", fields: [userId], references: [id])
   userId          String
