@@ -1,33 +1,12 @@
-import {
-  Box,
-  VStack,
-  Text,
-  Button,
-  Badge,
-  HStack,
-  Separator,
-} from "@chakra-ui/react";
+import { Badge } from "@chakra-ui/react";
 import { Popup } from "react-leaflet";
 import { Post } from "@/types";
+import { VolunteerButton, OpenButton } from "../common/buttons";
+import { getStatusBadgeColor } from "../../utils";
 
 interface MapPopUpProps {
   post: Post;
 }
-
-const getStatusBadgeColor = (status: string) => {
-  switch (status) {
-    case "OPEN":
-      return "green";
-    case "ACCEPTED":
-      return "yellow";
-    case "COMPLETED":
-      return "blue";
-    case "CLOSED":
-      return "red";
-    default:
-      return "gray";
-  }
-};
 
 export const MapPopUp = ({ post }: MapPopUpProps) => {
   return (
@@ -52,29 +31,10 @@ export const MapPopUp = ({ post }: MapPopUpProps) => {
         {post.description}
       </p>
       <p className="text-xs text-gray-500 mb-3">{post.taskTime}</p>
-      {post.status === "OPEN" && (
-        <Button
-          colorScheme="blue"
-          size="sm"
-          w="full"
-          borderRadius="md"
-          fontWeight="semibold"
-          bg="blue.500"
-          color="white"
-          _hover={{
-            bg: "blue.600",
-            transform: "translateY(-1px)",
-            boxShadow: "lg",
-          }}
-          _active={{
-            transform: "translateY(0)",
-          }}
-          transition="all 0.2s ease"
-          py={2}
-        >
-          🙋‍♂️ Volunteer!
-        </Button>
-      )}
+      <div className="flex flex-row gap-2">
+        <OpenButton />
+        {post.status === "OPEN" && <VolunteerButton />}
+      </div>
     </Popup>
   );
 };

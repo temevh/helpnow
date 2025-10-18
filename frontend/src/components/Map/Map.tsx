@@ -14,44 +14,34 @@ interface PostMapProps {
 
 const PostMap = ({ posts }: PostMapProps) => {
   return (
-    <Box
-      w="100%"
-      h="100%"
-      p={4}
-      borderRadius="12px"
-      bg="gray.100"
-      boxShadow="sm"
-      overflow="hidden"
+    <MapContainer
+      center={[60.1699, 24.9384]}
+      zoom={13}
+      style={{ width: "100%", height: "100%", borderRadius: "12px" }}
     >
-      <MapContainer
-        center={[60.1699, 24.9384]}
-        zoom={13}
-        style={{ width: "100%", height: "100%", borderRadius: "12px" }}
-      >
-        <TileLayer
-          attribution="&copy; OpenStreetMap contributors"
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
+      <TileLayer
+        attribution="&copy; OpenStreetMap contributors"
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
 
-        {posts.map((post) =>
-          post.latitude && post.longitude ? (
-            <Circle
-              key={post.id}
-              center={[post.latitude, post.longitude]}
-              radius={150}
-              pathOptions={{
-                color: "#3182ce",
-                fillColor: "#3182ce",
-                fillOpacity: 0.3,
-                weight: 2,
-              }}
-            >
-              <MapPopUp post={post} />
-            </Circle>
-          ) : null
-        )}
-      </MapContainer>
-    </Box>
+      {posts.map((post) =>
+        post.latitude && post.longitude ? (
+          <Circle
+            key={post.id}
+            center={[post.latitude, post.longitude]}
+            radius={150}
+            pathOptions={{
+              color: "#3182ce",
+              fillColor: "#3182ce",
+              fillOpacity: 0.3,
+              weight: 2,
+            }}
+          >
+            <MapPopUp post={post} />
+          </Circle>
+        ) : null
+      )}
+    </MapContainer>
   );
 };
 

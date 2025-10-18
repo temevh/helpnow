@@ -19,12 +19,12 @@ export default function Home() {
   if (error) return <p>Error: {error.message}</p>;
 
   return (
-    <Container maxW="100%" p={6} pt={12}>
+    <Container maxW="100%" p={6} pt={6}>
       <HStack w="full" align="start" gap={6} height="calc(100vh - 100px)">
         <Box flex="1" height="100%">
           <Map posts={data?.posts ?? []} />
         </Box>
-        <Box flex="0.4" height="100%">
+        <Box flex="0.3" height="100%">
           <Postlist posts={data?.posts ?? []} />
         </Box>
       </HStack>
