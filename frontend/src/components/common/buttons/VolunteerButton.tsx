@@ -8,6 +8,7 @@ const VolunteerButton = () => {
       borderRadius="md"
       fontWeight="semibold"
       bg="green.500"
+      flex={1}
       color="white"
       _hover={{
         bg: "green.700",

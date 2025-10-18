@@ -7,6 +7,7 @@ const OpenButton = () => {
       size="sm"
       borderRadius="md"
       fontWeight="semibold"
+      flex={1}
       bg="blue.500"
       color="white"
       _hover={{

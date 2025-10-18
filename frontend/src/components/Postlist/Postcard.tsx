@@ -7,7 +7,7 @@ import {
   CardFooter,
   HStack,
 } from "@chakra-ui/react";
-import { OpenButton, ShowButton, VolunteerButton } from "../common/buttons";
+import { OpenButton, VolunteerButton } from "../common/buttons";
 import { Post } from "@/types";
 import { getStatusBadgeColor } from "../../utils";
 
@@ -48,7 +48,7 @@ export const Postcard = ({ post }: { post: Post }) => {
         <Text
           fontSize="sm"
           color="white"
-          bg="gray.700"
+          bg="gray.400"
           p="2"
           borderRadius="md"
           lineHeight="1.5"
