@@ -1,4 +1,4 @@
-import { Badge } from "@chakra-ui/react";
+import { Box, Badge, Text, Separator, HStack } from "@chakra-ui/react";
 import { Popup } from "react-leaflet";
 import { Post } from "@/types";
 import { VolunteerButton, OpenButton } from "../common/buttons";
@@ -11,32 +11,36 @@ interface MapPopUpProps {
 export const MapPopUp = ({ post }: MapPopUpProps) => {
   return (
     <Popup closeButton={true}>
-      <div className="flex flex-row items-center justify-between mb-2">
-        <h1 className="text-lg font-bold text-gray-800 flex-1 mr-2">
-          <strong>{post.name}</strong>
-        </h1>
+      <HStack justify="space-between" mb={1}>
+        <Text fontWeight="bold" fontSize="md" color="gray.800" noOfLines={1}>
+          {post.name}
+        </Text>
         <Badge
           backgroundColor={getStatusBadgeColor(post.status)}
-          borderRadius="md"
           color="white"
-          fontWeight="bold"
-          px={3}
-          py={1}
-          ml={2}
+          borderRadius="md"
+          px={2}
+          py={0.5}
+          fontSize="xs"
         >
           {post.status}
         </Badge>
-      </div>
-      <p className="text-sm text-gray-600 mb-2 leading-relaxed">
-        {post.description}
-      </p>
-      <p className="text-xs text-gray-500 mb-2">
-        {convertUnixToDate(post.taskTime)}
-      </p>
-      <div className="flex flex-row gap-2">
+      </HStack>
+
+      <Separator mb={2} />
+
+      <Text fontSize="sm" color="gray.700" mb={2} noOfLines={3}>
+        {post.description || "No description provided."}
+      </Text>
+
+      <Text fontSize="xs" color="gray.500" mb={3}>
+        📅 {convertUnixToDate(post.taskTime)}
+      </Text>
+
+      <HStack gap={2}>
         <OpenButton />
         {post.status === "OPEN" && <VolunteerButton />}
-      </div>
+      </HStack>
     </Popup>
   );
 };
