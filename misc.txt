@@ -12,3 +12,5 @@ Password hashing: bcrypt
 
 FEATURES:
 - chat between (potential) volunteers and post creator
+- Convert address to coordinates when submitting post
+- When not signed in, show "X people need help in your area" and a call to action

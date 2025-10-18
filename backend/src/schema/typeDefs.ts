@@ -5,6 +5,7 @@ export const typeDefs = gql`
     OPEN
     ACCEPTED
     COMPLETED
+    CLOSED
   }
 
   type User {
@@ -21,8 +22,9 @@ export const typeDefs = gql`
     id: ID!
     name: String!
     description: String
-    locApprox: String!
-    locAccurate: String!
+    address: String!
+    latitude: Float!
+    longitude: Float!
     taskTime: String!
     creator: User!
     status: PostStatus!
@@ -51,10 +53,12 @@ export const typeDefs = gql`
     createPost(
       name: String!
       description: String
-      locApprox: String!
-      locAccurate: String!
+      address: String!
+      latitude: Float!
+      longitude: Float!
       taskTime: String!
       userId: String!
+      reward: Int
     ): Post!
     volunteerForPost(postId: String!, userId: String!): Volunteer!
   }

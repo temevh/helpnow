@@ -1,39 +1,48 @@
-import { MapContainer, Marker, TileLayer } from "react-leaflet";
-import { Box } from "@chakra-ui/react";
+"use client";
+
+import { MapContainer, TileLayer, Circle } from "react-leaflet";
+import { Post } from "@/types";
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
+import { MapPopUp } from "./MapPopUp";
+import { getCircleColor } from "@/utils";
 
-interface MapProps {
-  position?: [number, number];
-  zoom?: number;
+interface PostMapProps {
+  posts: Post[];
 }
 
-export default function Map({
-  position = [60.1699, 24.9384],
-  zoom = 13,
-}: MapProps) {
+const PostMap = ({ posts }: PostMapProps) => {
   return (
-    <Box
-      h="700px"
-      w="full"
-      borderRadius="lg"
-      overflow="hidden"
-      boxShadow="md"
-      flex={1}
+    <MapContainer
+      center={[60.1699, 24.9384]}
+      zoom={13}
+      style={{ width: "100%", height: "100%", borderRadius: "12px" }}
     >
-      <MapContainer
-        center={position}
-        zoom={zoom}
-        scrollWheelZoom={false}
-        style={{ height: "100%", width: "100%" }}
-      >
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        <Marker position={position}></Marker>
-      </MapContainer>
-    </Box>
+      <TileLayer
+        attribution="&copy; OpenStreetMap contributors"
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+
+      {posts.map((post) =>
+        post.latitude && post.longitude ? (
+          <Circle
+            key={post.id}
+            center={[post.latitude, post.longitude]}
+            radius={150}
+            pathOptions={{
+              color: getCircleColor(post.status),
+              fillColor: getCircleColor(post.status),
+              fillOpacity: 0.3,
+              weight: 2,
+            }}
+          >
+            <MapPopUp post={post} />
+          </Circle>
+        ) : null
+      )}
+    </MapContainer>
   );
-}
+};
+
+export default PostMap;
