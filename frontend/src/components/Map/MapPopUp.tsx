@@ -12,7 +12,7 @@ export const MapPopUp = ({ post }: MapPopUpProps) => {
   return (
     <Popup closeButton={true}>
       <HStack justify="space-between" mb={1}>
-        <Text fontWeight="bold" fontSize="md" color="gray.800" noOfLines={1}>
+        <Text fontWeight="bold" fontSize="md" color="gray.800">
           {post.name}
         </Text>
         <Badge
@@ -29,7 +29,7 @@ export const MapPopUp = ({ post }: MapPopUpProps) => {
 
       <Separator mb={2} />
 
-      <Text fontSize="sm" color="gray.700" mb={2} noOfLines={3}>
+      <Text fontSize="sm" color="gray.700" mb={2}>
         {post.description || "No description provided."}
       </Text>
 
