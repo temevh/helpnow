@@ -1,5 +1,5 @@
 "use client";
-import { TextInput } from "@/components/common/inputs";
+import { TextInput, PasswordInput } from "@/components/common/inputs";
 import { Button, Card, HStack, Stack } from "@chakra-ui/react";
 import { LuLock, LuMail, LuUser } from "react-icons/lu";
 
@@ -12,13 +12,12 @@ export default function SignInPage() {
           Fill in the form below to create an account
         </Card.Description>
       </Card.Header>
-      <Card.Body>
-        <HStack gap="4" w="full">
+      <Card.Body gap={4}>
+        <HStack gap="8" w="full">
           <TextInput
             label="Email"
             placeholder="Enter your email"
             required={true}
-            helperText="We'll never share your email."
             icon={<LuMail />}
           />
           <TextInput
@@ -28,16 +27,15 @@ export default function SignInPage() {
             icon={<LuUser />}
           />
         </HStack>
-        <HStack gap="4" w="full">
-          <TextInput
+        <HStack gap="8" w="full">
+          <PasswordInput
             label="Password"
             placeholder="Enter your password"
             required={true}
-            helperText="We'll never share your email."
             icon={<LuLock />}
           />
-          <TextInput
-            label=""
+          <PasswordInput
+            label="Password again"
             placeholder="Re-enter your password"
             required={true}
             icon={<LuLock />}
