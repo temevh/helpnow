@@ -2,8 +2,12 @@ import { Box, Flex } from "@chakra-ui/react";
 import Logo from "./Logo";
 import MenuLinks from "./MenuLinks";
 import MobileDrawer from "./MobileDrawer";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../../../auth";
+export const Navbar = async () => {
+  const session = await getServerSession(authOptions);
+  const user = session?.user;
 
-export const Navbar = () => {
   return (
     <Flex
       as={"nav"}
@@ -22,7 +26,7 @@ export const Navbar = () => {
       <Logo />
       {/*Desktop Menu*/}
       <Box display={{ base: "none", md: "block" }}>
-        <MenuLinks />
+        <MenuLinks user={user} />
       </Box>
 
       {/*Mobile Menu*/}

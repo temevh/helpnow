@@ -8,7 +8,7 @@ const links = [
   { name: "Alerts", href: "#contact", icon: Bell },
 ];
 
-const MenuLinks = ({ isMobile = false }) => {
+const MenuLinks = ({ isMobile = false, user }) => {
   const LinkComponent = isMobile ? VStack : HStack;
 
   return (
@@ -33,20 +33,24 @@ const MenuLinks = ({ isMobile = false }) => {
         </Link>
       ))}
 
-      <Button
-        bg={"blue.600"}
-        color={"white"}
-        size={"lg"}
-        borderRadius={"full"}
-        px={4}
-        _hover={{
-          transform: "translateY(-4px)",
-          shadow: "lg",
-        }}
-        transition={"all 0.2s ease"}
-      >
-        Sign in
-      </Button>
+      {user.email ? (
+        <p>{user.email}</p>
+      ) : (
+        <Button
+          bg={"blue.600"}
+          color={"white"}
+          size={"lg"}
+          borderRadius={"full"}
+          px={4}
+          _hover={{
+            transform: "translateY(-4px)",
+            shadow: "lg",
+          }}
+          transition={"all 0.2s ease"}
+        >
+          Sign in
+        </Button>
+      )}
     </LinkComponent>
   );
 };

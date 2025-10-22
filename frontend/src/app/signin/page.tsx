@@ -4,7 +4,7 @@ import { LuLock, LuMail, LuUser } from "react-icons/lu";
 import { Card, HStack, Button } from "@chakra-ui/react";
 import { signIn } from "next-auth/react";
 import React, { useState } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 export default function SignInPage() {
   const [username, setUsername] = useState("");
