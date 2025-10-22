@@ -1,7 +1,8 @@
 "use client";
 import { TextInput, PasswordInput } from "@/components/common/inputs";
-import { Button, Card, HStack, Stack } from "@chakra-ui/react";
 import { LuLock, LuMail, LuUser } from "react-icons/lu";
+import { Card, HStack, Button } from "@chakra-ui/react";
+import { signIn } from "next-auth/react";
 
 export default function SignInPage() {
   return (

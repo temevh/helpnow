@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "../components/Navbar/Navbar";
 import { ClientProviders } from "@/components/providers/ClientProviders";
+import { getSession } from "../../auth";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,17 +20,18 @@ export const metadata: Metadata = {
   description: "A platform to help your community",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getSession();
   return (
     <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ClientProviders>
+        <ClientProviders session={session}>
           <Navbar />
           <main>{children}</main>
         </ClientProviders>
