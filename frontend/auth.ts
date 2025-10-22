@@ -1,13 +1,33 @@
 import { AuthOptions, getServerSession } from "next-auth";
-import GithubProvider from "next-auth/providers/github";
+import CredentialsProvider from "next-auth/providers/credentials";
 
 const authOptions: AuthOptions = {
   providers: [
-    GithubProvider({
-      clientId: process.env.GITHUB_ID,
-      clientSecret: process.env.GITHUB_SECRET,
+    CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        username: { label: "Username", type: "text", placeholder: "jsmith" },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials, req) {
+        const user = { id: "1", name: "J smith", email: "jsmith@example.com" };
+
+        if (
+          credentials?.username === "jsmith" &&
+          credentials?.password === "password123"
+        ) {
+          return user;
+        }
+        return null;
+      },
     }),
   ],
+  pages: {
+    signIn: "/signin",
+  },
+  session: {
+    strategy: "jwt",
+  },
 };
 
 const getSession = () => getServerSession(authOptions);

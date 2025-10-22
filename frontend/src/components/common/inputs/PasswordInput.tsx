@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, ReactElement } from "react";
+import { useState, ReactElement, ChangeEvent } from "react";
 import {
   Input,
   Field,
@@ -17,6 +17,8 @@ type PasswordInputProps = {
   label?: string;
   helperText?: string;
   icon?: ReactElement;
+  value: string;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 };
 
 const PasswordInput = ({
@@ -25,6 +27,8 @@ const PasswordInput = ({
   label,
   helperText,
   icon,
+  value,
+  onChange,
 }: PasswordInputProps) => {
   const [show, setShow] = useState(false);
 
@@ -54,6 +58,8 @@ const PasswordInput = ({
             placeholder={placeholder}
             type={show ? "text" : "password"}
             variant="subtle"
+            value={value}
+            onChange={onChange}
           />
         </InputGroup>
       </HStack>
