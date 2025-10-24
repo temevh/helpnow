@@ -1,5 +1,5 @@
 "use client";
-import { TextInput, PasswordInput } from "@/components/common/inputs";
+import { TextInput } from "@/components/common/inputs";
 import { LuLock, LuMail, LuUser, LuShield } from "react-icons/lu";
 import {
   Card,
@@ -23,7 +23,6 @@ export default function SignInPage() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/";
 
-  // Redirect if already authenticated
   useEffect(() => {
     const checkSession = async () => {
       const session = await getSession();
@@ -81,9 +80,7 @@ export default function SignInPage() {
               bg="whiteAlpha.200"
               borderRadius="full"
               display="inline-flex"
-            >
-              <LuShield size={32} />
-            </Box>
+            ></Box>
             <VStack gap={2}>
               <Text fontSize="2xl" fontWeight="bold">
                 Welcome Back
@@ -95,7 +92,7 @@ export default function SignInPage() {
           </VStack>
         </Box>
 
-        <Box p={8}>
+        <Box p={6}>
           <form onSubmit={handleSubmit}>
             <VStack gap={6}>
               {error && (
@@ -128,7 +125,8 @@ export default function SignInPage() {
                   onChange={(e) => setUsername(e.target.value)}
                 />
 
-                <PasswordInput
+                <TextInput
+                  type={"password"}
                   label="Password"
                   placeholder="Enter your password"
                   required
@@ -161,31 +159,14 @@ export default function SignInPage() {
               >
                 Sign In
               </Button>
+              <Text>
+                Dont have an account?{" "}
+                <a className="hover:cursor-pointer text-blue-500">
+                  Register now
+                </a>
+              </Text>
             </VStack>
           </form>
-
-          {/* Demo Credentials */}
-          <Box mt={8} p={4} bg="gray.50" borderRadius="lg">
-            <VStack gap={2} align="start">
-              <Text fontSize="sm" fontWeight="semibold" color="gray.700">
-                Demo Credentials:
-              </Text>
-              <VStack gap={1} align="start" fontSize="sm" color="gray.600">
-                <Text>
-                  Username:{" "}
-                  <Text as="span" fontWeight="mono" color="blue.600">
-                    jsmith
-                  </Text>
-                </Text>
-                <Text>
-                  Password:{" "}
-                  <Text as="span" fontWeight="mono" color="blue.600">
-                    password123
-                  </Text>
-                </Text>
-              </VStack>
-            </VStack>
-          </Box>
         </Box>
       </Box>
     </Box>

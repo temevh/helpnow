@@ -1,7 +1,7 @@
 "use client";
 import { HStack, VStack, Button, Box, Text } from "@chakra-ui/react";
 import { Settings, User, Bell, House, LogOut } from "lucide-react";
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
@@ -20,7 +20,6 @@ const MenuLinks = ({
   user?: any;
 }) => {
   const LinkComponent = isMobile ? VStack : HStack;
-  const { data: session } = useSession();
   const router = useRouter();
 
   const handleSignOut = async () => {
