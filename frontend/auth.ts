@@ -2,6 +2,7 @@ import { AuthOptions, getServerSession } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 const authOptions: AuthOptions = {
+  secret: process.env.NEXTAUTH_SECRET || "b89897hb089u",
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -34,8 +35,17 @@ const authOptions: AuthOptions = {
       return token;
     },
     async session({ session, token }) {
-      session.user = token.user;
+      if (token.user) {
+        session.user = token.user as any;
+      }
       return session;
+    },
+    async redirect({ url, baseUrl }) {
+      // Allows relative callback URLs
+      if (url.startsWith("/")) return `${baseUrl}${url}`;
+      // Allows callback URLs on the same origin
+      else if (new URL(url).origin === baseUrl) return url;
+      return baseUrl;
     },
   },
 };

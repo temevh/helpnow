@@ -1,11 +1,12 @@
+"use client";
 import { Box, Flex } from "@chakra-ui/react";
 import Logo from "./Logo";
 import MenuLinks from "./MenuLinks";
 import MobileDrawer from "./MobileDrawer";
-import { getServerSession } from "next-auth";
-import { authOptions } from "../../../auth";
-export const Navbar = async () => {
-  const session = await getServerSession(authOptions);
+import { useSession } from "next-auth/react";
+
+export const Navbar = () => {
+  const { data: session } = useSession();
   const user = session?.user;
 
   return (
@@ -31,7 +32,7 @@ export const Navbar = async () => {
 
       {/*Mobile Menu*/}
       <Box display={{ base: "block", md: "none" }}>
-        <MobileDrawer />
+        <MobileDrawer user={user} />
       </Box>
     </Flex>
   );

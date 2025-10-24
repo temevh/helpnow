@@ -11,7 +11,7 @@ import { Menu } from "lucide-react";
 import Logo from "./Logo";
 import MenuLinks from "./MenuLinks";
 
-const MobileDrawer = () => {
+const MobileDrawer = ({ user }: { user?: any }) => {
   const { open, onToggle } = useDisclosure();
 
   return (
@@ -33,7 +33,7 @@ const MobileDrawer = () => {
               </Drawer.Title>
             </Drawer.Header>
             <Drawer.Body>
-              <MenuLinks isMobile />
+              <MenuLinks isMobile user={user} />
             </Drawer.Body>
             <Drawer.CloseTrigger asChild>
               <CloseButton size={"md"} />
