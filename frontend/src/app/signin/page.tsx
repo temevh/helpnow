@@ -13,6 +13,7 @@ import {
 import { signIn, getSession } from "next-auth/react";
 import React, { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
 
 export default function SignInPage() {
   const [username, setUsername] = useState("");
@@ -161,14 +162,16 @@ export default function SignInPage() {
               </Button>
               <Text>
                 Dont have an account?{" "}
-                <Text
-                  as="span"
-                  color="blue.600"
-                  cursor="pointer"
-                  _hover={{ color: "blue.800", textDecoration: "underline" }}
-                >
-                  Register now
-                </Text>
+                <Link href="/register">
+                  <Text
+                    as="span"
+                    color="blue.600"
+                    cursor="pointer"
+                    _hover={{ color: "blue.800", textDecoration: "underline" }}
+                  >
+                    Register now
+                  </Text>
+                </Link>
               </Text>
             </VStack>
           </form>

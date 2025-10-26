@@ -5,10 +5,12 @@ type CreateUserArgs = {
   username: string;
   email: string;
   password: string;
+  firstName: string;
+  lastName: string;
 };
 
 type AuthenticateUserArgs = {
-  email: string;
+  username: string;
   password: string;
 };
 
@@ -21,12 +23,12 @@ export const userResolvers = {
     },
   },
   Mutation: {
-    signUp: async (
+    createUser: async (
       _parent: unknown,
       args: CreateUserArgs,
       context: Context
     ) => {
-      const { email, password, username } = args;
+      const { email, password, username, firstName, lastName } = args;
 
       const existingUser = await context.prisma.user.findUnique({
         where: { email },
@@ -40,9 +42,11 @@ export const userResolvers = {
 
       const user = await context.prisma.user.create({
         data: {
+          username,
           email,
           password: hashedPassword,
-          username,
+          firstName,
+          lastName,
         },
       });
 
@@ -50,7 +54,7 @@ export const userResolvers = {
         user: {
           id: user.id,
           email: user.email,
-          name: user.username,
+          username: user.username,
         },
         message: "User created successfully",
       };
@@ -60,20 +64,20 @@ export const userResolvers = {
       args: AuthenticateUserArgs,
       context: Context
     ) => {
-      const { email, password } = args;
+      const { username, password } = args;
 
       const user = await context.prisma.user.findUnique({
-        where: { email },
+        where: { username },
       });
 
       if (!user) {
-        throw new Error("Invalid email or password");
+        throw new Error("Invalid username or password");
       }
 
       const isValidPassword = await bcrypt.compare(password, user.password);
 
       if (!isValidPassword) {
-        throw new Error("Invalid email or password");
+        throw new Error("Invalid username or password");
       }
 
       return {
@@ -82,7 +86,7 @@ export const userResolvers = {
           email: user.email,
           username: user.username,
         },
-        message: "Authentication suffessful",
+        message: "Authentication successful",
       };
     },
   },
