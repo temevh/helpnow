@@ -161,9 +161,14 @@ export default function SignInPage() {
               </Button>
               <Text>
                 Dont have an account?{" "}
-                <a className="hover:cursor-pointer text-blue-500">
+                <Text
+                  as="span"
+                  color="blue.600"
+                  cursor="pointer"
+                  _hover={{ color: "blue.800", textDecoration: "underline" }}
+                >
                   Register now
-                </a>
+                </Text>
               </Text>
             </VStack>
           </form>

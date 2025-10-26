@@ -27,7 +27,7 @@ const MenuLinks = ({
       redirect: false,
       callbackUrl: "/signin",
     });
-    router.push("/signin");
+    router.push("/");
   };
 
   const handleSignIn = () => {

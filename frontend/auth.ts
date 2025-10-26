@@ -1,5 +1,7 @@
 import { AuthOptions, getServerSession } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { AUTHENTICATE_USER } from "@/graphql/mutations/user";
+import client from "@/graphql/client";
 
 const authOptions: AuthOptions = {
   secret: process.env.NEXTAUTH_SECRET || "b89897hb089u",
@@ -11,15 +13,28 @@ const authOptions: AuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
-        const user = { id: "1", name: "J smith", email: "jsmith@example.com" };
+        try {
+          const { data } = await client.mutate({
+            mutation: AUTHENTICATE_USER,
+            variables: {
+              username: credentials?.username,
+              password: credentials?.password,
+            },
+          });
 
-        if (
-          credentials?.username === "jsmith" &&
-          credentials?.password === "password123"
-        ) {
-          return user;
+          if (data?.authenticateUser?.user) {
+            return {
+              id: data.authenticateUser.user.id,
+              email: data.authenticateUser.user.email,
+              name: data.authenticateUser.user.name,
+            };
+          }
+
+          return null;
+        } catch (error) {
+          console.error("Authentication error:", error);
+          throw new Error("Invalid credentials");
         }
-        return null;
       },
     }),
   ],
