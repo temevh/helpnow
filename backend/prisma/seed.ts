@@ -16,45 +16,35 @@ async function main() {
   const users = await Promise.all([
     prisma.user.create({
       data: {
-        firstName: "John",
-        lastName: "Doe",
-        userName: "johndoe",
+        username: "johndoe",
         email: "john.doe@example.com",
         password: "hashedpassword123", // In real app, this should be hashed
       },
     }),
     prisma.user.create({
       data: {
-        firstName: "Jane",
-        lastName: "Smith",
-        userName: "janesmith",
+        username: "janesmith",
         email: "jane.smith@example.com",
         password: "hashedpassword456",
       },
     }),
     prisma.user.create({
       data: {
-        firstName: "Mike",
-        lastName: "Johnson",
-        userName: "mikej",
+        username: "mikej",
         email: "mike.johnson@example.com",
         password: "hashedpassword789",
       },
     }),
     prisma.user.create({
       data: {
-        firstName: "Sarah",
-        lastName: "Wilson",
-        userName: "sarahw",
+        username: "sarahw",
         email: "sarah.wilson@example.com",
         password: "hashedpassword101",
       },
     }),
     prisma.user.create({
       data: {
-        firstName: "Alex",
-        lastName: "Brown",
-        userName: "alexb",
+        username: "alexb",
         email: "alex.brown@example.com",
         password: "hashedpassword202",
       },

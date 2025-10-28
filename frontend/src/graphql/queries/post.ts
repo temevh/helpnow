@@ -11,7 +11,7 @@ export const GET_POSTS = gql`
       longitude
       taskTime
       creator {
-        userName
+        username
       }
     }
   }

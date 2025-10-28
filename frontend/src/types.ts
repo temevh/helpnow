@@ -8,9 +8,7 @@ export enum PostStatus {
 // ---------- USER ----------
 export type User = {
   id: string;
-  firstName?: string | null;
-  lastName?: string | null;
-  userName: string;
+  username: string;
   email: string;
   password: string;
   posts?: Post[]; // posts created by this user

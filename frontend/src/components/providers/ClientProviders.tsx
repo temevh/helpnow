@@ -2,6 +2,7 @@
 import { ApolloProvider } from "@apollo/client/react";
 import { Provider } from "@/components/ui/provider";
 import client from "@/graphql/client";
+import { SessionProvider } from "next-auth/react";
 
 interface ClientProvidersProps {
   children: React.ReactNode;
@@ -9,8 +10,10 @@ interface ClientProvidersProps {
 
 export function ClientProviders({ children }: ClientProvidersProps) {
   return (
-    <ApolloProvider client={client}>
-      <Provider>{children}</Provider>
-    </ApolloProvider>
+    <SessionProvider>
+      <ApolloProvider client={client}>
+        <Provider>{children}</Provider>
+      </ApolloProvider>
+    </SessionProvider>
   );
 }

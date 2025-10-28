@@ -10,9 +10,7 @@ export const typeDefs = gql`
 
   type User {
     id: ID!
-    firstName: String
-    lastName: String
-    userName: String!
+    username: String!
     email: String!
     posts: [Post!]!
     volunteers: [Volunteer!]!
@@ -49,7 +47,6 @@ export const typeDefs = gql`
   }
 
   type Mutation {
-    createUser(userName: String!, email: String!, password: String!): User!
     createPost(
       name: String!
       description: String
@@ -61,5 +58,21 @@ export const typeDefs = gql`
       reward: Int
     ): Post!
     volunteerForPost(postId: String!, userId: String!): Volunteer!
+    createUser(
+      username: String!
+      email: String!
+      password: String!
+    ): CreateUserPayload!
+    authenticateUser(username: String!, password: String!): AuthPayload!
+  }
+
+  type AuthPayload {
+    user: User!
+    message: String!
+  }
+
+  type CreateUserPayload {
+    user: User
+    message: String!
   }
 `;
