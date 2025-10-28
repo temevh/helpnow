@@ -5,6 +5,7 @@ import { GET_POSTS } from "@/graphql/queries/post";
 import { useQuery } from "@apollo/client/react";
 import { Postlist } from "@/components/Postlist/Postlist";
 import { HStack, Box, Container } from "@chakra-ui/react";
+import Postmodal from "@/components/Postmodal/Postmodal";
 import { Post } from "@/types";
 
 const Map = dynamic(() => import("@/components/Map/Map"), {
@@ -20,6 +21,7 @@ export default function Home() {
 
   return (
     <Container maxW="100%" p={6} pt={6}>
+      <Postmodal post={data?.posts[0]} />
       <HStack w="full" align="start" gap={6} height="calc(100vh - 100px)">
         <Box flex="1" height="100%">
           <Map posts={data?.posts ?? []} />
