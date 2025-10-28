@@ -66,13 +66,13 @@ export default function RegisterPage() {
         },
       });
 
-      if (data?.createUser) {
+      if (data?.createUser.user) {
         setSuccess("Account created successfully! Redirecting to sign in...");
         setTimeout(() => {
           router.push("/signin");
         }, 2000);
       } else {
-        setError("Something went wrong");
+        setError(data?.createUser.message);
       }
     } catch (err: any) {
       setError(err.message || "An error occurred during registration");

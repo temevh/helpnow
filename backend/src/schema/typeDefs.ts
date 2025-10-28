@@ -58,12 +58,21 @@ export const typeDefs = gql`
       reward: Int
     ): Post!
     volunteerForPost(postId: String!, userId: String!): Volunteer!
-    createUser(username: String!, email: String!, password: String!): User!
+    createUser(
+      username: String!
+      email: String!
+      password: String!
+    ): CreateUserPayload!
     authenticateUser(username: String!, password: String!): AuthPayload!
   }
 
   type AuthPayload {
     user: User!
+    message: String!
+  }
+
+  type CreateUserPayload {
+    user: User
     message: String!
   }
 `;

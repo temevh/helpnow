@@ -28,12 +28,28 @@ export const userResolvers = {
     ) => {
       const { email, password, username } = args;
 
-      const existingUser = await context.prisma.user.findUnique({
+      const existingEmail = await context.prisma.user.findUnique({
         where: { email },
       });
 
-      if (existingUser) {
-        throw new Error("User already exists with this email");
+      const existingUsername = await context.prisma.user.findUnique({
+        where: { username },
+      });
+
+      if (existingEmail) {
+        console.error("User already exists with this email");
+        return {
+          user: null,
+          message: "Email already exists",
+        };
+      }
+
+      if (existingUsername) {
+        console.error("User already exists with this username");
+        return {
+          user: null,
+          message: "Username already exists",
+        };
       }
 
       const hashedPassword = await bcrypt.hash(password, 10);
@@ -46,7 +62,7 @@ export const userResolvers = {
         },
       });
 
-      return user;
+      return { user, message: "User created succesfully" };
     },
 
     authenticateUser: async (
