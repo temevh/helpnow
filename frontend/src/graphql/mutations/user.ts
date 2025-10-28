@@ -8,30 +8,15 @@ export const AUTHENTICATE_USER = gql`
         username
         email
       }
-      message
     }
   }
 `;
 
 export const CREATE_USER = gql`
-  mutation CreateUser(
-    $firstName: String
-    $lastName: String
-    $userName: String!
-    $email: String!
-    $password: String!
-  ) {
-    createUser(
-      userName: $userName
-      email: $email
-      password: $password
-      firstName: $firstName
-      lastName: $lastName
-    ) {
+  mutation CreateUser($email: String!, $password: String!, $username: String!) {
+    createUser(email: $email, password: $password, username: $username) {
       id
-      firstName
-      lastName
-      userName
+      username
       email
     }
   }

@@ -5,8 +5,6 @@ type CreateUserArgs = {
   username: string;
   email: string;
   password: string;
-  firstName: string;
-  lastName: string;
 };
 
 type AuthenticateUserArgs = {
@@ -28,7 +26,7 @@ export const userResolvers = {
       args: CreateUserArgs,
       context: Context
     ) => {
-      const { email, password, username, firstName, lastName } = args;
+      const { email, password, username } = args;
 
       const existingUser = await context.prisma.user.findUnique({
         where: { email },
@@ -45,20 +43,12 @@ export const userResolvers = {
           username,
           email,
           password: hashedPassword,
-          firstName,
-          lastName,
         },
       });
 
-      return {
-        user: {
-          id: user.id,
-          email: user.email,
-          username: user.username,
-        },
-        message: "User created successfully",
-      };
+      return user;
     },
+
     authenticateUser: async (
       _parent: unknown,
       args: AuthenticateUserArgs,
@@ -86,7 +76,6 @@ export const userResolvers = {
           email: user.email,
           username: user.username,
         },
-        message: "Authentication successful",
       };
     },
   },

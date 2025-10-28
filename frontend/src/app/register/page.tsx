@@ -9,8 +9,6 @@ import { CREATE_USER } from "@/graphql/mutations/user";
 import { useMutation } from "@apollo/client/react";
 
 export default function RegisterPage() {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -28,7 +26,7 @@ export default function RegisterPage() {
     setSuccess("");
     setIsLoading(true);
 
-    if (!firstName || !lastName || !username || !email || !password) {
+    if (!username || !email || !password) {
       setError("All fields are required");
       setIsLoading(false);
       return;
@@ -54,11 +52,15 @@ export default function RegisterPage() {
     }
 
     try {
+      const input = {
+        username: username,
+        email,
+        password,
+      };
+      console.log("input", input);
       const { data } = await createUser({
         variables: {
-          firstName,
-          lastName,
-          username: username,
+          username,
           email,
           password,
         },
@@ -159,25 +161,6 @@ export default function RegisterPage() {
               )}
 
               <VStack gap={4} w="full">
-                <HStack w="full" gap={4}>
-                  <TextInput
-                    label="First Name"
-                    placeholder="Enter your first name"
-                    required
-                    icon={<LuUser />}
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                  />
-                  <TextInput
-                    label="Last Name"
-                    placeholder="Enter your last name"
-                    required
-                    icon={<LuUser />}
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                  />
-                </HStack>
-
                 <TextInput
                   label="Username"
                   placeholder="Choose a username"

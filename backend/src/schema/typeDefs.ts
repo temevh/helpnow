@@ -10,8 +10,6 @@ export const typeDefs = gql`
 
   type User {
     id: ID!
-    firstName: String
-    lastName: String
     username: String!
     email: String!
     posts: [Post!]!
@@ -60,13 +58,7 @@ export const typeDefs = gql`
       reward: Int
     ): Post!
     volunteerForPost(postId: String!, userId: String!): Volunteer!
-    createUser(
-      username: String!
-      email: String!
-      password: String!
-      firstName: String!
-      lastName: String!
-    ): AuthPayload!
+    createUser(username: String!, email: String!, password: String!): User!
     authenticateUser(username: String!, password: String!): AuthPayload!
   }
 

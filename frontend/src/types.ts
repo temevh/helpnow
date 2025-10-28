@@ -8,8 +8,6 @@ export enum PostStatus {
 // ---------- USER ----------
 export type User = {
   id: string;
-  firstName?: string | null;
-  lastName?: string | null;
   username: string;
   email: string;
   password: string;
