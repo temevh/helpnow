@@ -1,4 +1,4 @@
-export default function getStatusBadgeColor(status: string) {
+export default function getStatusBadgeColor(status: string | undefined) {
   switch (status) {
     case "OPEN":
       return "green";
