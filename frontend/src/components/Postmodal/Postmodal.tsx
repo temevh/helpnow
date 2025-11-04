@@ -5,17 +5,9 @@ import {
   DialogBody,
   DialogFooter,
   DialogCloseTrigger,
+  DialogBackdrop,
 } from "@chakra-ui/react";
-import {
-  Button,
-  Text,
-  Stack,
-  Box,
-  Badge,
-  HStack,
-  VStack,
-  Separator,
-} from "@chakra-ui/react";
+import { Button, Text, Stack, Badge, HStack, VStack } from "@chakra-ui/react";
 import { getStatusBadgeColor } from "@/utils";
 import { convertUnixToDate } from "@/utils";
 import { Post } from "@/types";
@@ -23,15 +15,26 @@ import StatusBadge from "../common/StatusBadge";
 
 interface PostmodalProps {
   post?: Post;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 }
 
-export default function Postmodal({ post }: PostmodalProps) {
+export default function Postmodal({
+  post,
+  open,
+  onOpenChange,
+}: PostmodalProps) {
   console.log(post);
   const statusColors = getStatusBadgeColor(post?.status || "");
   const currentVolunteers = 0;
 
   return (
-    <DialogRoot open>
+    <DialogRoot
+      open={open}
+      onOpenChange={(e) => onOpenChange(e.open)}
+      placement="center"
+    >
+      <DialogBackdrop bg="blackAlpha.700" backdropFilter="blur(4px)" />
       <DialogContent
         maxW="2xl"
         bg="blue.50"
@@ -39,6 +42,11 @@ export default function Postmodal({ post }: PostmodalProps) {
         boxShadow="2xl"
         border="2px solid"
         borderColor="blue.200"
+        position="fixed"
+        top="50%"
+        left="50%"
+        transform="translate(-50%, -50%)"
+        zIndex={1000}
       >
         <DialogCloseTrigger
           top={4}
@@ -140,10 +148,16 @@ export default function Postmodal({ post }: PostmodalProps) {
 
         <DialogFooter bg="blue.50" borderBottomRadius="2xl" p={4} gap={3}>
           <Button
-            colorScheme="gray"
-            variant="outline"
+            bg="white"
+            color="gray.700"
+            border="1px solid"
+            borderColor="gray.300"
             size="lg"
-            onClick={() => {}}
+            onClick={() => onOpenChange(false)}
+            _hover={{
+              bg: "gray.50",
+              borderColor: "gray.400",
+            }}
           >
             Close
           </Button>

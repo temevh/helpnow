@@ -6,9 +6,10 @@ import { getStatusBadgeColor, convertUnixToDate } from "../../utils";
 
 interface MapPopUpProps {
   post: Post;
+  onOpenPost: (post: Post) => void;
 }
 
-export const MapPopUp = ({ post }: MapPopUpProps) => {
+export const MapPopUp = ({ post, onOpenPost }: MapPopUpProps) => {
   return (
     <Popup closeButton={true}>
       <HStack justify="space-between" mb={1}>
@@ -38,7 +39,7 @@ export const MapPopUp = ({ post }: MapPopUpProps) => {
       </Text>
 
       <HStack gap={2}>
-        <OpenButton />
+        <OpenButton onClick={() => onOpenPost(post)} />
         {post.status === "OPEN" && <VolunteerButton />}
       </HStack>
     </Popup>
