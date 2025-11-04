@@ -3,6 +3,7 @@ import { Popup } from "react-leaflet";
 import { Post } from "@/types";
 import { VolunteerButton, OpenButton } from "../common/buttons";
 import { getStatusBadgeColor, convertUnixToDate } from "../../utils";
+import VolunteerBadge from "../common/badges/VolunteerBadge";
 
 interface MapPopUpProps {
   post: Post;
@@ -10,6 +11,8 @@ interface MapPopUpProps {
 }
 
 export const MapPopUp = ({ post, onOpenPost }: MapPopUpProps) => {
+  const currentVolunteers = 0;
+
   return (
     <Popup closeButton={true}>
       <HStack justify="space-between" mb={1}>
@@ -30,13 +33,27 @@ export const MapPopUp = ({ post, onOpenPost }: MapPopUpProps) => {
 
       <Separator mb={2} />
 
-      <Text fontSize="sm" color="gray.700" mb={2}>
+      <Text fontSize="md" color="gray.700" mb={2}>
         {post.description || "No description provided."}
       </Text>
 
-      <Text fontSize="xs" color="gray.500" mb={3}>
+      <Text fontSize="md" color="gray.500" mb={1}>
         📅 {convertUnixToDate(post.taskTime)}
       </Text>
+
+      <HStack mb={1}>
+        <HStack>
+          <Text fontSize="sm">🙋‍♂️</Text>
+          <Text fontSize="sm" fontWeight="semibold" color="gray.600">
+            Volunteers
+          </Text>
+        </HStack>
+
+        <VolunteerBadge
+          currentVolunteers={currentVolunteers}
+          volunteerAmount={post?.volunteerAmount}
+        />
+      </HStack>
 
       <HStack gap={2}>
         <OpenButton onClick={() => onOpenPost(post)} />

@@ -7,11 +7,13 @@ import {
   DialogCloseTrigger,
   DialogBackdrop,
 } from "@chakra-ui/react";
-import { Button, Text, Stack, Badge, HStack, VStack } from "@chakra-ui/react";
+import { Text, Stack, HStack, VStack } from "@chakra-ui/react";
 import { getStatusBadgeColor } from "@/utils";
 import { convertUnixToDate } from "@/utils";
 import { Post } from "@/types";
-import StatusBadge from "../common/StatusBadge";
+import StatusBadge from "../common/badges/StatusBadge";
+import { VolunteerButton, CustomCloseButton } from "../common/buttons";
+import VolunteerBadge from "../common/badges/VolunteerBadge";
 
 interface PostmodalProps {
   post?: Post;
@@ -111,16 +113,11 @@ export default function Postmodal({
                   Volunteers Needed
                 </Text>
               </HStack>
-              <Badge
-                colorScheme="blue"
-                px={3}
-                py={1}
-                borderRadius="full"
-                fontSize="md"
-                fontWeight="bold"
-              >
-                {currentVolunteers} / {post?.volunteerAmount}
-              </Badge>
+
+              <VolunteerBadge
+                currentVolunteers={currentVolunteers}
+                volunteerAmount={post?.volunteerAmount}
+              />
             </HStack>
 
             {post?.reward && post.reward > 0 && (
@@ -147,39 +144,8 @@ export default function Postmodal({
         </DialogBody>
 
         <DialogFooter bg="blue.50" borderBottomRadius="2xl" p={4} gap={3}>
-          <Button
-            bg="white"
-            color="gray.700"
-            border="1px solid"
-            borderColor="gray.300"
-            size="lg"
-            onClick={() => onOpenChange(false)}
-            _hover={{
-              bg: "gray.50",
-              borderColor: "gray.400",
-            }}
-          >
-            Close
-          </Button>
-          {post?.status === "OPEN" && (
-            <Button
-              bgGradient="linear(to-r, green.500, green.600)"
-              color="white"
-              size="lg"
-              _hover={{
-                bgGradient: "linear(to-r, green.600, green.700)",
-                transform: "translateY(-2px)",
-                boxShadow: "lg",
-              }}
-              _active={{
-                transform: "translateY(0)",
-              }}
-              transition="all 0.2s ease"
-              fontWeight="semibold"
-            >
-              🙋‍♂️ Volunteer Now
-            </Button>
-          )}
+          <CustomCloseButton onClick={() => onOpenChange(false)} />
+          {post?.status === "OPEN" && <VolunteerButton />}
         </DialogFooter>
       </DialogContent>
     </DialogRoot>

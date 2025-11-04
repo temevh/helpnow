@@ -10,7 +10,7 @@ import {
 import { OpenButton, VolunteerButton } from "../common/buttons";
 import { Post } from "@/types";
 import { getStatusBadgeColor } from "../../utils";
-import StatusBadge from "../common/StatusBadge";
+import StatusBadge from "../common/badges/StatusBadge";
 
 interface PostcardProps {
   post: Post;
