@@ -1,7 +1,7 @@
 import { Box, Badge, Text, Separator, HStack } from "@chakra-ui/react";
 import { Popup } from "react-leaflet";
 import { Post } from "@/types";
-import { VolunteerButton, OpenButton } from "../common/buttons";
+import { VolunteerButton } from "../common/buttons";
 import { getStatusBadgeColor, convertUnixToDate } from "../../utils";
 import VolunteerBadge from "../common/badges/VolunteerBadge";
 
@@ -56,7 +56,7 @@ export const MapPopUp = ({ post, onOpenPost }: MapPopUpProps) => {
       </HStack>
 
       <HStack gap={2}>
-        <OpenButton onClick={() => onOpenPost(post)} />
+        {/*<OpenButton onClick={() => onOpenPost(post)} />*/}
         {post.status === "OPEN" && <VolunteerButton />}
       </HStack>
     </Popup>
