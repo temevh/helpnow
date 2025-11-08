@@ -9,9 +9,14 @@ import {
 } from "@chakra-ui/react";
 import { OpenButton, VolunteerButton } from "../common/buttons";
 import { Post } from "@/types";
-import { getStatusBadgeColor } from "../../utils";
+import StatusBadge from "../common/badges/StatusBadge";
 
-export const Postcard = ({ post }: { post: Post }) => {
+interface PostcardProps {
+  post: Post;
+  onOpenPost: (post: Post) => void;
+}
+
+export const Postcard = ({ post, onOpenPost }: PostcardProps) => {
   return (
     <CardRoot
       width="400px"
@@ -31,16 +36,7 @@ export const Postcard = ({ post }: { post: Post }) => {
           <Text fontWeight="semibold" fontSize="lg" color={"black"}>
             {post.name}
           </Text>
-          <Badge
-            backgroundColor={getStatusBadgeColor(post.status)}
-            px="2"
-            py="1"
-            borderRadius="md"
-            color={"black"}
-            fontWeight={"bold"}
-          >
-            {post.status}
-          </Badge>
+          <StatusBadge status={post.status} />
         </HStack>
       </CardHeader>
 
@@ -59,7 +55,7 @@ export const Postcard = ({ post }: { post: Post }) => {
 
       <CardFooter p="2" pt="0">
         <HStack w="100%" gap={2}>
-          <OpenButton />
+          <OpenButton onClick={() => onOpenPost(post)} />
           <VolunteerButton />
         </HStack>
       </CardFooter>

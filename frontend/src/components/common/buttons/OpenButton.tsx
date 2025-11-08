@@ -1,8 +1,13 @@
 import { Button } from "@chakra-ui/react";
 
-const OpenButton = () => {
+interface OpenButtonProps {
+  onClick: () => void;
+}
+
+const OpenButton = ({ onClick }: OpenButtonProps) => {
   return (
     <Button
+      onClick={onClick}
       colorScheme="blue"
       size="sm"
       borderRadius="md"

@@ -9,6 +9,7 @@ export const GET_POSTS = gql`
       status
       latitude
       longitude
+      volunteerAmount
       taskTime
       creator {
         username

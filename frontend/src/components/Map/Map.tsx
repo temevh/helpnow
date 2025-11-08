@@ -10,9 +10,10 @@ import { getCircleColor } from "@/utils";
 
 interface PostMapProps {
   posts: Post[];
+  onOpenPost: (post: Post) => void;
 }
 
-const PostMap = ({ posts }: PostMapProps) => {
+const PostMap = ({ posts, onOpenPost }: PostMapProps) => {
   return (
     <MapContainer
       center={[60.1699, 24.9384]}
@@ -37,7 +38,7 @@ const PostMap = ({ posts }: PostMapProps) => {
               weight: 2,
             }}
           >
-            <MapPopUp post={post} />
+            <MapPopUp post={post} onOpenPost={onOpenPost} />
           </Circle>
         ) : null
       )}

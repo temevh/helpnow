@@ -1,20 +1,21 @@
-import { useUser } from "@/hooks/useUser";
 import { Button } from "@chakra-ui/react";
 
-const VolunteerButton = () => {
-  const { user } = useUser();
+interface CustomCloseButtonProps {
+  onClick: () => void;
+}
+
+const CustomCloseButton = ({ onClick }: CustomCloseButtonProps) => {
   return (
     <Button
       colorScheme="blue"
       size="sm"
       borderRadius="md"
       fontWeight="semibold"
-      bg="green.500"
+      bg="red.500"
       flex={1}
       color="white"
-      visibility={user ? "visible" : "hidden"}
       _hover={{
-        bg: "green.700",
+        bg: "red.700",
         transform: "translateY(-1px)",
         boxShadow: "lg",
       }}
@@ -23,10 +24,11 @@ const VolunteerButton = () => {
       }}
       transition="all 0.2s ease"
       py={2}
+      onClick={onClick}
     >
-      🙋‍♂️ Volunteer!
+      ❌ Close
     </Button>
   );
 };
 
-export default VolunteerButton;
+export default CustomCloseButton;

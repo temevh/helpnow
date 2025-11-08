@@ -1,7 +1,7 @@
 "use client";
 import { HStack, VStack, Button, Box, Text } from "@chakra-ui/react";
 import { Settings, User, Bell, House, LogOut } from "lucide-react";
-import { signOut } from "next-auth/react";
+import { signOut, signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
@@ -28,6 +28,14 @@ const MenuLinks = ({
       callbackUrl: "/signin",
     });
     router.push("/");
+  };
+
+  const devSignIn = async () => {
+    await signIn("credentials", {
+      redirect: false,
+      username: "admin",
+      password: "admin123",
+    });
   };
 
   const handleSignIn = () => {
@@ -84,21 +92,24 @@ const MenuLinks = ({
           </Button>
         </HStack>
       ) : (
-        <Button
-          bg={"blue.600"}
-          color={"white"}
-          size={"lg"}
-          borderRadius={"full"}
-          px={4}
-          _hover={{
-            transform: "translateY(-4px)",
-            shadow: "lg",
-          }}
-          transition={"all 0.2s ease"}
-          onClick={handleSignIn}
-        >
-          Sign in
-        </Button>
+        <HStack>
+          <Button
+            bg={"blue.600"}
+            color={"white"}
+            size={"lg"}
+            borderRadius={"full"}
+            px={4}
+            _hover={{
+              transform: "translateY(-4px)",
+              shadow: "lg",
+            }}
+            transition={"all 0.2s ease"}
+            onClick={handleSignIn}
+          >
+            Sign in
+          </Button>
+          <Button onClick={devSignIn}>Dev sign in</Button>
+        </HStack>
       )}
     </LinkComponent>
   );

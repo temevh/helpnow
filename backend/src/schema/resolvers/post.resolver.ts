@@ -6,6 +6,7 @@ export const postResolvers = {
       try {
         const posts = await context.prisma.post.findMany({
           include: { creator: true },
+          where: { status: "OPEN" },
         });
         return posts;
       } catch (err) {
