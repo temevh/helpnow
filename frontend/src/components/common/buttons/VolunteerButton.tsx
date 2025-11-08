@@ -1,6 +1,8 @@
+import { useUser } from "@/hooks/useUser";
 import { Button } from "@chakra-ui/react";
 
 const VolunteerButton = () => {
+  const { user } = useUser();
   return (
     <Button
       colorScheme="blue"
@@ -10,6 +12,7 @@ const VolunteerButton = () => {
       bg="green.500"
       flex={1}
       color="white"
+      visibility={user ? "visible" : "hidden"}
       _hover={{
         bg: "green.700",
         transform: "translateY(-1px)",

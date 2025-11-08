@@ -4,7 +4,6 @@ import { Post } from "@/types";
 import { VolunteerButton } from "../common/buttons";
 import { getStatusBadgeColor, convertUnixToDate } from "../../utils";
 import VolunteerBadge from "../common/badges/VolunteerBadge";
-import { useUser } from "@/hooks/useUser";
 
 interface MapPopUpProps {
   post: Post;
@@ -12,7 +11,6 @@ interface MapPopUpProps {
 
 export const MapPopUp = ({ post }: MapPopUpProps) => {
   const currentVolunteers = 0;
-  const { user } = useUser();
 
   return (
     <Popup closeButton={true}>
@@ -58,7 +56,7 @@ export const MapPopUp = ({ post }: MapPopUpProps) => {
 
       <HStack gap={2}>
         {/*<OpenButton onClick={() => onOpenPost(post)} />*/}
-        {user && post.status === "OPEN" && <VolunteerButton />}
+        {post.status === "OPEN" && <VolunteerButton />}
       </HStack>
     </Popup>
   );
