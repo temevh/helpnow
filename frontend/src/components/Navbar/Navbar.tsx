@@ -3,11 +3,10 @@ import { Box, Flex } from "@chakra-ui/react";
 import Logo from "./Logo";
 import MenuLinks from "./MenuLinks";
 import MobileDrawer from "./MobileDrawer";
-import { useSession } from "next-auth/react";
+import { useUser } from "@/hooks/useUser";
 
 export const Navbar = () => {
-  const { data: session } = useSession();
-  const user = session?.user;
+  const { user } = useUser();
 
   return (
     <Flex

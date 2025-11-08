@@ -1,6 +1,6 @@
 "use client";
 import { TextInput } from "@/components/common/inputs";
-import { LuLock, LuMail, LuUser, LuShield } from "react-icons/lu";
+import { LuLock, LuUser, LuShield } from "react-icons/lu";
 import {
   Card,
   HStack,
