@@ -17,6 +17,7 @@ interface PostcardProps {
 }
 
 export const Postcard = ({ post, onOpenPost }: PostcardProps) => {
+  const isVisible = post.volunteersAlready < post.volunteersNeeded;
   return (
     <CardRoot
       width="400px"
@@ -56,7 +57,7 @@ export const Postcard = ({ post, onOpenPost }: PostcardProps) => {
       <CardFooter p="2" pt="0">
         <HStack w="100%" gap={2}>
           <OpenButton onClick={() => onOpenPost(post)} />
-          <VolunteerButton postId={post.id} />
+          {isVisible && <VolunteerButton postId={post.id} />}
         </HStack>
       </CardFooter>
     </CardRoot>

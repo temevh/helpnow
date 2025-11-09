@@ -1,6 +1,6 @@
 import { useUser } from "@/hooks/useUser";
 import { Button } from "@chakra-ui/react";
-import { VOLUNTEER_POST } from "@/graphql/queries/post";
+import { GET_POSTS, VOLUNTEER_POST } from "@/graphql/queries/post";
 import { useMutation } from "@apollo/client/react";
 import { useToast } from "@/hooks/useToast";
 
@@ -12,6 +12,8 @@ const VolunteerButton = ({ postId }: VolunteerButtonProps) => {
   const { user } = useUser();
   const { showToast } = useToast();
   const [volunteerPost, { loading, error }] = useMutation(VOLUNTEER_POST, {
+    refetchQueries: [{ query: GET_POSTS }],
+    awaitRefetchQueries: true,
     onCompleted: (data) => {
       console.log("Successfully volunteered:", data);
       showToast({ message: "Succesfully saved volunteering", type: "success" });
@@ -21,6 +23,8 @@ const VolunteerButton = ({ postId }: VolunteerButtonProps) => {
       showToast({ message: "Failure volunteering", type: "error" });
     },
   });
+
+  if (!user) return null;
 
   const onClick = () => {
     const userId = (user as any)?.id;
