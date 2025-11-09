@@ -28,7 +28,8 @@ export default function Postmodal({
 }: PostmodalProps) {
   console.log(post);
   const statusColors = getStatusBadgeColor(post?.status || "");
-  const currentVolunteers = 0;
+  const canVolunteer =
+    (post?.volunteersAlready ?? 0) < (post?.volunteersNeeded ?? 1);
 
   return (
     <DialogRoot
@@ -115,8 +116,8 @@ export default function Postmodal({
               </HStack>
 
               <VolunteerBadge
-                currentVolunteers={currentVolunteers}
-                volunteerAmount={post?.volunteerAmount}
+                volunteersAlready={post?.volunteersAlready ?? 0}
+                volunteersNeeded={post?.volunteersNeeded}
               />
             </HStack>
 
@@ -145,7 +146,9 @@ export default function Postmodal({
 
         <DialogFooter bg="blue.50" borderBottomRadius="2xl" p={4} gap={3}>
           <CustomCloseButton onClick={() => onOpenChange(false)} />
-          {post?.status === "OPEN" && <VolunteerButton />}
+          {post?.status === "OPEN" && canVolunteer && (
+            <VolunteerButton postId={post.id} />
+          )}
         </DialogFooter>
       </DialogContent>
     </DialogRoot>

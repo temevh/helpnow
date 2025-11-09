@@ -28,7 +28,8 @@ export type Post = {
   creator: User;
   userId: string;
   volunteers?: Volunteer[];
-  volunteerAmount: number;
+  volunteersNeeded: number;
+  volunteersAlready: number;
   status: PostStatus;
   createdAt: string;
   reward: number;

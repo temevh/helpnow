@@ -56,7 +56,7 @@ export const Postcard = ({ post, onOpenPost }: PostcardProps) => {
       <CardFooter p="2" pt="0">
         <HStack w="100%" gap={2}>
           <OpenButton onClick={() => onOpenPost(post)} />
-          <VolunteerButton />
+          <VolunteerButton postId={post.id} />
         </HStack>
       </CardFooter>
     </CardRoot>

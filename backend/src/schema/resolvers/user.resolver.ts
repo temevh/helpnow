@@ -59,6 +59,8 @@ export const userResolvers = {
           username,
           email,
           password: hashedPassword,
+          firstName: "",
+          lastName: "",
         },
       });
 

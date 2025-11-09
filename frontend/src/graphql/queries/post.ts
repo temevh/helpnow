@@ -9,10 +9,29 @@ export const GET_POSTS = gql`
       status
       latitude
       longitude
-      volunteerAmount
+      volunteersNeeded
+      volunteersAlready
       taskTime
+      reward
       creator {
         username
+      }
+    }
+  }
+`;
+
+export const VOLUNTEER_POST = gql`
+  mutation VolunteerPost($postId: String!, $userId: String!) {
+    volunteerPost(postId: $postId, userId: $userId) {
+      id
+      accepted
+      user {
+        id
+        username
+      }
+      post {
+        id
+        name
       }
     }
   }
