@@ -15,6 +15,8 @@ model User {
   username   String      @unique
   email      String      @unique
   password   String
+  firstName  String
+  lastName   String
   posts      Post[]      @relation("UserPosts") //Posts created by the user
   volunteers Volunteer[] // volunteer actions by this user
   createdAt  DateTime    @default(now())
