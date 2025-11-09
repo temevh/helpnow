@@ -2,6 +2,7 @@ import { useUser } from "@/hooks/useUser";
 import { Button } from "@chakra-ui/react";
 import { VOLUNTEER_POST } from "@/graphql/queries/post";
 import { useMutation } from "@apollo/client/react";
+import { useToast } from "@/hooks/useToast";
 
 interface VolunteerButtonProps {
   postId?: string;
@@ -9,13 +10,15 @@ interface VolunteerButtonProps {
 
 const VolunteerButton = ({ postId }: VolunteerButtonProps) => {
   const { user } = useUser();
-
+  const { showToast } = useToast();
   const [volunteerPost, { loading, error }] = useMutation(VOLUNTEER_POST, {
     onCompleted: (data) => {
       console.log("Successfully volunteered:", data);
+      showToast({ message: "Succesfully saved volunteering", type: "success" });
     },
     onError: (error) => {
       console.error("Error volunteering:", error);
+      showToast({ message: "Failure volunteering", type: "error" });
     },
   });
 

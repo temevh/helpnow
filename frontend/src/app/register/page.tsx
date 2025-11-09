@@ -57,23 +57,24 @@ export default function RegisterPage() {
         email,
         password,
       };
+      console.log("input", input);
       const { data } = await createUser({
         variables: {
           username,
           email,
           password,
-          firstName,
-          lastName,
+          firstName: "404",
+          lastName: "404",
         },
       });
 
-      if (data?.createUser?.user) {
+      if (data?.createUser.user) {
         setSuccess("Account created successfully! Redirecting to sign in...");
         setTimeout(() => {
           router.push("/signin");
         }, 2000);
       } else {
-        setError(data?.createUser?.message || "Registration failed");
+        setError(data?.createUser.message);
       }
     } catch (err: any) {
       setError(err.message || "An error occurred during registration");
