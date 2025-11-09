@@ -1,17 +1,17 @@
 import { Badge } from "@chakra-ui/react";
 
 interface VolunteerBadgeProps {
-  currentVolunteers: number;
-  volunteerAmount?: number;
+  volunteersAlready: number;
+  volunteersNeeded?: number;
 }
 
 const VolunteerBadge = ({
-  currentVolunteers,
-  volunteerAmount,
+  volunteersAlready,
+  volunteersNeeded,
 }: VolunteerBadgeProps) => {
   return (
     <Badge px={3} py={1} borderRadius="full" fontSize="md" fontWeight="bold">
-      {currentVolunteers} / {volunteerAmount}
+      {volunteersAlready} / {volunteersNeeded}
     </Badge>
   );
 };

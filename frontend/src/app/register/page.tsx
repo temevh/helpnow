@@ -63,6 +63,8 @@ export default function RegisterPage() {
           username,
           email,
           password,
+          firstName: "404",
+          lastName: "404",
         },
       });
 

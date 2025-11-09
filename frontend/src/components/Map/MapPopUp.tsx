@@ -10,7 +10,8 @@ interface MapPopUpProps {
 }
 
 export const MapPopUp = ({ post }: MapPopUpProps) => {
-  const currentVolunteers = 0;
+  const canVolunteer = post.volunteersAlready < post.volunteersNeeded;
+  console.log(post);
 
   return (
     <Popup closeButton={true}>
@@ -49,14 +50,16 @@ export const MapPopUp = ({ post }: MapPopUpProps) => {
         </HStack>
 
         <VolunteerBadge
-          currentVolunteers={currentVolunteers}
-          volunteerAmount={post?.volunteerAmount}
+          volunteersAlready={post.volunteersAlready}
+          volunteersNeeded={post.volunteersNeeded}
         />
       </HStack>
 
       <HStack gap={2}>
         {/*<OpenButton onClick={() => onOpenPost(post)} />*/}
-        {post.status === "OPEN" && <VolunteerButton />}
+        {post.status === "OPEN" && canVolunteer && (
+          <VolunteerButton postId={post.id} />
+        )}
       </HStack>
     </Popup>
   );

@@ -26,7 +26,8 @@ export const typeDefs = gql`
     taskTime: String!
     creator: User!
     status: PostStatus!
-    volunteerAmount: Int!
+    volunteersNeeded: Int!
+    volunteersAlready: Int!
     volunteers: [Volunteer!]!
     createdAt: String!
     reward: Int!
@@ -57,11 +58,13 @@ export const typeDefs = gql`
       userId: String!
       reward: Int
     ): Post!
-    volunteerForPost(postId: String!, userId: String!): Volunteer!
+    volunteerPost(postId: String!, userId: String!): Volunteer!
     createUser(
       username: String!
       email: String!
       password: String!
+      firstName: String!
+      lastName: String!
     ): CreateUserPayload!
     authenticateUser(username: String!, password: String!): AuthPayload!
   }
