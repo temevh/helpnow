@@ -12,8 +12,11 @@ export const typeDefs = gql`
     id: ID!
     username: String!
     email: String!
+    firstName: String!
+    lastName: String!
     posts: [Post!]!
     volunteers: [Volunteer!]!
+    createdAt: String!
   }
 
   type Post {
@@ -45,7 +48,7 @@ export const typeDefs = gql`
     users: [User!]!
     posts: [Post!]!
     post(id: ID!): Post
-    getVolunteeredPosts(userId: String!) [Volunteer]!
+    getVolunteeredPosts(userId: String!): [Volunteer!]!
   }
 
   type Mutation {

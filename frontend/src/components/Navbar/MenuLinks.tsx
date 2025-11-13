@@ -1,11 +1,11 @@
 "use client";
-import { HStack, VStack, Button, Box, Text } from "@chakra-ui/react";
-import { Settings, User, Bell, House, LogOut, ListCheck } from "lucide-react";
+import { HStack, VStack, Button, Text } from "@chakra-ui/react";
+import { Settings, User, Bell, LogOut, ListCheck } from "lucide-react";
 import { signOut, signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { VolunteeredModal } from "../VolunteeredModal/VolunteeredModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GET_VOLUNTEERED_POSTS } from "@/graphql/queries/post";
 import { useMutation, useQuery } from "@apollo/client/react";
 
@@ -31,6 +31,10 @@ const MenuLinks = ({
     variables: { userId: user?.id },
     skip: !user?.id,
   });
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   const handleSignOut = async () => {
     await signOut({

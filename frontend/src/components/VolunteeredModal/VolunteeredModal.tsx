@@ -7,22 +7,25 @@ import {
   DialogCloseTrigger,
   DialogBackdrop,
 } from "@chakra-ui/react";
-import { Text, Stack, HStack, VStack } from "@chakra-ui/react";
+import { Text, HStack, VStack } from "@chakra-ui/react";
 import { CustomCloseButton } from "../common/buttons";
 import { Post } from "@/types";
+import { VolunteeredCard } from "./VolunteeredCard";
 
 interface VolunteeredModalProps {
   posts: Post[];
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  loading: boolean;
 }
 
 export const VolunteeredModal = ({
   open,
   onOpenChange,
   posts,
+  loading,
 }: VolunteeredModalProps) => {
-  console.log(posts);
+  if (loading) return <p>Loading...</p>;
   return (
     <DialogRoot
       open={open}
@@ -66,8 +69,11 @@ export const VolunteeredModal = ({
           </VStack>
         </DialogHeader>
 
-        <DialogBody p={6} bg="white">
+        <DialogBody>
           <p>AAAA</p>
+          {posts.map((post) => {
+            return <VolunteeredCard key={post.id} post={post} />;
+          })}
         </DialogBody>
 
         <DialogFooter bg="blue.50" borderBottomRadius="2xl" p={4} gap={3}>
