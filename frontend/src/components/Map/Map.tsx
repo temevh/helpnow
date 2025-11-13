@@ -19,6 +19,7 @@ const PostMap = ({ posts, onOpenPost }: PostMapProps) => {
       center={[60.1699, 24.9384]}
       zoom={13}
       style={{ width: "100%", height: "100%", borderRadius: "12px" }}
+      zoomControl={false}
     >
       <TileLayer
         attribution="&copy; OpenStreetMap contributors"

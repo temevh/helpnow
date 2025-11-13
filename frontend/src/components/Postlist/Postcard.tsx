@@ -1,6 +1,5 @@
 import {
   Text,
-  Badge,
   CardRoot,
   CardHeader,
   CardBody,

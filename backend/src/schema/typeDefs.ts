@@ -45,6 +45,7 @@ export const typeDefs = gql`
     users: [User!]!
     posts: [Post!]!
     post(id: ID!): Post
+    getVolunteeredPosts(userId: String!) [Volunteer]!
   }
 
   type Mutation {
