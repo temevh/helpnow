@@ -7,7 +7,7 @@ import Link from "next/link";
 import { VolunteeredModal } from "../VolunteeredModal/VolunteeredModal";
 import { useEffect, useState } from "react";
 import { GET_VOLUNTEERED_POSTS } from "@/graphql/queries/post";
-import { useMutation, useQuery } from "@apollo/client/react";
+import { useQuery } from "@apollo/client/react";
 
 const links = [
   { name: "Posts", modal: VolunteeredModal, icon: ListCheck },
@@ -33,7 +33,14 @@ const MenuLinks = ({
   });
 
   useEffect(() => {
+    if (user?.id) {
+      refetch();
+    }
+  }, [user?.id, refetch]);
+
+  useEffect(() => {
     console.log(data);
+    console.log("user", user);
   }, [data]);
 
   const handleSignOut = async () => {

@@ -26,6 +26,7 @@ export const VolunteeredModal = ({
   loading,
 }: VolunteeredModalProps) => {
   if (loading) return <p>Loading...</p>;
+  console.log("posts", posts);
   return (
     <DialogRoot
       open={open}
@@ -72,7 +73,7 @@ export const VolunteeredModal = ({
         <DialogBody>
           <p>AAAA</p>
           {posts.map((post) => {
-            return <VolunteeredCard key={post.id} post={post} />;
+            return <VolunteeredCard key={post.id} post={post.post} />;
           })}
         </DialogBody>
 

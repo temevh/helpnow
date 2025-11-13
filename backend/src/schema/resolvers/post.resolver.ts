@@ -30,9 +30,10 @@ export const postResolvers = {
       context: Context
     ) => {
       try {
+        console.log("flag 1");
         const { userId } = args;
 
-        const volunteers = await context.prisma.volunteer.findMany({
+        const posts = await context.prisma.volunteer.findMany({
           where: { userId },
           include: {
             user: true,
@@ -46,7 +47,9 @@ export const postResolvers = {
             createdAt: "desc",
           },
         });
-        return volunteers;
+        console.log("posts fetched:", posts.length);
+        console.log(posts.map((v) => v.post.name));
+        return posts;
       } catch (err) {
         console.error("Error fetching volunteered posts", err);
         throw err;
