@@ -71,7 +71,6 @@ export const VolunteeredModal = ({
         </DialogHeader>
 
         <DialogBody>
-          <p>AAAA</p>
           {posts.map((post) => {
             return <VolunteeredCard key={post.id} post={post.post} />;
           })}
