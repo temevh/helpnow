@@ -85,8 +85,8 @@ export const VolunteeredModal = ({
           }}
         >
           <VStack gap={2} align="stretch">
-            {posts.map((post) => {
-              return <VolunteeredCard key={post.id} post={post.post} />;
+            {posts.map((post: Post) => {
+              return <VolunteeredCard key={post.id} post={post.post as Post} />;
             })}
           </VStack>
         </DialogBody>

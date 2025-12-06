@@ -4,7 +4,7 @@ const TaskDescriptionCard = ({
   description,
   hideHeader = false,
 }: {
-  description: string | null;
+  description: string | null | undefined;
   hideHeader?: boolean;
 }) => {
   return (

@@ -7,8 +7,9 @@ import {
   TaskVolunteerCard,
 } from "../common/infocards";
 import { CancelVolunteerButton, ContactPosterButton } from "../common/buttons";
+import { Post } from "@/types";
 
-export const VolunteeredCard = ({ post }) => {
+export const VolunteeredCard = ({ post }: { post: Post }) => {
   return (
     <Box p={5} bg="gray.200" borderRadius="xl" border="2px solid">
       <VStack align="stretch" gap={3} mt={1}>
@@ -26,11 +27,11 @@ export const VolunteeredCard = ({ post }) => {
 
         <VStack align="stretch" gap={2}>
           <TaskDescriptionCard
-            description={post?.description}
+            description={post.description ?? null}
             hideHeader={true}
           />
           <HStack>
-            <TaskTimeCard time={post?.taskTime} />
+            <TaskTimeCard time={post.taskTime} />
 
             {post?.reward && post.reward > 0 && (
               <TaskRewardCard reward={post.reward} />

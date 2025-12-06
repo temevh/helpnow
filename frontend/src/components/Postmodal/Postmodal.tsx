@@ -63,44 +63,51 @@ export default function Postmodal({
           _hover={{ bg: "blue.100" }}
         />
 
-        <DialogHeader
-          bgGradient="linear(to-r, blue.400, blue.500)"
-          color="white"
-          borderTopRadius="2xl"
-          p={6}
-        >
-          <VStack alignItems="flex-start" gap={2}>
-            <HStack justify="space-between" w="full">
-              <Text fontSize="2xl" fontWeight="bold" color={"black"}>
-                {post?.name}
-              </Text>
+        {!post ? (
+          <DialogBody p={6} bg="white">
+            <Text>Error viewing post</Text>
+          </DialogBody>
+        ) : (
+          <>
+            <DialogHeader
+              bgGradient="linear(to-r, blue.400, blue.500)"
+              color="white"
+              borderTopRadius="2xl"
+              p={6}
+            >
+              <VStack alignItems="flex-start" gap={2}>
+                <HStack justify="space-between" w="full">
+                  <Text fontSize="2xl" fontWeight="bold" color={"black"}>
+                    {post?.name}
+                  </Text>
 
-              <StatusBadge status={post?.status} />
-            </HStack>
-          </VStack>
-        </DialogHeader>
+                  <StatusBadge status={post?.status || ""} />
+                </HStack>
+              </VStack>
+            </DialogHeader>
+            <DialogBody p={6} bg="white">
+              <Stack gap={4}>
+                <TaskDescriptionCard description={post?.description} />
+                <TaskTimeCard time={post?.taskTime} />
+                <TaskVolunteerCard
+                  volunteersAlready={post?.volunteersAlready}
+                  volunteersNeeded={post?.volunteersNeeded}
+                />
 
-        <DialogBody p={6} bg="white">
-          <Stack gap={4}>
-            <TaskDescriptionCard description={post?.description} />
-            <TaskTimeCard time={post?.taskTime} />
-            <TaskVolunteerCard
-              volunteersAlready={post?.volunteersAlready}
-              volunteersNeeded={post?.volunteersNeeded}
-            />
+                {post?.reward && post.reward > 0 && (
+                  <TaskRewardCard reward={post.reward} />
+                )}
+              </Stack>
+            </DialogBody>
 
-            {post?.reward && post.reward > 0 && (
-              <TaskRewardCard reward={post.reward} />
-            )}
-          </Stack>
-        </DialogBody>
-
-        <DialogFooter bg="blue.50" borderBottomRadius="2xl" p={4} gap={3}>
-          <CustomCloseButton onClick={() => onOpenChange(false)} />
-          {post?.status === "OPEN" && canVolunteer && (
-            <VolunteerButton postId={post.id} />
-          )}
-        </DialogFooter>
+            <DialogFooter bg="blue.50" borderBottomRadius="2xl" p={4} gap={3}>
+              <CustomCloseButton onClick={() => onOpenChange(false)} />
+              {post?.status === "OPEN" && canVolunteer && (
+                <VolunteerButton postId={post.id} />
+              )}
+            </DialogFooter>
+          </>
+        )}
       </DialogContent>
     </DialogRoot>
   );
