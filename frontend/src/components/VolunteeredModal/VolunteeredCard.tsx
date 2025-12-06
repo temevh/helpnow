@@ -4,6 +4,7 @@ import {
   TaskTimeCard,
   TaskDescriptionCard,
   TaskRewardCard,
+  TaskVolunteerCard,
 } from "../common/infocards";
 import { CancelVolunteerButton, ContactPosterButton } from "../common/buttons";
 
@@ -24,12 +25,21 @@ export const VolunteeredCard = ({ post }) => {
         </HStack>
 
         <VStack align="stretch" gap={2}>
-          <TaskDescriptionCard description={post?.description} />
-          <TaskTimeCard time={post?.taskTime} />
+          <TaskDescriptionCard
+            description={post?.description}
+            hideHeader={true}
+          />
+          <HStack>
+            <TaskTimeCard time={post?.taskTime} />
 
-          {post?.reward && post.reward > 0 && (
-            <TaskRewardCard reward={post.reward} />
-          )}
+            {post?.reward && post.reward > 0 && (
+              <TaskRewardCard reward={post.reward} />
+            )}
+            <TaskVolunteerCard
+              volunteersAlready={post.volunteersAlready}
+              volunteersNeeded={post.volunteersNeeded}
+            />
+          </HStack>
         </VStack>
         <HStack>
           <CancelVolunteerButton onClick={() => {}} />

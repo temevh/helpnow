@@ -2,12 +2,19 @@ import { HStack, Text } from "@chakra-ui/react";
 
 const TaskDescriptionCard = ({
   description,
+  hideHeader = false,
 }: {
   description: string | null;
+  hideHeader?: boolean;
 }) => {
   return (
     <>
-      <Text fontSize="lg" fontWeight="semibold" color="blue.700">
+      <Text
+        fontSize="lg"
+        fontWeight="semibold"
+        color="blue.700"
+        hidden={hideHeader}
+      >
         Description
       </Text>
       <Text color="gray.700" lineHeight="1.6">

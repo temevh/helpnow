@@ -26,7 +26,6 @@ export const VolunteeredModal = ({
   loading,
 }: VolunteeredModalProps) => {
   if (loading) return <p>Loading...</p>;
-  console.log("posts", posts);
   return (
     <DialogRoot
       open={open}
@@ -36,12 +35,12 @@ export const VolunteeredModal = ({
     >
       <DialogBackdrop bg="blackAlpha.700" backdropFilter="blur(4px)" />
       <DialogContent
-        maxW="2xl"
+        maxW="3xl"
         maxH="85vh"
         bg="white"
         borderRadius="2xl"
         boxShadow="2xl"
-        border="2px solid"
+        border="3px solid"
         borderColor="blue.200"
         position="fixed"
         top="50%"
@@ -71,7 +70,20 @@ export const VolunteeredModal = ({
           </HStack>
         </DialogHeader>
 
-        <DialogBody p={6} bg="white" overflowY="auto" maxH="calc(85vh - 200px)">
+        <DialogBody
+          px={6}
+          bg="white"
+          overflowY="auto"
+          maxH="calc(85vh - 200px)"
+          css={{
+            "&::-webkit-scrollbar": {
+              width: "0px",
+              display: "none",
+            },
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
+          }}
+        >
           <VStack gap={2} align="stretch">
             {posts.map((post) => {
               return <VolunteeredCard key={post.id} post={post.post} />;

@@ -16,7 +16,7 @@ const CustomCloseButton = ({ onClick }: CustomCloseButtonProps) => {
       _hover={{
         bg: "red.700",
         transform: "translateY(-1px)",
-        boxShadow: "lg",
+        boxShadow: "sm",
       }}
       _active={{
         transform: "translateY(0)",

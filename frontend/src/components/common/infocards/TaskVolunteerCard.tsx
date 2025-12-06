@@ -13,7 +13,7 @@ const TaskVolunteerCard = ({
       <HStack>
         <Text fontSize="lg">🙋‍♂️</Text>
         <Text fontSize="sm" fontWeight="semibold" color="gray.600">
-          Volunteers Needed
+          Volunteers
         </Text>
       </HStack>
 

@@ -13,7 +13,7 @@ const ContactPosterButton = () => {
       _hover={{
         bg: "blue.700",
         transform: "translateY(-1px)",
-        boxShadow: "lg",
+        boxShadow: "sm",
       }}
       _active={{
         transform: "translateY(0)",
