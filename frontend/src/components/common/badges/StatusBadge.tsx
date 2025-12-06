@@ -11,7 +11,7 @@ const StatusBadge = ({ status }: { status: string | undefined }) => {
       fontSize="sm"
       fontWeight="bold"
     >
-      <Text color={"black"}>{status}</Text>
+      <Text color={"white"}>{status}</Text>
     </Badge>
   );
 };

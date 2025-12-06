@@ -32,11 +32,13 @@ export const VolunteeredModal = ({
       open={open}
       onOpenChange={(e) => onOpenChange(e.open)}
       placement="center"
+      closeOnEscape
     >
       <DialogBackdrop bg="blackAlpha.700" backdropFilter="blur(4px)" />
       <DialogContent
         maxW="2xl"
-        bg="blue.50"
+        maxH="85vh"
+        bg="white"
         borderRadius="2xl"
         boxShadow="2xl"
         border="2px solid"
@@ -61,24 +63,28 @@ export const VolunteeredModal = ({
           borderTopRadius="2xl"
           p={6}
         >
-          <VStack alignItems="flex-start" gap={2}>
-            <HStack justify="space-between" w="full">
-              <Text fontSize="2xl" fontWeight="bold" color={"black"}>
-                Your volunteers
-              </Text>
-            </HStack>
-          </VStack>
+          <HStack justify="space-between" align="center" w={"100%"}>
+            <Text fontSize="2xl" fontWeight="bold" color={"black"}>
+              Your volunteers
+            </Text>
+            <CustomCloseButton onClick={() => onOpenChange(false)} />
+          </HStack>
         </DialogHeader>
 
-        <DialogBody>
-          {posts.map((post) => {
-            return <VolunteeredCard key={post.id} post={post.post} />;
-          })}
+        <DialogBody p={6} bg="white" overflowY="auto" maxH="calc(85vh - 200px)">
+          <VStack gap={2} align="stretch">
+            {posts.map((post) => {
+              return <VolunteeredCard key={post.id} post={post.post} />;
+            })}
+          </VStack>
         </DialogBody>
 
-        <DialogFooter bg="blue.50" borderBottomRadius="2xl" p={4} gap={3}>
-          <CustomCloseButton onClick={() => onOpenChange(false)} />
-        </DialogFooter>
+        <DialogFooter
+          bg="blue.50"
+          borderBottomRadius="2xl"
+          p={4}
+          gap={3}
+        ></DialogFooter>
       </DialogContent>
     </DialogRoot>
   );

@@ -1,10 +1,10 @@
 import { Button } from "@chakra-ui/react";
 
-interface CustomCloseButtonProps {
+interface CancelVolunteerButtonProps {
   onClick: () => void;
 }
 
-const CustomCloseButton = ({ onClick }: CustomCloseButtonProps) => {
+const CancelVolunteerButton = ({ onClick }: CancelVolunteerButtonProps) => {
   return (
     <Button
       colorScheme="blue"
@@ -12,6 +12,7 @@ const CustomCloseButton = ({ onClick }: CustomCloseButtonProps) => {
       borderRadius="md"
       fontWeight="semibold"
       bg="red.500"
+      flex={1}
       color="white"
       _hover={{
         bg: "red.700",
@@ -25,9 +26,9 @@ const CustomCloseButton = ({ onClick }: CustomCloseButtonProps) => {
       py={2}
       onClick={onClick}
     >
-      ❌ Close
+      ❌ Cancel volunteering
     </Button>
   );
 };
 
-export default CustomCloseButton;
+export default CancelVolunteerButton;

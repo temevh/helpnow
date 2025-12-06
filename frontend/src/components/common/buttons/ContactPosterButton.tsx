@@ -1,20 +1,17 @@
 import { Button } from "@chakra-ui/react";
 
-interface CustomCloseButtonProps {
-  onClick: () => void;
-}
-
-const CustomCloseButton = ({ onClick }: CustomCloseButtonProps) => {
+const ContactPosterButton = () => {
   return (
     <Button
       colorScheme="blue"
       size="sm"
       borderRadius="md"
       fontWeight="semibold"
-      bg="red.500"
+      bg="blue.500"
+      flex={1}
       color="white"
       _hover={{
-        bg: "red.700",
+        bg: "blue.700",
         transform: "translateY(-1px)",
         boxShadow: "lg",
       }}
@@ -23,11 +20,10 @@ const CustomCloseButton = ({ onClick }: CustomCloseButtonProps) => {
       }}
       transition="all 0.2s ease"
       py={2}
-      onClick={onClick}
     >
-      ❌ Close
+      📩 Contact poster
     </Button>
   );
 };
 
-export default CustomCloseButton;
+export default ContactPosterButton;
