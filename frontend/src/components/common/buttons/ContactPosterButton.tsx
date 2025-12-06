@@ -1,19 +1,14 @@
 import { Button } from "@chakra-ui/react";
 
-interface OpenButtonProps {
-  onClick: () => void;
-}
-
-const OpenButton = ({ onClick }: OpenButtonProps) => {
+const ContactPosterButton = () => {
   return (
     <Button
-      onClick={onClick}
       colorScheme="blue"
       size="sm"
       borderRadius="md"
       fontWeight="semibold"
-      flex={1}
       bg="blue.500"
+      flex={1}
       color="white"
       _hover={{
         bg: "blue.700",
@@ -26,9 +21,9 @@ const OpenButton = ({ onClick }: OpenButtonProps) => {
       transition="all 0.2s ease"
       py={2}
     >
-      👀 Open!
+      📩 Contact poster
     </Button>
   );
 };
 
-export default OpenButton;
+export default ContactPosterButton;

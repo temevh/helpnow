@@ -5,6 +5,10 @@ type VolunteerPostArgs = {
   userId: string;
 };
 
+type GetVolunteeredPostsArgs = {
+  userId: string;
+};
+
 export const postResolvers = {
   Query: {
     posts: async (_parent: unknown, _args: unknown, context: Context) => {
@@ -16,10 +20,43 @@ export const postResolvers = {
         return posts;
       } catch (err) {
         console.error("Error fetching posts:", err);
-        return []; // prevent GraphQL null error
+        return [];
+      }
+    },
+
+    getVolunteeredPosts: async (
+      _parent: unknown,
+      args: GetVolunteeredPostsArgs,
+      context: Context
+    ) => {
+      try {
+        console.log("flag 1");
+        const { userId } = args;
+
+        const posts = await context.prisma.volunteer.findMany({
+          where: { userId },
+          include: {
+            user: true,
+            post: {
+              include: {
+                creator: true,
+              },
+            },
+          },
+          orderBy: {
+            createdAt: "desc",
+          },
+        });
+        console.log("posts fetched:", posts.length);
+        console.log(posts.map((v) => v.post.name));
+        return posts;
+      } catch (err) {
+        console.error("Error fetching volunteered posts", err);
+        throw err;
       }
     },
   },
+
   Mutation: {
     volunteerPost: async (
       _parent: unknown,

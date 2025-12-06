@@ -12,12 +12,11 @@ const CustomCloseButton = ({ onClick }: CustomCloseButtonProps) => {
       borderRadius="md"
       fontWeight="semibold"
       bg="red.500"
-      flex={1}
       color="white"
       _hover={{
         bg: "red.700",
         transform: "translateY(-1px)",
-        boxShadow: "lg",
+        boxShadow: "sm",
       }}
       _active={{
         transform: "translateY(0)",

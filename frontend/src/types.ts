@@ -18,6 +18,7 @@ export type User = {
 
 // ---------- POST ----------
 export type Post = {
+  post: unknown;
   id: string;
   name: string;
   description?: string | null;

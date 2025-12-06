@@ -11,8 +11,6 @@ interface MapPopUpProps {
 
 export const MapPopUp = ({ post }: MapPopUpProps) => {
   const canVolunteer = post.volunteersAlready < post.volunteersNeeded;
-  console.log(post);
-
   return (
     <Popup closeButton={true}>
       <HStack justify="space-between" mb={1}>

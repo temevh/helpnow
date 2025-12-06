@@ -9,11 +9,15 @@ import {
 } from "@chakra-ui/react";
 import { Text, Stack, HStack, VStack } from "@chakra-ui/react";
 import { getStatusBadgeColor } from "@/utils";
-import { convertUnixToDate } from "@/utils";
 import { Post } from "@/types";
 import StatusBadge from "../common/badges/StatusBadge";
 import { VolunteerButton, CustomCloseButton } from "../common/buttons";
-import VolunteerBadge from "../common/badges/VolunteerBadge";
+import {
+  TaskTimeCard,
+  TaskDescriptionCard,
+  TaskVolunteerCard,
+  TaskRewardCard,
+} from "../common/infocards";
 
 interface PostmodalProps {
   post?: Post;
@@ -59,97 +63,51 @@ export default function Postmodal({
           _hover={{ bg: "blue.100" }}
         />
 
-        <DialogHeader
-          bgGradient="linear(to-r, blue.400, blue.500)"
-          color="white"
-          borderTopRadius="2xl"
-          p={6}
-        >
-          <VStack alignItems="flex-start" gap={2}>
-            <HStack justify="space-between" w="full">
-              <Text fontSize="2xl" fontWeight="bold" color={"black"}>
-                {post?.name}
-              </Text>
-
-              <StatusBadge status={post?.status} />
-            </HStack>
-          </VStack>
-        </DialogHeader>
-
-        <DialogBody p={6} bg="white">
-          <Stack gap={4}>
-            <Text fontSize="lg" fontWeight="semibold" color="blue.700">
-              Description
-            </Text>
-            <Text color="gray.700" lineHeight="1.6">
-              {post?.description || "No description provided"}
-            </Text>
-
-            <HStack
-              p={3}
-              bg="blue.50"
-              borderRadius="lg"
-              justify="space-between"
+        {!post ? (
+          <DialogBody p={6} bg="white">
+            <Text>Error viewing post</Text>
+          </DialogBody>
+        ) : (
+          <>
+            <DialogHeader
+              bgGradient="linear(to-r, blue.400, blue.500)"
+              color="white"
+              borderTopRadius="2xl"
+              p={6}
             >
-              <HStack>
-                <Text fontSize="lg">📅</Text>
-                <Text fontSize="sm" fontWeight="semibold" color="gray.600">
-                  Task Time
-                </Text>
-              </HStack>
-              <Text fontWeight="medium" color="gray.800">
-                {post?.taskTime ? convertUnixToDate(post.taskTime) : "N/A"}
-              </Text>
-            </HStack>
-
-            <HStack
-              p={3}
-              bg="blue.50"
-              borderRadius="lg"
-              justify="space-between"
-            >
-              <HStack>
-                <Text fontSize="lg">🙋‍♂️</Text>
-                <Text fontSize="sm" fontWeight="semibold" color="gray.600">
-                  Volunteers Needed
-                </Text>
-              </HStack>
-
-              <VolunteerBadge
-                volunteersAlready={post?.volunteersAlready ?? 0}
-                volunteersNeeded={post?.volunteersNeeded}
-              />
-            </HStack>
-
-            {post?.reward && post.reward > 0 && (
-              <HStack
-                p={3}
-                bg="green.50"
-                borderRadius="lg"
-                justify="space-between"
-                border="1px solid"
-                borderColor="green.200"
-              >
-                <HStack>
-                  <Text fontSize="lg">💰</Text>
-                  <Text fontSize="sm" fontWeight="semibold" color="green.700">
-                    Reward
+              <VStack alignItems="flex-start" gap={2}>
+                <HStack justify="space-between" w="full">
+                  <Text fontSize="2xl" fontWeight="bold" color={"black"}>
+                    {post?.name}
                   </Text>
-                </HStack>
-                <Text fontWeight="bold" color="green.600" fontSize="lg">
-                  €{post?.reward}
-                </Text>
-              </HStack>
-            )}
-          </Stack>
-        </DialogBody>
 
-        <DialogFooter bg="blue.50" borderBottomRadius="2xl" p={4} gap={3}>
-          <CustomCloseButton onClick={() => onOpenChange(false)} />
-          {post?.status === "OPEN" && canVolunteer && (
-            <VolunteerButton postId={post.id} />
-          )}
-        </DialogFooter>
+                  <StatusBadge status={post?.status || ""} />
+                </HStack>
+              </VStack>
+            </DialogHeader>
+            <DialogBody p={6} bg="white">
+              <Stack gap={4}>
+                <TaskDescriptionCard description={post?.description} />
+                <TaskTimeCard time={post?.taskTime} />
+                <TaskVolunteerCard
+                  volunteersAlready={post?.volunteersAlready}
+                  volunteersNeeded={post?.volunteersNeeded}
+                />
+
+                {post?.reward && post.reward > 0 && (
+                  <TaskRewardCard reward={post.reward} />
+                )}
+              </Stack>
+            </DialogBody>
+
+            <DialogFooter bg="blue.50" borderBottomRadius="2xl" p={4} gap={3}>
+              <CustomCloseButton onClick={() => onOpenChange(false)} />
+              {post?.status === "OPEN" && canVolunteer && (
+                <VolunteerButton postId={post.id} />
+              )}
+            </DialogFooter>
+          </>
+        )}
       </DialogContent>
     </DialogRoot>
   );

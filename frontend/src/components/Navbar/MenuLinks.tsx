@@ -1,15 +1,19 @@
 "use client";
-import { HStack, VStack, Button, Box, Text } from "@chakra-ui/react";
-import { Settings, User, Bell, House, LogOut } from "lucide-react";
+import { HStack, VStack, Button, Text } from "@chakra-ui/react";
+import { Settings, User, Bell, LogOut, ListCheck } from "lucide-react";
 import { signOut, signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { VolunteeredModal } from "../VolunteeredModal/VolunteeredModal";
+import { useEffect, useState } from "react";
+import { GET_VOLUNTEERED_POSTS } from "@/graphql/queries/post";
+import { useQuery } from "@apollo/client/react";
 
 const links = [
-  { name: "Home", href: "/", icon: House },
-  { name: "Profile", href: "/profile", icon: User },
-  { name: "Settings", href: "#services", icon: Settings },
-  { name: "Alerts", href: "#contact", icon: Bell },
+  { name: "Posts", modal: VolunteeredModal, icon: ListCheck },
+  { name: "Profile", modal: VolunteeredModal, icon: User },
+  { name: "Settings", modal: VolunteeredModal, icon: Settings },
+  { name: "Alerts", modal: VolunteeredModal, icon: Bell },
 ];
 
 const MenuLinks = ({
@@ -21,6 +25,23 @@ const MenuLinks = ({
 }) => {
   const LinkComponent = isMobile ? VStack : HStack;
   const router = useRouter();
+
+  const [isVolunteeredModalOpen, setIsVolunteeredModalOpen] = useState(false);
+  const { data, loading, error, refetch } = useQuery(GET_VOLUNTEERED_POSTS, {
+    variables: { userId: user?.id },
+    skip: !user?.id,
+  });
+
+  useEffect(() => {
+    if (user?.id) {
+      refetch();
+    }
+  }, [user?.id, refetch]);
+
+  useEffect(() => {
+    console.log(data);
+    console.log("user", user);
+  }, [data]);
 
   const handleSignOut = async () => {
     await signOut({
@@ -42,12 +63,26 @@ const MenuLinks = ({
     router.push("/signin");
   };
 
+  const handleOpenModal = () => {
+    if (user?.id) {
+      refetch(); // Refetch the latest data when opening modal
+    }
+    setIsVolunteeredModalOpen(true);
+  };
+
   return (
     <LinkComponent gap={isMobile ? 4 : 8} align={"center"}>
+      <VolunteeredModal
+        open={isVolunteeredModalOpen}
+        onOpenChange={setIsVolunteeredModalOpen}
+        posts={data?.getVolunteeredPosts || []}
+        loading={loading}
+      />
       {links.map((link) => (
         <Link
           key={link.name}
-          href={link.href}
+          href={""}
+          onClick={handleOpenModal}
           style={{
             fontWeight: "medium",
             color: "#2563eb",

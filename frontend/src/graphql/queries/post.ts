@@ -36,3 +36,31 @@ export const VOLUNTEER_POST = gql`
     }
   }
 `;
+
+export const GET_VOLUNTEERED_POSTS = gql`
+  query GetVolunteeredPosts($userId: String!) {
+    getVolunteeredPosts(userId: $userId) {
+      id
+      createdAt
+      user {
+        id
+        username
+        email
+      }
+      post {
+        id
+        name
+        description
+        address
+        taskTime
+        status
+        volunteersNeeded
+        volunteersAlready
+        reward
+        creator {
+          username
+        }
+      }
+    }
+  }
+`;

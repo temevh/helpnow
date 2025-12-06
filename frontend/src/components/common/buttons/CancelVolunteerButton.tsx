@@ -1,22 +1,21 @@
 import { Button } from "@chakra-ui/react";
 
-interface OpenButtonProps {
+interface CancelVolunteerButtonProps {
   onClick: () => void;
 }
 
-const OpenButton = ({ onClick }: OpenButtonProps) => {
+const CancelVolunteerButton = ({ onClick }: CancelVolunteerButtonProps) => {
   return (
     <Button
-      onClick={onClick}
       colorScheme="blue"
       size="sm"
       borderRadius="md"
       fontWeight="semibold"
+      bg="red.500"
       flex={1}
-      bg="blue.500"
       color="white"
       _hover={{
-        bg: "blue.700",
+        bg: "red.700",
         transform: "translateY(-1px)",
         boxShadow: "sm",
       }}
@@ -25,10 +24,11 @@ const OpenButton = ({ onClick }: OpenButtonProps) => {
       }}
       transition="all 0.2s ease"
       py={2}
+      onClick={onClick}
     >
-      👀 Open!
+      ❌ Cancel volunteering
     </Button>
   );
 };
 
-export default OpenButton;
+export default CancelVolunteerButton;
