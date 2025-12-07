@@ -1,7 +1,7 @@
 import { convertUnixToDate } from "@/utils";
 import { HStack, Text } from "@chakra-ui/react";
 
-const TaskTimeCard = ({ time }: { time: string | null }) => {
+const TaskTimeCard = ({ time }: { time: string | undefined }) => {
   return (
     <HStack p={3} bg="blue.50" borderRadius="lg" justify="space-between">
       <HStack>
