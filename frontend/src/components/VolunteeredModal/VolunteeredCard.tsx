@@ -1,5 +1,4 @@
-import { HStack, Text, VStack, Box, Badge, Separator } from "@chakra-ui/react";
-
+import { HStack, Text, VStack, Box } from "@chakra-ui/react";
 import {
   TaskTimeCard,
   TaskDescriptionCard,
@@ -9,7 +8,7 @@ import {
 import { CancelVolunteerButton, ContactPosterButton } from "../common/buttons";
 import { Post } from "@/types";
 
-export const VolunteeredCard = ({ post }: { post: Post }) => {
+export const VolunteeredCard = ({ post, cancelClicked }: { post: Post }) => {
   return (
     <Box p={5} bg="gray.200" borderRadius="xl" border="2px solid">
       <VStack align="stretch" gap={3} mt={1}>
@@ -43,7 +42,7 @@ export const VolunteeredCard = ({ post }: { post: Post }) => {
           </HStack>
         </VStack>
         <HStack>
-          <CancelVolunteerButton onClick={() => {}} />
+          <CancelVolunteerButton onClick={() => cancelClicked(post.id)} />
           <ContactPosterButton />
         </HStack>
       </VStack>

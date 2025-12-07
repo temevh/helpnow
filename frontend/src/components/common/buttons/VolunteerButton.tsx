@@ -1,6 +1,7 @@
 import { useUser } from "@/hooks/useUser";
 import { Button } from "@chakra-ui/react";
-import { GET_POSTS, VOLUNTEER_POST } from "@/graphql/queries/post";
+import { GET_POSTS } from "@/graphql/queries/post";
+import { VOLUNTEER_POST } from "@/graphql/mutations/post";
 import { useMutation } from "@apollo/client/react";
 import { useToast } from "@/hooks/useToast";
 

@@ -5,9 +5,7 @@ import { signOut, signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { VolunteeredModal } from "../VolunteeredModal/VolunteeredModal";
-import { useEffect, useState } from "react";
-import { GET_VOLUNTEERED_POSTS } from "@/graphql/queries/post";
-import { useQuery } from "@apollo/client/react";
+import { useState } from "react";
 
 const links = [
   { name: "Posts", modal: VolunteeredModal, icon: ListCheck },
@@ -27,21 +25,6 @@ const MenuLinks = ({
   const router = useRouter();
 
   const [isVolunteeredModalOpen, setIsVolunteeredModalOpen] = useState(false);
-  const { data, loading, error, refetch } = useQuery(GET_VOLUNTEERED_POSTS, {
-    variables: { userId: user?.id },
-    skip: !user?.id,
-  });
-
-  useEffect(() => {
-    if (user?.id) {
-      refetch();
-    }
-  }, [user?.id, refetch]);
-
-  useEffect(() => {
-    console.log(data);
-    console.log("user", user);
-  }, [data]);
 
   const handleSignOut = async () => {
     await signOut({
@@ -64,9 +47,6 @@ const MenuLinks = ({
   };
 
   const handleOpenModal = () => {
-    if (user?.id) {
-      refetch(); // Refetch the latest data when opening modal
-    }
     setIsVolunteeredModalOpen(true);
   };
 
@@ -75,8 +55,7 @@ const MenuLinks = ({
       <VolunteeredModal
         open={isVolunteeredModalOpen}
         onOpenChange={setIsVolunteeredModalOpen}
-        posts={data?.getVolunteeredPosts || []}
-        loading={loading}
+        user={user}
       />
       {links.map((link) => (
         <Link
