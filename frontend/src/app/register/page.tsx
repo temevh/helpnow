@@ -1,24 +1,31 @@
 "use client";
 import { TextInput } from "@/components/common/inputs";
 import { LuLock, LuMail, LuUser, LuShield, LuUserPlus } from "react-icons/lu";
-import { Card, HStack, Button, Box, Text, VStack } from "@chakra-ui/react";
+import { HStack, Button, Box, Text, VStack } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { CREATE_USER } from "@/graphql/mutations/user";
 import { useMutation } from "@apollo/client/react";
+import { User } from "@/types";
+
+interface CreateUserResponse {
+  createUser: {
+    user: User;
+    message?: string;
+  };
+}
 
 export default function RegisterPage() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
+  const [createUser] = useMutation<CreateUserResponse>(CREATE_USER);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-
-  const [createUser] = useMutation(CREATE_USER);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -74,10 +81,14 @@ export default function RegisterPage() {
           router.push("/signin");
         }, 2000);
       } else {
-        setError(data?.createUser.message);
+        setError(data?.createUser.message || "Registration failed");
       }
-    } catch (err: any) {
-      setError(err.message || "An error occurred during registration");
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "An error occurred during registration"
+      );
     } finally {
       setIsLoading(false);
     }

@@ -1,4 +1,4 @@
-import { HStack, Text } from "@chakra-ui/react";
+import { Text } from "@chakra-ui/react";
 
 const TaskDescriptionCard = ({
   description,

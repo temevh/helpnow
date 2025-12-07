@@ -1,8 +1,10 @@
 import { useUser } from "@/hooks/useUser";
 import { Button } from "@chakra-ui/react";
-import { GET_POSTS, VOLUNTEER_POST } from "@/graphql/queries/post";
+import { GET_POSTS } from "@/graphql/queries/post";
+import { VOLUNTEER_POST } from "@/graphql/mutations/post";
 import { useMutation } from "@apollo/client/react";
 import { useToast } from "@/hooks/useToast";
+import { User } from "@/types";
 
 interface VolunteerButtonProps {
   postId?: string;
@@ -11,7 +13,7 @@ interface VolunteerButtonProps {
 const VolunteerButton = ({ postId }: VolunteerButtonProps) => {
   const { user } = useUser();
   const { showToast } = useToast();
-  const [volunteerPost, { loading, error }] = useMutation(VOLUNTEER_POST, {
+  const [volunteerPost] = useMutation(VOLUNTEER_POST, {
     refetchQueries: [{ query: GET_POSTS }],
     awaitRefetchQueries: true,
     onCompleted: (data) => {
@@ -27,7 +29,7 @@ const VolunteerButton = ({ postId }: VolunteerButtonProps) => {
   if (!user) return null;
 
   const onClick = () => {
-    const userId = (user as any)?.id;
+    const userId = (user as User)?.id;
 
     if (!userId || !postId) {
       console.error("Missing user ID or post ID");

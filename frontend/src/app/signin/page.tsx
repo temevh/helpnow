@@ -1,15 +1,7 @@
 "use client";
 import { TextInput } from "@/components/common/inputs";
 import { LuLock, LuUser, LuShield } from "react-icons/lu";
-import {
-  Card,
-  HStack,
-  Button,
-  Box,
-  Text,
-  VStack,
-  Flex,
-} from "@chakra-ui/react";
+import { HStack, Button, Box, Text, VStack } from "@chakra-ui/react";
 import { signIn, getSession } from "next-auth/react";
 import React, { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -53,6 +45,7 @@ export default function SignInPage() {
         router.push(callbackUrl);
       }
     } catch (err) {
+      console.log("error signing in", err);
       setError("An error occurred during sign in");
     } finally {
       setIsLoading(false);

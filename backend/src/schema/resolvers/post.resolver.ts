@@ -125,5 +125,65 @@ export const postResolvers = {
         throw err;
       }
     },
+    cancelVolunteer: async (
+      _parent: unknown,
+      args: VolunteerPostArgs,
+      context: Context
+    ) => {
+      try {
+        const { postId, userId } = args;
+
+        const post = await context.prisma.post.findUnique({
+          where: { id: postId },
+          include: { volunteers: true },
+        });
+
+        const user = await context.prisma.user.findUnique({
+          where: { id: userId },
+        });
+
+        if (!post) {
+          throw new Error("Post not found");
+        }
+
+        if (!user) {
+          throw new Error("User not found");
+        }
+
+        // Check if user has volunteered for this post
+        const existingVolunteer = post.volunteers.find(
+          (v) => v.userId === userId
+        );
+
+        if (!existingVolunteer) {
+          throw new Error("You have not volunteered for this post");
+        }
+
+        // Delete the volunteer entry
+        await context.prisma.volunteer.delete({
+          where: {
+            userId_postId: {
+              userId: userId,
+              postId: postId,
+            },
+          },
+        });
+
+        // Decrement the volunteersAlready count
+        await context.prisma.post.update({
+          where: { id: postId },
+          data: {
+            volunteersAlready: {
+              decrement: 1,
+            },
+          },
+        });
+
+        return true;
+      } catch (err) {
+        console.error("Error cancelling volunteer:", err);
+        return false;
+      }
+    },
   },
 };

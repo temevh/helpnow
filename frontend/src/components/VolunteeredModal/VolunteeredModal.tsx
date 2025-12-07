@@ -9,23 +9,77 @@ import {
 } from "@chakra-ui/react";
 import { Text, HStack, VStack } from "@chakra-ui/react";
 import { CustomCloseButton } from "../common/buttons";
-import { Post } from "@/types";
+import { CANCEL_VOLUNTEER } from "@/graphql/mutations/post";
+import { GET_VOLUNTEERED_POSTS } from "@/graphql/queries/post";
+import { Post, User } from "@/types";
 import { VolunteeredCard } from "./VolunteeredCard";
+import { useMutation, useQuery } from "@apollo/client/react";
+import { useToast } from "@/hooks/useToast";
+import { useEffect } from "react";
+
+interface VolunteeredPostsData {
+  getVolunteeredPosts: Array<{
+    id: string;
+    post: Post;
+  }>;
+}
 
 interface VolunteeredModalProps {
-  posts: Post[];
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  loading: boolean;
+  user: User;
 }
 
 export const VolunteeredModal = ({
   open,
   onOpenChange,
-  posts,
-  loading,
+  user,
 }: VolunteeredModalProps) => {
+  const { showToast } = useToast();
+  const { data, loading, refetch } = useQuery<VolunteeredPostsData>(
+    GET_VOLUNTEERED_POSTS,
+    {
+      variables: { userId: user?.id },
+      skip: !user?.id,
+    }
+  );
+  const [cancelVolunteer] = useMutation(CANCEL_VOLUNTEER, {
+    refetchQueries: [
+      {
+        query: GET_VOLUNTEERED_POSTS,
+        variables: { userId: user?.id },
+      },
+    ],
+    awaitRefetchQueries: true,
+    onCompleted: () => {
+      showToast({
+        message: "Succesfully cancelled volunteering",
+        type: "success",
+      });
+    },
+    onError: (error) => {
+      console.error("Error canceling volunteering:", error);
+      showToast({ message: "Failure canceling volunteering", type: "error" });
+    },
+  });
+
+  useEffect(() => {
+    if (open && user?.id) {
+      refetch({ userId: user.id });
+      console.log(data);
+    }
+  }, [open, user?.id, data, refetch]);
+
+  const cancelClicked = (postId: string) => {
+    console.log("cancel post", postId, "for user", user);
+    const userId = user.id;
+    cancelVolunteer({
+      variables: { postId, userId },
+    });
+  };
+
   if (loading) return <p>Loading...</p>;
+
   return (
     <DialogRoot
       open={open}
@@ -85,9 +139,16 @@ export const VolunteeredModal = ({
           }}
         >
           <VStack gap={2} align="stretch">
-            {posts.map((post: Post) => {
-              return <VolunteeredCard key={post.id} post={post.post as Post} />;
-            })}
+            {data?.getVolunteeredPosts &&
+              data.getVolunteeredPosts.map((volunteerData) => {
+                return (
+                  <VolunteeredCard
+                    key={volunteerData.id}
+                    post={volunteerData.post as Post}
+                    cancelClicked={cancelClicked}
+                  />
+                );
+              })}
           </VStack>
         </DialogBody>
 

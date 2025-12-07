@@ -8,7 +8,6 @@ import {
   DialogBackdrop,
 } from "@chakra-ui/react";
 import { Text, Stack, HStack, VStack } from "@chakra-ui/react";
-import { getStatusBadgeColor } from "@/utils";
 import { Post } from "@/types";
 import StatusBadge from "../common/badges/StatusBadge";
 import { VolunteerButton, CustomCloseButton } from "../common/buttons";
@@ -31,7 +30,6 @@ export default function Postmodal({
   onOpenChange,
 }: PostmodalProps) {
   console.log(post);
-  const statusColors = getStatusBadgeColor(post?.status || "");
   const canVolunteer =
     (post?.volunteersAlready ?? 0) < (post?.volunteersNeeded ?? 1);
 
