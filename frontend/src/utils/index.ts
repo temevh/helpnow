@@ -1,5 +1,3 @@
-import getStatusBadgeColor from "./getStatusBadgeColors";
+import getStatusColor from "./getStatusColor";
 import convertUnixToDate from "./convertUnixToDate";
-import getCircleColor from "./getCircleColor";
-
-export { getStatusBadgeColor, convertUnixToDate, getCircleColor };
+export { getStatusColor, convertUnixToDate };

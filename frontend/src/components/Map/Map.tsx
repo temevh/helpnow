@@ -6,7 +6,7 @@ import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import { MapPopUp } from "./MapPopUp";
-import { getCircleColor } from "@/utils";
+import { getStatusColor } from "@/utils";
 
 interface PostMapProps {
   posts: Post[];
@@ -33,8 +33,8 @@ const PostMap = ({ posts, onOpenPost }: PostMapProps) => {
             center={[post.latitude, post.longitude]}
             radius={150}
             pathOptions={{
-              color: getCircleColor(post.status),
-              fillColor: getCircleColor(post.status),
+              color: getStatusColor(post.status),
+              fillColor: getStatusColor(post.status),
               fillOpacity: 0.3,
               weight: 2,
             }}

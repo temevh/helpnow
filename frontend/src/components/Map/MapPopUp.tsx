@@ -2,7 +2,7 @@ import { Badge, Text, Separator, HStack } from "@chakra-ui/react";
 import { Popup } from "react-leaflet";
 import { Post } from "@/types";
 import { VolunteerButton } from "../common/buttons";
-import { getStatusBadgeColor, convertUnixToDate } from "../../utils";
+import { getStatusColor, convertUnixToDate } from "../../utils";
 import VolunteerBadge from "../common/badges/VolunteerBadge";
 
 interface MapPopUpProps {
@@ -18,7 +18,7 @@ export const MapPopUp = ({ post }: MapPopUpProps) => {
           {post.name}
         </Text>
         <Badge
-          backgroundColor={getStatusBadgeColor(post.status)}
+          backgroundColor={getStatusColor(post.status)}
           color="white"
           borderRadius="md"
           px={2}

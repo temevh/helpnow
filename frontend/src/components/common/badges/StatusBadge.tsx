@@ -1,10 +1,10 @@
 import { Badge, Text } from "@chakra-ui/react";
-import { getStatusBadgeColor } from "@/utils";
+import { getStatusColor } from "@/utils";
 
-const StatusBadge = ({ status }: { status: string | undefined }) => {
+const StatusBadge = ({ status }: { status: string }) => {
   return (
     <Badge
-      backgroundColor={getStatusBadgeColor(status)}
+      backgroundColor={getStatusColor(status)}
       px={3}
       py={1}
       borderRadius="full"
