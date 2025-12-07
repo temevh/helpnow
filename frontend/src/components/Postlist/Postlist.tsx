@@ -1,5 +1,5 @@
 import { Postcard } from "./Postcard";
-import { VStack, Box, ScrollArea } from "@chakra-ui/react";
+import { VStack, ScrollArea } from "@chakra-ui/react";
 import { Post } from "@/types";
 
 interface PostListProps {

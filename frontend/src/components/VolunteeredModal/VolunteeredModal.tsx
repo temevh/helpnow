@@ -11,16 +11,23 @@ import { Text, HStack, VStack } from "@chakra-ui/react";
 import { CustomCloseButton } from "../common/buttons";
 import { CANCEL_VOLUNTEER } from "@/graphql/mutations/post";
 import { GET_VOLUNTEERED_POSTS } from "@/graphql/queries/post";
-import { Post } from "@/types";
+import { Post, User } from "@/types";
 import { VolunteeredCard } from "./VolunteeredCard";
 import { useMutation, useQuery } from "@apollo/client/react";
 import { useToast } from "@/hooks/useToast";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+
+interface VolunteeredPostsData {
+  getVolunteeredPosts: Array<{
+    id: string;
+    post: Post;
+  }>;
+}
 
 interface VolunteeredModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  user;
+  user: User;
 }
 
 export const VolunteeredModal = ({
@@ -28,46 +35,42 @@ export const VolunteeredModal = ({
   onOpenChange,
   user,
 }: VolunteeredModalProps) => {
-  const [posts, setPosts] = useState([]);
   const { showToast } = useToast();
-  const {
-    data,
-    loading,
-    error: getVolunteerError,
-    refetch,
-  } = useQuery(GET_VOLUNTEERED_POSTS, {
-    variables: { userId: user?.id },
-    skip: !user?.id,
+  const { data, loading, refetch } = useQuery<VolunteeredPostsData>(
+    GET_VOLUNTEERED_POSTS,
+    {
+      variables: { userId: user?.id },
+      skip: !user?.id,
+    }
+  );
+  const [cancelVolunteer] = useMutation(CANCEL_VOLUNTEER, {
+    refetchQueries: [
+      {
+        query: GET_VOLUNTEERED_POSTS,
+        variables: { userId: user?.id },
+      },
+    ],
+    awaitRefetchQueries: true,
+    onCompleted: () => {
+      showToast({
+        message: "Succesfully cancelled volunteering",
+        type: "success",
+      });
+    },
+    onError: (error) => {
+      console.error("Error canceling volunteering:", error);
+      showToast({ message: "Failure canceling volunteering", type: "error" });
+    },
   });
-  const [cancelVolunteer, { loading: cancelLoading, error: cancelError }] =
-    useMutation(CANCEL_VOLUNTEER, {
-      refetchQueries: [
-        {
-          query: GET_VOLUNTEERED_POSTS,
-          variables: { userId: user?.id },
-        },
-      ],
-      awaitRefetchQueries: true,
-      onCompleted: () => {
-        showToast({
-          message: "Succesfully cancelled volunteering",
-          type: "success",
-        });
-      },
-      onError: (error) => {
-        console.error("Error canceling volunteering:", error);
-        showToast({ message: "Failure canceling volunteering", type: "error" });
-      },
-    });
 
   useEffect(() => {
     if (open && user?.id) {
       refetch({ userId: user.id });
       console.log(data);
     }
-  }, [open, user?.id]);
+  }, [open, user?.id, data, refetch]);
 
-  const cancelClicked = (postId) => {
+  const cancelClicked = (postId: string) => {
     console.log("cancel post", postId, "for user", user);
     const userId = user.id;
     cancelVolunteer({

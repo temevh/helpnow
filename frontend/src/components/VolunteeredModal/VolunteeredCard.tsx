@@ -8,7 +8,13 @@ import {
 import { CancelVolunteerButton, ContactPosterButton } from "../common/buttons";
 import { Post } from "@/types";
 
-export const VolunteeredCard = ({ post, cancelClicked }: { post: Post }) => {
+export const VolunteeredCard = ({
+  post,
+  cancelClicked,
+}: {
+  post: Post;
+  cancelClicked: (postId: string) => void;
+}) => {
   return (
     <Box p={5} bg="gray.200" borderRadius="xl" border="2px solid">
       <VStack align="stretch" gap={3} mt={1}>

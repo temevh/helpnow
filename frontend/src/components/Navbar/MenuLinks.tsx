@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { VolunteeredModal } from "../VolunteeredModal/VolunteeredModal";
 import { useState } from "react";
+import { User as UserType } from "@/types";
 
 const links = [
   { name: "Posts", modal: VolunteeredModal, icon: ListCheck },
@@ -19,7 +20,7 @@ const MenuLinks = ({
   user,
 }: {
   isMobile?: boolean;
-  user?: any;
+  user?: UserType;
 }) => {
   const LinkComponent = isMobile ? VStack : HStack;
   const router = useRouter();
@@ -52,11 +53,13 @@ const MenuLinks = ({
 
   return (
     <LinkComponent gap={isMobile ? 4 : 8} align={"center"}>
-      <VolunteeredModal
-        open={isVolunteeredModalOpen}
-        onOpenChange={setIsVolunteeredModalOpen}
-        user={user}
-      />
+      {user && (
+        <VolunteeredModal
+          open={isVolunteeredModalOpen}
+          onOpenChange={setIsVolunteeredModalOpen}
+          user={user}
+        />
+      )}
       {links.map((link) => (
         <Link
           key={link.name}

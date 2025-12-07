@@ -10,8 +10,9 @@ import {
 import { Menu } from "lucide-react";
 import Logo from "./Logo";
 import MenuLinks from "./MenuLinks";
+import { User } from "@/types";
 
-const MobileDrawer = ({ user }: { user?: any }) => {
+const MobileDrawer = ({ user }: { user?: User }) => {
   const { open, onToggle } = useDisclosure();
 
   return (

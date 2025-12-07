@@ -3,6 +3,16 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { AUTHENTICATE_USER } from "@/graphql/mutations/user";
 import client from "@/graphql/client";
 
+interface AuthenticateUserResponse {
+  authenticateUser?: {
+    user?: {
+      id: string;
+      email: string;
+      name: string;
+    };
+  };
+}
+
 const authOptions: AuthOptions = {
   secret: process.env.NEXTAUTH_SECRET || "b89897hb089u",
   providers: [
@@ -12,9 +22,9 @@ const authOptions: AuthOptions = {
         username: { label: "Username", type: "text", placeholder: "jsmith" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials, req) {
+      async authorize(credentials) {
         try {
-          const { data } = await client.mutate({
+          const { data } = await client.mutate<AuthenticateUserResponse>({
             mutation: AUTHENTICATE_USER,
             variables: {
               username: credentials?.username,
@@ -51,7 +61,11 @@ const authOptions: AuthOptions = {
     },
     async session({ session, token }) {
       if (token.user) {
-        session.user = token.user as any;
+        session.user = token.user as {
+          id: string;
+          email: string;
+          name: string;
+        };
       }
       return session;
     },
