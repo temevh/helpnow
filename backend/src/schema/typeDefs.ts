@@ -6,6 +6,7 @@ export const typeDefs = gql`
     ACCEPTED
     COMPLETED
     CLOSED
+    FILLED
   }
 
   type User {

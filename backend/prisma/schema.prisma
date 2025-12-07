@@ -57,4 +57,5 @@ enum PostStatus {
   ACCEPTED
   COMPLETED
   CLOSED
+  FILLED
 }

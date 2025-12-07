@@ -8,6 +8,8 @@ export default function getStatusBadgeColor(status: string | undefined) {
       return "blue";
     case "CLOSED":
       return "red";
+    case "FILLED":
+      return "orange";
     default:
       return "gray";
   }

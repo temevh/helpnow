@@ -110,7 +110,7 @@ async function main() {
         userId: users[2].id,
         volunteersNeeded: 3,
         volunteersAlready: 0,
-        status: PostStatus.ACCEPTED,
+        status: PostStatus.OPEN,
       },
     }),
     prisma.post.create({

@@ -1,3 +1,4 @@
+import { PostStatus } from "@prisma/client";
 import { Context } from "../../context";
 
 type VolunteerPostArgs = {
@@ -15,7 +16,13 @@ export const postResolvers = {
       try {
         const posts = await context.prisma.post.findMany({
           include: { creator: true },
-          where: { status: "OPEN" },
+          where: {
+            OR: [
+              { status: PostStatus["FILLED"] },
+              { status: PostStatus["OPEN"] },
+              { status: PostStatus["ACCEPTED"] },
+            ],
+          },
         });
         return posts;
       } catch (err) {
@@ -109,8 +116,8 @@ export const postResolvers = {
           },
         });
 
-        // Update the post's volunteersAlready count
-        await context.prisma.post.update({
+        // Update the post's volunteersAlready count and check if filled
+        const updatedPost = await context.prisma.post.update({
           where: { id: postId },
           data: {
             volunteersAlready: {
@@ -118,6 +125,16 @@ export const postResolvers = {
             },
           },
         });
+
+        // If the post is now filled, update status to FILLED
+        if (updatedPost.volunteersAlready >= updatedPost.volunteersNeeded) {
+          await context.prisma.post.update({
+            where: { id: postId },
+            data: {
+              status: PostStatus.FILLED,
+            },
+          });
+        }
 
         return volunteer;
       } catch (err) {
@@ -170,7 +187,7 @@ export const postResolvers = {
         });
 
         // Decrement the volunteersAlready count
-        await context.prisma.post.update({
+        const updatedPost = await context.prisma.post.update({
           where: { id: postId },
           data: {
             volunteersAlready: {
@@ -178,6 +195,19 @@ export const postResolvers = {
             },
           },
         });
+
+        // If the post was FILLED and now has space, change status back to OPEN
+        if (
+          post.status === PostStatus.FILLED &&
+          updatedPost.volunteersAlready < updatedPost.volunteersNeeded
+        ) {
+          await context.prisma.post.update({
+            where: { id: postId },
+            data: {
+              status: PostStatus.OPEN,
+            },
+          });
+        }
 
         return true;
       } catch (err) {

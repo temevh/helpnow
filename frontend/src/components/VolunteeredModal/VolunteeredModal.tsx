@@ -6,8 +6,10 @@ import {
   DialogFooter,
   DialogCloseTrigger,
   DialogBackdrop,
+  Text,
+  HStack,
+  VStack,
 } from "@chakra-ui/react";
-import { Text, HStack, VStack } from "@chakra-ui/react";
 import { CustomCloseButton } from "../common/buttons";
 import { CANCEL_VOLUNTEER } from "@/graphql/mutations/post";
 import { GET_VOLUNTEERED_POSTS } from "@/graphql/queries/post";
@@ -140,6 +142,7 @@ export const VolunteeredModal = ({
         >
           <VStack gap={2} align="stretch">
             {data?.getVolunteeredPosts &&
+            data.getVolunteeredPosts.length > 0 ? (
               data.getVolunteeredPosts.map((volunteerData) => {
                 return (
                   <VolunteeredCard
@@ -148,7 +151,12 @@ export const VolunteeredModal = ({
                     cancelClicked={cancelClicked}
                   />
                 );
-              })}
+              })
+            ) : (
+              <Text fontSize="lg" color="gray.600" textAlign="center" py={8}>
+                No volunteers yet!
+              </Text>
+            )}
           </VStack>
         </DialogBody>
 
