@@ -20,6 +20,8 @@ export const NewPostModal = ({ open, onOpenChange }: NewPostModalProps) => {
   const [volunteersNeeded, setVolunteersNeeded] = useState("1");
   const [country, setCountry] = useState("");
   const [region, setRegion] = useState("");
+  const [address, setAddress] = useState("");
+  const [postCode, setPostCode] = useState("");
 
   return (
     <BasicModal
@@ -66,6 +68,22 @@ export const NewPostModal = ({ open, onOpenChange }: NewPostModalProps) => {
           onRegionChange={setRegion}
           required
         />
+        <HStack gap={4} align="stretch">
+          <TextInput
+            onChange={(e) => setAddress(e.target.value)}
+            placeholder="Street address"
+            label="Address"
+            value={address}
+            required
+          />
+          <TextInput
+            onChange={(e) => setPostCode(e.target.value)}
+            placeholder="12345"
+            label="Post code"
+            value={postCode}
+            required
+          />
+        </HStack>
       </VStack>
     </BasicModal>
   );
