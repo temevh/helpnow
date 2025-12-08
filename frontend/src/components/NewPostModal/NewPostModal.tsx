@@ -1,9 +1,12 @@
 import { BasicModal } from "../common/modals/BasicModal";
 import { HStack, VStack } from "@chakra-ui/react";
-import { TextInput } from "../common/inputs";
+import {
+  TextInput,
+  DateInput,
+  NumberInput,
+  CountryRegionInput,
+} from "../common/inputs";
 import { useState } from "react";
-import DateInput from "../common/inputs/DateInput";
-import NumberInput from "../common/inputs/NumberInput";
 
 interface NewPostModalProps {
   open: boolean;
@@ -15,6 +18,8 @@ export const NewPostModal = ({ open, onOpenChange }: NewPostModalProps) => {
   const [postDescrtiption, setPostDescription] = useState("");
   const [postDate, setPostDate] = useState(new Date());
   const [volunteersNeeded, setVolunteersNeeded] = useState("1");
+  const [country, setCountry] = useState("");
+  const [region, setRegion] = useState("");
 
   return (
     <BasicModal
@@ -54,6 +59,13 @@ export const NewPostModal = ({ open, onOpenChange }: NewPostModalProps) => {
             required
           />
         </HStack>
+        <CountryRegionInput
+          countryValue={country}
+          regionValue={region}
+          onCountryChange={setCountry}
+          onRegionChange={setRegion}
+          required
+        />
       </VStack>
     </BasicModal>
   );
