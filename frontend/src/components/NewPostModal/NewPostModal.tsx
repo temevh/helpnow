@@ -1,5 +1,5 @@
 import { BasicModal } from "../common/modals/BasicModal";
-import { HStack, Input, VStack } from "@chakra-ui/react";
+import { HStack, VStack } from "@chakra-ui/react";
 import { TextInput } from "../common/inputs";
 import { useState } from "react";
 import DateInput from "../common/inputs/DateInput";
@@ -15,7 +15,6 @@ export const NewPostModal = ({ open, onOpenChange }: NewPostModalProps) => {
   const [postDescrtiption, setPostDescription] = useState("");
   const [postDate, setPostDate] = useState(new Date());
   const [volunteersNeeded, setVolunteersNeeded] = useState("1");
-  const [reward, setReward] = useState("0");
 
   return (
     <BasicModal

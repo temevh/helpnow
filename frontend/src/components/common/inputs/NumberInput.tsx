@@ -12,6 +12,7 @@ type NumberInputProps = {
   type?: string;
   bigText?: boolean;
   rows?: number;
+  minNumber?: number;
 };
 
 const NumberInput = ({
@@ -23,6 +24,7 @@ const NumberInput = ({
   value,
   onChange,
   type = "number",
+  minNumber = 1,
 }: NumberInputProps) => {
   return (
     <Field.Root required={required}>
@@ -46,6 +48,7 @@ const NumberInput = ({
           type={type}
           bg="gray.50"
           borderColor="gray.200"
+          min={minNumber}
           color="gray.700"
           _placeholder={{
             color: "gray.400",
