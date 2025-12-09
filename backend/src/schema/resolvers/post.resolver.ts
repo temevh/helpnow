@@ -215,5 +215,22 @@ export const postResolvers = {
         return false;
       }
     },
+    createPost: async (
+      _parent: unknown,
+      args: VolunteerPostArgs,
+      context: Context
+    ) => {
+      try {
+        const { post } = args;
+
+        if (!post) {
+          throw new Error("Error creating post");
+        }
+
+        await context.prisma.post.create({});
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
   },
 };

@@ -1,4 +1,5 @@
 import { gql } from "@apollo/client";
+import { CreatePostVariables } from "@/types";
 
 export const VOLUNTEER_POST = gql`
   mutation VolunteerPost($postId: String!, $userId: String!) {
@@ -13,6 +14,14 @@ export const VOLUNTEER_POST = gql`
         id
         name
       }
+    }
+  }
+`;
+
+export const CREATE_POST = gql`
+  mutation CreatePost($post: CreatePostVariables!) {
+    createPost(post: $post) {
+      id
     }
   }
 `;

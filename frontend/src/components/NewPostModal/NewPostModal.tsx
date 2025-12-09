@@ -6,7 +6,11 @@ import {
   NumberInput,
   CountryRegionInput,
 } from "../common/inputs";
+import { SaveButton } from "../common/buttons";
+import { CreatePostVariables } from "@/types";
 import { useState } from "react";
+import { CREATE_POST } from "@/graphql/mutations/post";
+import { useMutation } from "@apollo/client/react";
 
 interface NewPostModalProps {
   open: boolean;
@@ -15,13 +19,34 @@ interface NewPostModalProps {
 
 export const NewPostModal = ({ open, onOpenChange }: NewPostModalProps) => {
   const [postName, setPostName] = useState("");
-  const [postDescrtiption, setPostDescription] = useState("");
+  const [postDescription, setPostDescription] = useState("");
   const [postDate, setPostDate] = useState(new Date());
   const [volunteersNeeded, setVolunteersNeeded] = useState("1");
   const [country, setCountry] = useState("");
   const [region, setRegion] = useState("");
   const [address, setAddress] = useState("");
-  const [postCode, setPostCode] = useState("");
+  const [postcode, setPostcode] = useState("");
+
+  const [createPost, { loading, error, data }] = useMutation<
+    { createPost: any },
+    { post: CreatePostVariables }
+  >(CREATE_POST);
+
+  const saveClicked = () => {
+    const post = {
+      name: postName,
+      description: postDescription,
+      taskTime: postDate,
+      volunteersNeeded: Number(volunteersNeeded),
+      country: country,
+      region: region,
+      address: address,
+      postcode: postcode,
+    };
+    alert(post);
+
+    createPost({ variables: { post } });
+  };
 
   return (
     <BasicModal
@@ -41,7 +66,7 @@ export const NewPostModal = ({ open, onOpenChange }: NewPostModalProps) => {
           onChange={(e) => setPostDescription(e.target.value)}
           placeholder="Give a short description about the post"
           label="Description"
-          value={postDescrtiption}
+          value={postDescription}
           required
           bigText
         />
@@ -77,13 +102,14 @@ export const NewPostModal = ({ open, onOpenChange }: NewPostModalProps) => {
             required
           />
           <TextInput
-            onChange={(e) => setPostCode(e.target.value)}
+            onChange={(e) => setPostcode(e.target.value)}
             placeholder="12345"
-            label="Post code"
-            value={postCode}
+            label="Postcode"
+            value={postcode}
             required
           />
         </HStack>
+        <SaveButton saveClicked={saveClicked} />
       </VStack>
     </BasicModal>
   );
