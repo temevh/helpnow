@@ -57,4 +57,5 @@ export type CreatePostVariables = {
   region: string;
   address: string;
   postcode: string;
+  userId: string;
 };

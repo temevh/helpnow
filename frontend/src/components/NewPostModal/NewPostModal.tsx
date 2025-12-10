@@ -11,6 +11,7 @@ import { CreatePostVariables } from "@/types";
 import { useState } from "react";
 import { CREATE_POST } from "@/graphql/mutations/post";
 import { useMutation } from "@apollo/client/react";
+import { useUser } from "@/hooks/useUser";
 
 interface NewPostModalProps {
   open: boolean;
@@ -18,6 +19,7 @@ interface NewPostModalProps {
 }
 
 export const NewPostModal = ({ open, onOpenChange }: NewPostModalProps) => {
+  const { user } = useUser();
   const [postName, setPostName] = useState("");
   const [postDescription, setPostDescription] = useState("");
   const [postDate, setPostDate] = useState(new Date());
@@ -33,6 +35,12 @@ export const NewPostModal = ({ open, onOpenChange }: NewPostModalProps) => {
   >(CREATE_POST);
 
   const saveClicked = () => {
+    /*
+    if (!user?.id) {
+      alert("You must be logged in to create a post");
+      return;
+    }*/
+
     const post = {
       name: postName,
       description: postDescription,
@@ -42,10 +50,17 @@ export const NewPostModal = ({ open, onOpenChange }: NewPostModalProps) => {
       region: region,
       address: address,
       postcode: postcode,
+      userId: user.id,
     };
-    alert(post);
 
-    createPost({ variables: { post } });
+    createPost({ variables: { post } })
+      .then(() => {
+        alert("Post created successfully!");
+        onOpenChange(false);
+      })
+      .catch((err) => {
+        alert(`Error creating post: ${err.message}`);
+      });
   };
 
   return (

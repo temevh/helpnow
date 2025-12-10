@@ -25,6 +25,9 @@ export const typeDefs = gql`
     name: String!
     description: String
     address: String!
+    country: String!
+    region: String!
+    postcode: String!
     latitude: Float!
     longitude: Float!
     taskTime: String!
@@ -55,7 +58,7 @@ export const typeDefs = gql`
   type postCreation {
     name: String!
     description: String!
-    taskTime: Date!
+    taskTime: String!
     volunteersNeeded: Int!
     country: String!
     region: String!
@@ -67,15 +70,17 @@ export const typeDefs = gql`
     name: String!
     description: String
     address: String!
-    latitude: Float!
-    longitude: Float!
     taskTime: String!
     userId: String!
     reward: Int
+    volunteersNeeded: Int
+    country: String!
+    region: String!
+    postcode: String!
   }
 
   type Mutation {
-    createPost(input: CreatePostInput!): Post!
+    createPost(post: CreatePostInput!): Post!
     volunteerPost(postId: String!, userId: String!): Volunteer!
     createUser(
       username: String!

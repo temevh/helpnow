@@ -19,9 +19,25 @@ export const VOLUNTEER_POST = gql`
 `;
 
 export const CREATE_POST = gql`
-  mutation CreatePost($post: CreatePostVariables!) {
+  mutation CreatePost($post: CreatePostInput!) {
     createPost(post: $post) {
       id
+      name
+      description
+      address
+      country
+      region
+      postcode
+      latitude
+      longitude
+      taskTime
+      status
+      volunteersNeeded
+      volunteersAlready
+      creator {
+        id
+        username
+      }
     }
   }
 `;

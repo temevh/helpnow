@@ -6,6 +6,10 @@ type VolunteerPostArgs = {
   userId: string;
 };
 
+type CreatePostArgs = {
+  post: any;
+};
+
 type GetVolunteeredPostsArgs = {
   userId: string;
 };
@@ -217,7 +221,7 @@ export const postResolvers = {
     },
     createPost: async (
       _parent: unknown,
-      args: VolunteerPostArgs,
+      args: CreatePostArgs,
       context: Context
     ) => {
       try {
@@ -227,9 +231,40 @@ export const postResolvers = {
           throw new Error("Error creating post");
         }
 
-        await context.prisma.post.create({});
+        // Validate required fields
+        if (!post.name || !post.address || !post.taskTime || !post.userId) {
+          throw new Error("Missing required fields");
+        }
+
+        // Geocode the address to get latitude and longitude
+
+        // Create the post
+        const newPost = await context.prisma.post.create({
+          data: {
+            name: post.name,
+            description: post.description || "",
+            address: post.address,
+            country: post.country,
+            region: post.region,
+            postcode: post.postcode,
+            latitude: 404,
+            longitude: 404,
+            taskTime: new Date(post.taskTime),
+            userId: post.userId,
+            volunteersNeeded: post.volunteersNeeded || 1,
+            volunteersAlready: 0,
+            status: PostStatus.OPEN,
+            reward: post.reward || 0,
+          },
+          include: {
+            creator: true,
+          },
+        });
+
+        return newPost;
       } catch (err) {
-        throw new Error(err);
+        console.error("Error creating post:", err);
+        throw err;
       }
     },
   },
