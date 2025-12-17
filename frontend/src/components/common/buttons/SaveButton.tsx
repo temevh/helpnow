@@ -1,8 +1,15 @@
 import { Button } from "@chakra-ui/react";
 
-const SaveButton = ({ saveClicked }: { saveClicked: () => void }) => {
+const SaveButton = ({
+  saveClicked,
+  disabled,
+}: {
+  saveClicked: () => void;
+  disabled: boolean;
+}) => {
   return (
     <Button
+      disabled={disabled}
       colorScheme="blue"
       size="sm"
       w="100%"

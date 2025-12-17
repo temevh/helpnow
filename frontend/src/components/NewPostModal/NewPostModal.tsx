@@ -8,7 +8,7 @@ import {
 } from "../common/inputs";
 import { SaveButton } from "../common/buttons";
 import { CreatePostVariables } from "@/types";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CREATE_POST } from "@/graphql/mutations/post";
 import { useMutation } from "@apollo/client/react";
 import { useUser } from "@/hooks/useUser";
@@ -32,14 +32,37 @@ export const NewPostModal = ({ open, onOpenChange }: NewPostModalProps) => {
   const [createPost, { loading, error, data }] = useMutation<
     { createPost: any },
     { post: CreatePostVariables }
-  >(CREATE_POST);
+  >(CREATE_POST, {
+    refetchQueries: ["GetPosts"],
+  });
+
+  // Handle success when data is received
+  useEffect(() => {
+    if (data?.createPost) {
+      alert("Post created successfully!");
+      onOpenChange(false);
+      setPostName("");
+      setPostDescription("");
+      setPostDate(new Date());
+      setVolunteersNeeded("1");
+      setCountry("");
+      setRegion("");
+      setAddress("");
+      setPostcode("");
+    }
+  }, [data, onOpenChange]);
+
+  useEffect(() => {
+    if (error) {
+      alert(`Error creating post: ${error.message}`);
+    }
+  }, [error]);
 
   const saveClicked = () => {
-    /*
     if (!user?.id) {
       alert("You must be logged in to create a post");
       return;
-    }*/
+    }
 
     const post = {
       name: postName,
@@ -53,15 +76,18 @@ export const NewPostModal = ({ open, onOpenChange }: NewPostModalProps) => {
       userId: user.id,
     };
 
-    createPost({ variables: { post } })
-      .then(() => {
-        alert("Post created successfully!");
-        onOpenChange(false);
-      })
-      .catch((err) => {
-        alert(`Error creating post: ${err.message}`);
-      });
+    createPost({ variables: { post } });
   };
+
+  const isFormValid =
+    postName.trim() !== "" &&
+    postDescription.trim() !== "" &&
+    volunteersNeeded.trim() !== "" &&
+    country.trim() !== "" &&
+    region.trim() !== "" &&
+    address.trim() !== "" &&
+    postcode.trim() !== "" &&
+    !loading;
 
   return (
     <BasicModal
@@ -124,7 +150,7 @@ export const NewPostModal = ({ open, onOpenChange }: NewPostModalProps) => {
             required
           />
         </HStack>
-        <SaveButton saveClicked={saveClicked} />
+        <SaveButton saveClicked={saveClicked} disabled={!isFormValid} />
       </VStack>
     </BasicModal>
   );

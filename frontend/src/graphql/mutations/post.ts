@@ -1,5 +1,4 @@
 import { gql } from "@apollo/client";
-import { CreatePostVariables } from "@/types";
 
 export const VOLUNTEER_POST = gql`
   mutation VolunteerPost($postId: String!, $userId: String!) {
