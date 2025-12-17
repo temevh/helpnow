@@ -236,32 +236,47 @@ export const postResolvers = {
           throw new Error("Missing required fields");
         }
 
+        const postGeocode = `${post.address}+${post.postcode}+${post.region}+${post.country}`;
+        const apikey = process.env.GEOCODE_API_KEY;
         // Geocode the address to get latitude and longitude
+        const apiResponse = await fetch(
+          `https://maps.googleapis.com/maps/api/geocode/json?address=${postGeocode}&key=${apikey}`
+        );
+        const geocodeData = await apiResponse.json();
+        console.log(geocodeData);
+        if (
+          geocodeData &&
+          geocodeData.results &&
+          geocodeData.results.length > 0 &&
+          geocodeData.status === "OK"
+        ) {
+          // Create the post
+          const lat = geocodeData.results[0].geometry.location.lat.toFixed(3);
+          const lng = geocodeData.results[0].geometry.location.lng.toFixed(3);
+          const newPost = await context.prisma.post.create({
+            data: {
+              name: post.name,
+              description: post.description || "",
+              address: post.address,
+              country: post.country,
+              region: post.region,
+              postcode: post.postcode,
+              latitude: lat,
+              longitude: lng,
+              taskTime: new Date(post.taskTime),
+              userId: post.userId,
+              volunteersNeeded: post.volunteersNeeded || 1,
+              volunteersAlready: 0,
+              status: PostStatus.OPEN,
+              reward: post.reward || 0,
+            },
+            include: {
+              creator: true,
+            },
+          });
 
-        // Create the post
-        const newPost = await context.prisma.post.create({
-          data: {
-            name: post.name,
-            description: post.description || "",
-            address: post.address,
-            country: post.country,
-            region: post.region,
-            postcode: post.postcode,
-            latitude: 404,
-            longitude: 404,
-            taskTime: new Date(post.taskTime),
-            userId: post.userId,
-            volunteersNeeded: post.volunteersNeeded || 1,
-            volunteersAlready: 0,
-            status: PostStatus.OPEN,
-            reward: post.reward || 0,
-          },
-          include: {
-            creator: true,
-          },
-        });
-
-        return newPost;
+          return newPost;
+        }
       } catch (err) {
         console.error("Error creating post:", err);
         throw err;
