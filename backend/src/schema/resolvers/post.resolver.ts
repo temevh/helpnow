@@ -243,7 +243,6 @@ export const postResolvers = {
           `https://maps.googleapis.com/maps/api/geocode/json?address=${postGeocode}&key=${apikey}`
         );
         const geocodeData = await apiResponse.json();
-        console.log(geocodeData);
         if (
           geocodeData &&
           geocodeData.results &&
@@ -251,8 +250,13 @@ export const postResolvers = {
           geocodeData.status === "OK"
         ) {
           // Create the post
-          const lat = geocodeData.results[0].geometry.location.lat.toFixed(3);
-          const lng = geocodeData.results[0].geometry.location.lng.toFixed(3);
+          const lat =
+            Math.trunc(geocodeData.results[0].geometry.location.lat * 1000) /
+            1000;
+          const lng =
+            Math.trunc(geocodeData.results[0].geometry.location.lng * 1000) /
+            1000;
+
           const newPost = await context.prisma.post.create({
             data: {
               name: post.name,
