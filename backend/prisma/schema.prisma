@@ -1,5 +1,5 @@
-//To update after changes -> npx prisma migrate dev --name [migration name]
-//If not wanting to migrate but just push database changes -> npx prisma db push
+//npx prisma migrate dev --name [migration name]
+//npx prisma migrate reset
 
 generator client {
   provider = "prisma-client-js"
@@ -27,6 +27,9 @@ model Post {
   name              String
   description       String?
   address           String //Address of the post
+  country           String
+  region            String
+  postcode          String
   latitude          Float
   longitude         Float
   taskTime          DateTime

@@ -1,14 +1,23 @@
 "use client";
 import { HStack, VStack, Button, Text } from "@chakra-ui/react";
-import { Settings, User, Bell, LogOut, ListCheck } from "lucide-react";
+import {
+  Settings,
+  User,
+  Bell,
+  LogOut,
+  ListCheck,
+  CirclePlus,
+} from "lucide-react";
 import { signOut, signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { VolunteeredModal } from "../VolunteeredModal/VolunteeredModal";
+import { NewPostModal } from "../NewPostModal/NewPostModal";
 import { useState } from "react";
 import { User as UserType } from "@/types";
 
 const links = [
+  { name: "New post", modal: NewPostModal, icon: CirclePlus },
   { name: "Posts", modal: VolunteeredModal, icon: ListCheck },
   { name: "Profile", modal: VolunteeredModal, icon: User },
   { name: "Settings", modal: VolunteeredModal, icon: Settings },
@@ -26,6 +35,7 @@ const MenuLinks = ({
   const router = useRouter();
 
   const [isVolunteeredModalOpen, setIsVolunteeredModalOpen] = useState(false);
+  const [isNewPostModalOpen, setIsNewPostModalOpen] = useState(false);
 
   const handleSignOut = async () => {
     await signOut({
@@ -47,24 +57,39 @@ const MenuLinks = ({
     router.push("/signin");
   };
 
-  const handleOpenModal = () => {
-    setIsVolunteeredModalOpen(true);
+  const handleLinkClick = (linkName: string) => {
+    switch (linkName) {
+      case "New post":
+        setIsNewPostModalOpen(true);
+        break;
+      case "Posts":
+        setIsVolunteeredModalOpen(true);
+        break;
+      default:
+        break;
+    }
   };
 
   return (
     <LinkComponent gap={isMobile ? 4 : 8} align={"center"}>
       {user && (
-        <VolunteeredModal
-          open={isVolunteeredModalOpen}
-          onOpenChange={setIsVolunteeredModalOpen}
-          user={user}
-        />
+        <>
+          <VolunteeredModal
+            open={isVolunteeredModalOpen}
+            onOpenChange={setIsVolunteeredModalOpen}
+            user={user}
+          />
+          <NewPostModal
+            open={isNewPostModalOpen}
+            onOpenChange={setIsNewPostModalOpen}
+          />
+        </>
       )}
       {links.map((link) => (
         <Link
           key={link.name}
           href={""}
-          onClick={handleOpenModal}
+          onClick={() => handleLinkClick(link.name)}
           style={{
             fontWeight: "medium",
             color: "#2563eb",

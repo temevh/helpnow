@@ -4,6 +4,7 @@ import OpenButton from "./OpenButton";
 import CustomCloseButton from "./CustomCloseButton";
 import CancelVolunteerButton from "./CancelVolunteerButton";
 import ContactPosterButton from "./ContactPosterButton";
+import SaveButton from "./SaveButton";
 
 export {
   VolunteerButton,
@@ -12,4 +13,5 @@ export {
   CustomCloseButton,
   CancelVolunteerButton,
   ContactPosterButton,
+  SaveButton,
 };

@@ -46,3 +46,16 @@ export type Volunteer = {
   accepted: boolean;
   createdAt: string;
 };
+
+// ---------- MUTATION VARIABLES ----------
+export type CreatePostVariables = {
+  name: string;
+  description: string;
+  taskTime: Date;
+  volunteersNeeded: number;
+  country: string;
+  region: string;
+  address: string;
+  postcode: string;
+  userId: string;
+};
