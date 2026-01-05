@@ -1,0 +1,36 @@
+import { Button } from "@chakra-ui/react";
+
+interface JumpToPostButtonProps {
+  postId?: string;
+}
+
+const JumpToPostButton = ({ postId }: JumpToPostButtonProps) => {
+  const onClick = () => {};
+
+  return (
+    <Button
+      colorScheme="blue"
+      size="sm"
+      borderRadius="md"
+      fontWeight="semibold"
+      bg="yellow.500"
+      flex={1}
+      color="white"
+      _hover={{
+        bg: "yellow.700",
+        transform: "translateY(-1px)",
+        boxShadow: "sm",
+      }}
+      _active={{
+        transform: "translateY(0)",
+      }}
+      transition="all 0.2s ease"
+      py={2}
+      onClick={onClick}
+    >
+      🔎 Show post on map
+    </Button>
+  );
+};
+
+export default JumpToPostButton;

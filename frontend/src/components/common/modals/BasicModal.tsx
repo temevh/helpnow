@@ -8,6 +8,7 @@ import {
   DialogBackdrop,
   Text,
   HStack,
+  Box,
 } from "@chakra-ui/react";
 import { CustomCloseButton } from "../buttons";
 import { ReactNode } from "react";
@@ -64,9 +65,7 @@ export const BasicModal = ({
           p={6}
         >
           <HStack justify="space-between" align="center" w={"100%"}>
-            <Text fontSize="2xl" fontWeight="bold" color={"black"}>
-              {header}
-            </Text>
+            {header}
             <CustomCloseButton onClick={() => onOpenChange(false)} />
           </HStack>
         </DialogHeader>

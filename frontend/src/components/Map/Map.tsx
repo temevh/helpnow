@@ -7,11 +7,15 @@ import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import { MapPopUp } from "./MapPopUp";
 import { getStatusColor } from "@/utils";
+import { useEffect, useRef } from "react";
+import { useMapControl } from "@/contexts/MapContext";
 
 interface PostMapProps {
   posts: Post[];
   onOpenPost: (post: Post) => void;
 }
+
+//TODO: Add map controller and context
 
 const PostMap = ({ posts, onOpenPost }: PostMapProps) => {
   return (

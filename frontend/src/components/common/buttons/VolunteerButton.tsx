@@ -4,7 +4,6 @@ import { GET_POSTS } from "@/graphql/queries/post";
 import { VOLUNTEER_POST } from "@/graphql/mutations/post";
 import { useMutation } from "@apollo/client/react";
 import { useToast } from "@/hooks/useToast";
-import { User } from "@/types";
 
 interface VolunteerButtonProps {
   postId?: string;
@@ -29,7 +28,7 @@ const VolunteerButton = ({ postId }: VolunteerButtonProps) => {
   if (!user) return null;
 
   const onClick = () => {
-    const userId = (user as User)?.id;
+    const userId = user?.id;
 
     if (!userId || !postId) {
       console.error("Missing user ID or post ID");

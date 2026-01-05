@@ -5,6 +5,7 @@ import CustomCloseButton from "./CustomCloseButton";
 import CancelVolunteerButton from "./CancelVolunteerButton";
 import ContactPosterButton from "./ContactPosterButton";
 import SaveButton from "./SaveButton";
+import JumpToPostButton from "./JumpToPostButton";
 
 export {
   VolunteerButton,
@@ -14,4 +15,5 @@ export {
   CancelVolunteerButton,
   ContactPosterButton,
   SaveButton,
+  JumpToPostButton,
 };

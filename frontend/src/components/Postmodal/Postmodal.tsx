@@ -1,7 +1,11 @@
-import { Text, Stack, HStack, VStack } from "@chakra-ui/react";
+import { Text, Stack, HStack, VStack, Heading } from "@chakra-ui/react";
 import { Post } from "@/types";
 import StatusBadge from "../common/badges/StatusBadge";
-import { VolunteerButton, CustomCloseButton } from "../common/buttons";
+import {
+  VolunteerButton,
+  CustomCloseButton,
+  JumpToPostButton,
+} from "../common/buttons";
 import {
   TaskTimeCard,
   TaskDescriptionCard,
@@ -32,9 +36,9 @@ export default function Postmodal({
       header={
         <VStack alignItems="flex-start" gap={2}>
           <HStack justify="space-between" w="full">
-            <Text fontSize="2xl" fontWeight="bold" color={"black"}>
+            <Heading fontSize="2xl" fontWeight="bold" color={"black"}>
               {post?.name}
-            </Text>
+            </Heading>
 
             <StatusBadge status={post?.status || ""} />
           </HStack>
@@ -42,7 +46,7 @@ export default function Postmodal({
       }
       footer={
         <>
-          <CustomCloseButton onClick={() => onOpenChange(false)} />
+          <JumpToPostButton postId={post?.id} />
           {post?.status === "OPEN" && canVolunteer && (
             <VolunteerButton postId={post.id} />
           )}
