@@ -9,6 +9,7 @@ Utils:
 Input validation: ZOD
 Authentication: next auth
 Password hashing: bcrypt
+Geocoding: Google maps geocode API
 
 FEATURES:
 - chat between (potential) volunteers and post creator

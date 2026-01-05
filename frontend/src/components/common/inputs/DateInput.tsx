@@ -56,7 +56,7 @@ const DateInput = ({
           font-size: 1rem;
           line-height: 1.5;
           color: #2d3748;
-          background-color: #f7fafc;
+          background-color: #ffffff;
           border: 1px solid #e2e8f0;
           border-radius: 0.375rem;
           outline: none;

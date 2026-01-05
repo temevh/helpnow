@@ -111,22 +111,6 @@ export const NewPostModal = ({ open, onOpenChange }: NewPostModalProps) => {
           required
           bigText
         />
-
-        <HStack gap={4} align="stretch">
-          <NumberInput
-            onChange={(e) => setVolunteersNeeded(e.target.value)}
-            placeholder="1"
-            label="Volunteers needed"
-            value={volunteersNeeded}
-            required
-          />
-          <DateInput
-            onChange={(date) => setPostDate(date || new Date())}
-            value={postDate}
-            label="Task date and time"
-            required
-          />
-        </HStack>
         <CountryRegionInput
           countryValue={country}
           regionValue={region}
@@ -147,6 +131,21 @@ export const NewPostModal = ({ open, onOpenChange }: NewPostModalProps) => {
             placeholder="12345"
             label="Postcode"
             value={postcode}
+            required
+          />
+        </HStack>
+        <HStack gap={4} align="stretch">
+          <NumberInput
+            onChange={(e) => setVolunteersNeeded(e.target.value)}
+            placeholder="1"
+            label="Volunteers needed"
+            value={volunteersNeeded}
+            required
+          />
+          <DateInput
+            onChange={(date) => setPostDate(date || new Date())}
+            value={postDate}
+            label="Task date and time"
             required
           />
         </HStack>
