@@ -11,7 +11,7 @@ import { CreatePostVariables } from "@/types";
 import { useState, useEffect } from "react";
 import { CREATE_POST } from "@/graphql/mutations/post";
 import { useMutation } from "@apollo/client/react";
-import { useUser } from "@/hooks/useUser";
+import { useUser, useToast } from "@/hooks/";
 
 interface NewPostModalProps {
   open: boolean;
@@ -20,6 +20,7 @@ interface NewPostModalProps {
 
 export const NewPostModal = ({ open, onOpenChange }: NewPostModalProps) => {
   const { user } = useUser();
+  const { showToast } = useToast();
   const [postName, setPostName] = useState("");
   const [postDescription, setPostDescription] = useState("");
   const [postDate, setPostDate] = useState(new Date());
@@ -39,7 +40,7 @@ export const NewPostModal = ({ open, onOpenChange }: NewPostModalProps) => {
   // Handle success when data is received
   useEffect(() => {
     if (data?.createPost) {
-      alert("Post created successfully!");
+      showToast({ message: "Post created succesfully!", type: "success" });
       onOpenChange(false);
       setPostName("");
       setPostDescription("");
@@ -54,7 +55,10 @@ export const NewPostModal = ({ open, onOpenChange }: NewPostModalProps) => {
 
   useEffect(() => {
     if (error) {
-      alert(`Error creating post: ${error.message}`);
+      showToast({
+        message: `Error creating post: ${error.message}`,
+        type: "error",
+      });
     }
   }, [error]);
 
