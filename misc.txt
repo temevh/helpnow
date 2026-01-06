@@ -15,3 +15,24 @@ FEATURES:
 - chat between (potential) volunteers and post creator
 - Convert address to coordinates when submitting post
 - When not signed in, show "X people need help in your area" and a call to action
+
+DEPLOYMENT:
+Compute: Fargate 
+    - Two services:
+        - Frontend (next.js)
+        - api (apollo server / node.js)
+
+Networking: VPC
+    - Application Load Balancer (ALB)
+    - Security groups
+
+Database: Amazon RDS Postgresql
+
+Containers: ECR
+    - Docker images
+    - Repos for frontend and backend
+
+Secrets: Systems Manager Parameter Store
+    - DB URL
+    - jwt Secrets
+    - API keys
