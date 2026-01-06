@@ -46,7 +46,10 @@ export default function Postmodal({
       }
       footer={
         <>
-          <JumpToPostButton postId={post?.id} />
+          <JumpToPostButton
+            postId={post?.id}
+            onModalClose={() => onOpenChange(false)}
+          />
           {post?.status === "OPEN" && canVolunteer && (
             <VolunteerButton postId={post.id} />
           )}

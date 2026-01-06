@@ -3,13 +3,15 @@ import { useMapControl } from "@/contexts/MapContext";
 
 interface JumpToPostButtonProps {
   postId?: string;
+  onModalClose?: () => void;
 }
 
-const JumpToPostButton = ({ postId }: JumpToPostButtonProps) => {
+const JumpToPostButton = ({ postId, onModalClose }: JumpToPostButtonProps) => {
   const { jumpToPost } = useMapControl();
 
   const onClick = () => {
     if (postId) {
+      onModalClose?.();
       jumpToPost(postId);
     }
   };
