@@ -1,11 +1,18 @@
 import { Button } from "@chakra-ui/react";
+import { useMapControl } from "@/contexts/MapContext";
 
 interface JumpToPostButtonProps {
   postId?: string;
 }
 
 const JumpToPostButton = ({ postId }: JumpToPostButtonProps) => {
-  const onClick = () => {};
+  const { jumpToPost } = useMapControl();
+
+  const onClick = () => {
+    if (postId) {
+      jumpToPost(postId);
+    }
+  };
 
   return (
     <Button

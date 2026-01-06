@@ -2,15 +2,15 @@
 
 import { createContext, useContext, useRef, useCallback } from "react";
 
-interface MapContextInterface {
+interface MapContextType {
   jumpToPost: (postId: string) => void;
   registerJumpHandler: (handler: (postId: string) => void) => void;
 }
 
-const MapContext = createContext<MapContextInterface | null>(null);
+const MapContext = createContext<MapContextType | null>(null);
 
 export const MapProvider = ({ children }: { children: React.ReactNode }) => {
-  const jumpHandlerRef = useRef<(postId: string) => void | null>(null);
+  const jumpHandlerRef = useRef<((postId: string) => void) | null>(null);
 
   const registerJumpHandler = useCallback(
     (handler: (postId: string) => void) => {
