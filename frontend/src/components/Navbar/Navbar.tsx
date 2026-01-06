@@ -26,12 +26,14 @@ export const Navbar = () => {
       <Logo />
       {/*Desktop Menu*/}
       <Box display={{ base: "none", md: "block" }}>
-        <MenuLinks user={user} />
+        {/*TODO: Change to something else other than any :D*/}
+        <MenuLinks user={user as any} />
       </Box>
 
       {/*Mobile Menu*/}
       <Box display={{ base: "block", md: "none" }}>
-        <MobileDrawer user={user} />
+        {/*TODO: Change to something else other than any :D*/}
+        <MobileDrawer user={user as any} />
       </Box>
     </Flex>
   );

@@ -1,11 +1,7 @@
 import { Text, Stack, HStack, VStack, Heading } from "@chakra-ui/react";
 import { Post } from "@/types";
 import StatusBadge from "../common/badges/StatusBadge";
-import {
-  VolunteerButton,
-  CustomCloseButton,
-  JumpToPostButton,
-} from "../common/buttons";
+import { VolunteerButton, JumpToPostButton } from "../common/buttons";
 import {
   TaskTimeCard,
   TaskDescriptionCard,

@@ -54,7 +54,6 @@ export const MapPopUp = ({ post }: MapPopUpProps) => {
       </HStack>
 
       <HStack gap={2}>
-        {/*<OpenButton onClick={() => onOpenPost(post)} />*/}
         {post.status === "OPEN" && canVolunteer && (
           <VolunteerButton postId={post.id} />
         )}

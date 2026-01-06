@@ -6,9 +6,7 @@ import {
   DialogFooter,
   DialogCloseTrigger,
   DialogBackdrop,
-  Text,
   HStack,
-  Box,
 } from "@chakra-ui/react";
 import { CustomCloseButton } from "../buttons";
 import { ReactNode } from "react";

@@ -10,7 +10,9 @@
     "dev:studio": "npx prisma studio",
     "dev:server": "npx ts-node src/index.ts",
     "dev": "npm run dev:db && npx prisma generate && concurrently \"npm run dev:server\" \"npm run dev:studio\"",
-    "stop": "docker compose down"
+    "stop": "docker compose down",
+    "build": "tsc",
+    "start": "node dist/index.js"
   },
   "keywords": [],
   "author": "",

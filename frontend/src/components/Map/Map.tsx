@@ -15,10 +15,15 @@ interface PostMapProps {
   onOpenPost: (post: Post) => void;
 }
 
-const MapController = ({ posts }: { posts: Post[] }) => {
+const MapController = ({
+  posts,
+  circlesRef,
+}: {
+  posts: Post[];
+  circlesRef: React.MutableRefObject<Map<string, any>>;
+}) => {
   const map = useMap();
   const { registerJumpHandler } = useMapControl();
-  const circlesRef = useRef<Map<string, any>>(new Map());
 
   useEffect(() => {
     registerJumpHandler((postId: string) => {
@@ -34,30 +39,14 @@ const MapController = ({ posts }: { posts: Post[] }) => {
         }, 1500);
       }
     });
-  }, [map, posts, registerJumpHandler]);
-
-  useEffect(() => {
-    const handler = (e: any) => {
-      if (e.target && e.target.options?.postId) {
-        circlesRef.current.set(e.target.options.postId, e.target);
-      }
-    };
-
-    map.eachLayer((layer: any) => {
-      if (layer.options?.postId) {
-        circlesRef.current.set(layer.options.postId, layer);
-      }
-    });
-
-    return () => {
-      circlesRef.current.clear();
-    };
-  }, [map, posts]);
+  }, [map, posts, registerJumpHandler, circlesRef]);
 
   return null;
 };
 
-const PostMap = ({ posts, onOpenPost }: PostMapProps) => {
+const PostMap = ({ posts }: PostMapProps) => {
+  const circlesRef = useRef<Map<string, any>>(new Map());
+
   return (
     <MapContainer
       center={[60.1699, 24.9384]}
@@ -70,7 +59,7 @@ const PostMap = ({ posts, onOpenPost }: PostMapProps) => {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
 
-      <MapController posts={posts} />
+      <MapController posts={posts} circlesRef={circlesRef} />
 
       {posts.map((post) =>
         post.latitude && post.longitude ? (
@@ -84,9 +73,14 @@ const PostMap = ({ posts, onOpenPost }: PostMapProps) => {
               fillOpacity: 0.3,
               weight: 2,
             }}
-            postId={post.id}
+            eventHandlers={{
+              add: (e) => {
+                e.target.options.postId = post.id;
+                circlesRef.current.set(post.id, e.target);
+              },
+            }}
           >
-            <MapPopUp post={post} onOpenPost={onOpenPost} />
+            <MapPopUp post={post} />
           </Circle>
         ) : null
       )}

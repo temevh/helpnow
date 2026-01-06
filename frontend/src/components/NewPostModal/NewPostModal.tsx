@@ -51,7 +51,7 @@ export const NewPostModal = ({ open, onOpenChange }: NewPostModalProps) => {
       setAddress("");
       setPostcode("");
     }
-  }, [data, onOpenChange]);
+  }, [data, onOpenChange, showToast]);
 
   useEffect(() => {
     if (error) {
@@ -60,7 +60,7 @@ export const NewPostModal = ({ open, onOpenChange }: NewPostModalProps) => {
         type: "error",
       });
     }
-  }, [error]);
+  }, [error, showToast]);
 
   const saveClicked = () => {
     if (!user?.id) {
