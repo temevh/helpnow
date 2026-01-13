@@ -39,17 +39,15 @@ Secrets: Systems Manager Parameter Store
 
 Done: 
 Backend dockerfile working 
-
-Todo:
-Fix frontend build issues...
-Get frontend dockerfile working 
-Move dockerfiles to ECR
+Pushed frontend and backend dockerfiles to ECR
+Added ECS (Elastic Container Service) for backend 
+ALB not working for some reason, check 
 
 
 Docker:
 - Backend
-    docker build -t my-backend .
+    docker build -t helpnow-backend .
     docker run --rm -p 5000:5000 --env DATABASE_URL="postgresql://POSTGRES_USER:POSTGRES_PASSWORD@host.docker.internal:5432/POSTGRES_DB"
 - Frontend:
-    docker build -t my-frontend .
-    docker run --rm -p 3000:3000 -e NEXT_PUBLIC_API_URL=http://localhost:5000/graphql my-frontend
+    docker build -t helpnow-frontend .
+    docker run --rm -p 3000:3000 -e NEXT_PUBLIC_API_URL=http://localhost:5000/graphql helpnow-frontend
