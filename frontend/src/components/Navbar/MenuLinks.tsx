@@ -90,18 +90,19 @@ const MenuLinks = ({
           key={link.name}
           href={""}
           onClick={() => handleLinkClick(link.name)}
+          color="teal.600"
           style={{
             fontWeight: "medium",
-            color: "#2563eb",
+            color: "#0d9488",
             textDecoration: "none",
             transition: "color 0.2s ease",
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.color = "#3b82f6";
+            e.currentTarget.style.color = "#0f766e";
             e.currentTarget.style.textDecoration = "underline";
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.color = "#2563eb";
+            e.currentTarget.style.color = "#0d9488";
             e.currentTarget.style.textDecoration = "none";
           }}
           aria-label={link.name}
@@ -136,7 +137,7 @@ const MenuLinks = ({
       ) : (
         <HStack>
           <Button
-            bg={"blue.600"}
+            bg={"teal.600"}
             color={"white"}
             size={"lg"}
             borderRadius={"full"}

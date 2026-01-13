@@ -1,11 +1,16 @@
 "use client";
 import { TextInput } from "@/components/common/inputs";
+import {
+  AuthCard,
+  AuthAlert,
+  PrimaryButton,
+  AuthLink,
+} from "@/components/common/auth";
 import { LuLock, LuUser, LuShield } from "react-icons/lu";
-import { HStack, Button, Box, Text, VStack } from "@chakra-ui/react";
+import { VStack } from "@chakra-ui/react";
 import { signIn, getSession } from "next-auth/react";
 import React, { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import Link from "next/link";
 
 export default function SignInClient() {
   const [username, setUsername] = useState("");
@@ -54,123 +59,57 @@ export default function SignInClient() {
   };
 
   return (
-    <Box
-      minHeight="100vh"
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
-      p={4}
+    <AuthCard
+      icon={<LuUser size={28} />}
+      title="Welcome Back"
+      subtitle="Sign in to your HelpNow account"
     >
-      <Box
-        w="full"
-        maxW="md"
-        bg="blue.200"
-        borderRadius="2xl"
-        overflow="hidden"
-      >
-        <Box p={8} textAlign="center" color="black">
-          <VStack gap={4}>
-            <Box
-              p={4}
-              bg="whiteAlpha.200"
-              borderRadius="full"
-              display="inline-flex"
-            ></Box>
-            <VStack gap={2}>
-              <Text fontSize="2xl" fontWeight="bold">
-                Welcome Back
-              </Text>
-              <Text fontSize="sm" opacity={0.9}>
-                Sign in to your HelpNow account
-              </Text>
-            </VStack>
+      <form onSubmit={handleSubmit}>
+        <VStack gap={6}>
+          {error && (
+            <AuthAlert
+              type="error"
+              message={error}
+              icon={<LuShield size={20} />}
+            />
+          )}
+
+          <VStack gap={4} w="full">
+            <TextInput
+              label="Username"
+              placeholder="Enter your username"
+              required
+              icon={<LuUser />}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+
+            <TextInput
+              type="password"
+              label="Password"
+              placeholder="Enter your password"
+              required
+              icon={<LuLock />}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
           </VStack>
-        </Box>
 
-        <Box p={6}>
-          <form onSubmit={handleSubmit}>
-            <VStack gap={6}>
-              {error && (
-                <Box
-                  w="full"
-                  bg="red.50"
-                  border="1px solid"
-                  borderColor="red.200"
-                  borderRadius="lg"
-                  p={4}
-                >
-                  <HStack>
-                    <Box color="red.500">
-                      <LuShield size={20} />
-                    </Box>
-                    <Text color="red.600" fontWeight="medium" fontSize="sm">
-                      {error}
-                    </Text>
-                  </HStack>
-                </Box>
-              )}
+          <PrimaryButton
+            type="submit"
+            isLoading={isLoading}
+            loadingText="Signing in..."
+          >
+            Sign In
+          </PrimaryButton>
 
-              <VStack gap={4} w="full">
-                <TextInput
-                  label="Username"
-                  placeholder="Enter your username"
-                  required
-                  icon={<LuUser />}
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                />
-
-                <TextInput
-                  type={"password"}
-                  label="Password"
-                  placeholder="Enter your password"
-                  required
-                  icon={<LuLock />}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </VStack>
-
-              <Button
-                type="submit"
-                w="full"
-                size="lg"
-                bgGradient="linear(to-r, blue.600, indigo.600)"
-                color="gray.500"
-                _hover={{
-                  bgGradient: "linear(to-r, blue.700, indigo.700)",
-                  transform: "translateY(-1px)",
-                  shadow: "lg",
-                }}
-                _active={{
-                  transform: "translateY(0)",
-                }}
-                loading={isLoading}
-                loadingText="Signing in..."
-                transition="all 0.2s ease"
-                fontWeight="semibold"
-                fontSize="md"
-                py={6}
-              >
-                Sign In
-              </Button>
-              <Text>
-                Dont have an account?{" "}
-                <Link href="/register">
-                  <Text
-                    as="span"
-                    color="blue.600"
-                    cursor="pointer"
-                    _hover={{ color: "blue.800", textDecoration: "underline" }}
-                  >
-                    Register now
-                  </Text>
-                </Link>
-              </Text>
-            </VStack>
-          </form>
-        </Box>
-      </Box>
-    </Box>
+          <AuthLink
+            text="Don't have an account?"
+            linkText="Register now"
+            href="/register"
+          />
+        </VStack>
+      </form>
+    </AuthCard>
   );
 }

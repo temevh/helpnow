@@ -10,7 +10,7 @@ export const colors = {
   status: {
     open: "#38A169", // green.500
     accepted: "#ECC94B", // yellow.400
-    completed: "#3182CE", // blue.600
+    completed: "#3182CE", // teal.600
     closed: "#E53E3E", // red.600
     filled: "#FF6B35", // brand orange
     default: "#A0AEC0", // gray.400
