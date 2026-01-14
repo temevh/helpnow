@@ -39,9 +39,9 @@ const CountryRegionInput = ({
     padding: "0.5rem 1rem",
     fontSize: "1rem",
     lineHeight: "1.5",
-    color: "#2d3748",
-    backgroundColor: "#f7fafc",
-    border: "1px solid #e2e8f0",
+    color: "var(--chakra-colors-fg-default)",
+    backgroundColor: "var(--chakra-colors-bg-surface)",
+    border: "1px solid var(--chakra-colors-gray-200)",
     borderRadius: "0.375rem",
     outline: "none",
     transition: "all 0.2s",
@@ -50,7 +50,7 @@ const CountryRegionInput = ({
 
   return (
     <Field.Root required={required}>
-      <Field.Label fontWeight="semibold" fontSize="md" color="gray.700" mb={2}>
+      <Field.Label fontWeight="semibold" fontSize="md" color="fg.default" mb={2}>
         Location {required && <Field.RequiredIndicator />}
       </Field.Label>
       <HStack gap={4} align="stretch">
@@ -75,7 +75,9 @@ const CountryRegionInput = ({
               ...dropdownStyles,
               opacity: !country ? 0.4 : 1,
               cursor: !country ? "not-allowed" : "pointer",
-              backgroundColor: !country ? "#edf2f7" : "#f7fafc",
+              backgroundColor: !country
+                ? "var(--chakra-colors-gray-100)"
+                : "var(--chakra-colors-bg-surface)",
             }}
           />
         </Box>

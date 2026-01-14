@@ -14,7 +14,7 @@ import { ReactNode } from "react";
 interface BasicModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  header: string | ReactNode;
+  header?: string | ReactNode;
   children: ReactNode;
   footer?: ReactNode;
 }
@@ -37,7 +37,7 @@ export const BasicModal = ({
       <DialogContent
         maxW="3xl"
         maxH="85vh"
-        bg="white"
+        bg="bg.surface"
         borderRadius="2xl"
         boxShadow="2xl"
         border="3px solid"
@@ -51,7 +51,7 @@ export const BasicModal = ({
         <DialogCloseTrigger
           top={4}
           right={4}
-          bg="white"
+          bg="bg.surface"
           borderRadius="full"
           _hover={{ bg: "blue.100" }}
         />
@@ -70,7 +70,7 @@ export const BasicModal = ({
 
         <DialogBody
           px={6}
-          bg="white"
+          bg="bg.surface"
           overflowY="auto"
           maxH="calc(85vh - 200px)"
           css={{
@@ -85,7 +85,7 @@ export const BasicModal = ({
           {children}
         </DialogBody>
 
-        <DialogFooter bg="blue.50" borderBottomRadius="2xl" p={4} gap={3}>
+        <DialogFooter bg="bg.surface" borderBottomRadius="2xl" p={4} gap={3}>
           {footer}
         </DialogFooter>
       </DialogContent>

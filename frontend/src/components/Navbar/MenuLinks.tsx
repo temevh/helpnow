@@ -14,6 +14,7 @@ import Link from "next/link";
 import { VolunteeredModal } from "../VolunteeredModal/VolunteeredModal";
 import { NewPostModal } from "../NewPostModal/NewPostModal";
 import { useState } from "react";
+import { ColorModeButton } from "../ui/color-mode";
 import { User as UserType } from "@/types";
 
 const links = [
@@ -114,9 +115,11 @@ const MenuLinks = ({
         </Link>
       ))}
 
+      <ColorModeButton />
+
       {user?.email ? (
         <HStack gap={2}>
-          <Text fontSize="sm" color="gray.600">
+          <Text fontSize="sm" color="fg.muted">
             {user.email}
           </Text>
           <Button

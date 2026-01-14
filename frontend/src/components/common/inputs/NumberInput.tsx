@@ -32,7 +32,7 @@ const NumberInput = ({
         <Field.Label
           fontWeight="semibold"
           fontSize="md"
-          color="gray.700"
+          color="fg.default"
           mb={2}
         >
           {label} {required && <Field.RequiredIndicator />}
@@ -46,21 +46,28 @@ const NumberInput = ({
           value={value}
           onChange={onChange}
           type={type}
-          bg="gray.50"
+          bg="bg.surface"
           borderColor="gray.200"
           min={minNumber}
-          color="gray.700"
+          color="fg.default"
           _placeholder={{
-            color: "gray.400",
+            color: "fg.muted",
           }}
           _hover={{
             borderColor: "gray.300",
-            bg: "white",
+            bg: "bg.surface",
           }}
           _focus={{
             borderColor: "blue.300",
             boxShadow: "0 0 0 1px var(--chakra-colors-blue-300)",
-            bg: "white",
+            bg: "bg.surface",
+          }}
+          _dark={{
+            borderColor: "gray.700",
+            bg: "bg.surface",
+            _hover: {
+              borderColor: "gray.600",
+            },
           }}
         />
       </InputGroup>

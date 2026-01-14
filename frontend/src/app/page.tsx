@@ -28,10 +28,10 @@ export default function Home() {
   if (error) return <p>Error: {error.message}</p>;
 
   return (
-    <Container maxW="100%" p={6} pt={6}>
-      <Postmodal 
-        post={selectedPost} 
-        open={isModalOpen} 
+    <Container maxW="100%" p={6} pt={6} bg="bg.surface">
+      <Postmodal
+        post={selectedPost}
+        open={isModalOpen}
         onOpenChange={setIsModalOpen}
       />
       <HStack w="full" align="start" gap={6} height="calc(100vh - 100px)">

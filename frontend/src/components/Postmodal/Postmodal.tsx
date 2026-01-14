@@ -32,7 +32,7 @@ export default function Postmodal({
       header={
         <VStack alignItems="flex-start" gap={2}>
           <HStack justify="space-between" w="full">
-            <Heading fontSize="2xl" fontWeight="bold" color={"black"}>
+            <Heading fontSize="2xl" fontWeight="bold" color="fg.default">
               {post?.name}
             </Heading>
 

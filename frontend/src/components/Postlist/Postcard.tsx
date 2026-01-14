@@ -22,7 +22,7 @@ export const Postcard = ({ post, onOpenPost }: PostcardProps) => {
       width="400px"
       maxW="400px"
       borderRadius="2xl"
-      bg="white"
+      bg="bg.surface"
       border="1px solid"
       borderColor="gray.300"
     >
@@ -33,7 +33,7 @@ export const Postcard = ({ post, onOpenPost }: PostcardProps) => {
         p="2"
       >
         <HStack>
-          <Text fontWeight="semibold" fontSize="lg" color={"black"}>
+          <Text fontWeight="semibold" fontSize="lg" color="fg.default">
             {post.name}
           </Text>
           <StatusBadge status={post.status} />
@@ -43,7 +43,7 @@ export const Postcard = ({ post, onOpenPost }: PostcardProps) => {
       <CardBody p="2">
         <Text
           fontSize="sm"
-          color="white"
+          color="fg.default"
           bg="gray.400"
           p="2"
           borderRadius="md"

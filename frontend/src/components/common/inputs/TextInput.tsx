@@ -27,20 +27,26 @@ const TextInput = ({
   type = "text",
 }: TextInputProps) => {
   const sharedStyles = {
-    bg: "gray.50",
+    bg: "bg.surface",
     borderColor: "gray.200",
-    color: "gray.700",
+    color: "fg.default",
     _placeholder: {
-      color: "gray.400",
+      color: "fg.muted",
     },
     _hover: {
       borderColor: "gray.300",
-      bg: "white",
+      bg: "bg.surface",
     },
     _focus: {
       borderColor: "blue.300",
       boxShadow: "0 0 0 1px var(--chakra-colors-blue-300)",
-      bg: "white",
+      bg: "bg.surface",
+    },
+    _dark: {
+      borderColor: "gray.700",
+      _hover: {
+        borderColor: "gray.600",
+      },
     },
   };
 
@@ -50,7 +56,7 @@ const TextInput = ({
         <Field.Label
           fontWeight="semibold"
           fontSize="md"
-          color="gray.700"
+          color="fg.default"
           mb={2}
         >
           {label} {required && <Field.RequiredIndicator />}

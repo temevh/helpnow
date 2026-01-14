@@ -12,12 +12,12 @@ const TaskDescriptionCard = ({
       <Text
         fontSize="lg"
         fontWeight="semibold"
-        color="blue.700"
+        color="teal.700"
         hidden={hideHeader}
       >
         Description
       </Text>
-      <Text color="gray.700" lineHeight="1.6">
+      <Text color="fg.default" lineHeight="1.6">
         {description || "No description provided"}
       </Text>
     </>

@@ -29,7 +29,7 @@ const DateInput = ({
         <Field.Label
           fontWeight="semibold"
           fontSize="md"
-          color="gray.700"
+          color="fg.default"
           mb={2}
         >
           {label} {required && <Field.RequiredIndicator />}
@@ -55,27 +55,27 @@ const DateInput = ({
           padding: 0.5rem 1rem;
           font-size: 1rem;
           line-height: 1.5;
-          color: #2d3748;
-          background-color: #ffffff;
-          border: 1px solid #e2e8f0;
+          color: var(--chakra-colors-fg-default);
+          background-color: var(--chakra-colors-bg-surface);
+          border: 1px solid var(--chakra-colors-gray-200);
           border-radius: 0.375rem;
           outline: none;
           transition: all 0.2s;
         }
 
         .chakra-datepicker:hover {
-          border-color: #cbd5e0;
-          background-color: white;
+          border-color: var(--chakra-colors-gray-300);
+          background-color: var(--chakra-colors-bg-surface);
         }
 
         .chakra-datepicker:focus {
-          border-color: #90cdf4;
-          box-shadow: 0 0 0 1px #90cdf4;
-          background-color: white;
+          border-color: var(--chakra-colors-blue-300);
+          box-shadow: 0 0 0 1px var(--chakra-colors-blue-300);
+          background-color: var(--chakra-colors-bg-surface);
         }
 
         .chakra-datepicker::placeholder {
-          color: #a0aec0;
+          color: var(--chakra-colors-fg-muted);
         }
 
         .react-datepicker-popper {
@@ -84,19 +84,57 @@ const DateInput = ({
 
         .react-datepicker {
           font-family: inherit;
-          border: 1px solid #e2e8f0;
+          border: 1px solid var(--chakra-colors-gray-200);
           border-radius: 0.5rem;
           box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+          background-color: var(--chakra-colors-bg-surface);
+          color: var(--chakra-colors-fg-default);
         }
 
         .react-datepicker__header {
-          background-color: #edf2f7;
-          border-bottom: 1px solid #e2e8f0;
+          background-color: var(--chakra-colors-gray-100);
+          border-bottom: 1px solid var(--chakra-colors-gray-200);
+        }
+        
+        [data-theme="dark"] .react-datepicker__header {
+           background-color: var(--chakra-colors-gray-800);
+           border-bottom: 1px solid var(--chakra-colors-gray-700);
+        }
+
+        .react-datepicker__current-month,
+        .react-datepicker__day-name,
+        .react-datepicker__day {
+          color: var(--chakra-colors-fg-default);
+        }
+        
+        .react-datepicker__day:hover {
+           background-color: var(--chakra-colors-gray-100);
+        }
+        
+        [data-theme="dark"] .react-datepicker__day:hover {
+           background-color: var(--chakra-colors-gray-700);
+        }
+        
+        .react-datepicker__time-container {
+           border-left: 1px solid var(--chakra-colors-gray-200);
+           background-color: var(--chakra-colors-bg-surface);
+        }
+
+        .react-datepicker__time-list-item {
+           color: var(--chakra-colors-fg-default);
+           background-color: var(--chakra-colors-bg-surface) !important;
+        }
+        
+        .react-datepicker__time-list-item:hover {
+           background-color: var(--chakra-colors-gray-100) !important;
+        }
+        
+        [data-theme="dark"] .react-datepicker__time-list-item:hover {
+           background-color: var(--chakra-colors-gray-700) !important;
         }
 
         .react-datepicker__current-month,
         .react-datepicker__day-name {
-          color: #2d3748;
           font-weight: 600;
         }
 

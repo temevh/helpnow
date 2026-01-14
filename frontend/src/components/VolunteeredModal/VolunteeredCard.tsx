@@ -19,13 +19,7 @@ export const VolunteeredCard = ({
     <Box p={5} bg="gray.200" borderRadius="xl" border="2px solid">
       <VStack align="stretch" gap={3} mt={1}>
         <HStack justify="space-between" align="start">
-          <Text
-            fontSize="xl"
-            fontWeight="bold"
-            color="gray.800"
-            flex={1}
-            lineHeight="1.3"
-          >
+          <Text fontSize="xl" fontWeight="bold" flex={1} lineHeight="1.3">
             {post.name}
           </Text>
         </HStack>
