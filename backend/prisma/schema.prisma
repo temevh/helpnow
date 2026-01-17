@@ -33,6 +33,7 @@ model Post {
   latitude          Float
   longitude         Float
   taskTime          DateTime
+  locationReveal    DateTime
   creator           User        @relation("UserPosts", fields: [userId], references: [id])
   userId            String
   volunteers        Volunteer[] // volunteers on this post

@@ -62,10 +62,6 @@ export default function Postmodal({
             volunteersAlready={post.volunteersAlready}
             volunteersNeeded={post.volunteersNeeded}
           />
-
-          {post?.reward && post.reward > 0 && (
-            <TaskRewardCard reward={post.reward} />
-          )}
         </Stack>
       )}
     </BasicModal>

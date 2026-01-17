@@ -31,6 +31,7 @@ export const typeDefs = gql`
     latitude: Float!
     longitude: Float!
     taskTime: String!
+    locationReveal: String!
     creator: User!
     status: PostStatus!
     volunteersNeeded: Int!
@@ -71,6 +72,7 @@ export const typeDefs = gql`
     description: String
     address: String!
     taskTime: String!
+    locationReveal: String!
     userId: String!
     reward: Int
     volunteersNeeded: Int

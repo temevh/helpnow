@@ -41,10 +41,9 @@ export const postResolvers = {
       context: Context
     ) => {
       try {
-        console.log("flag 1");
         const { userId } = args;
 
-        const posts = await context.prisma.volunteer.findMany({
+        const volunteers = await context.prisma.volunteer.findMany({
           where: { userId },
           include: {
             user: true,
@@ -58,9 +57,32 @@ export const postResolvers = {
             createdAt: "desc",
           },
         });
-        console.log("posts fetched:", posts.length);
-        console.log(posts.map((v) => v.post.name));
-        return posts;
+
+        console.log(volunteers);
+
+        return volunteers.map((volunteer) => {
+          const d = volunteer.post.locationReveal;
+          let addressToShow = `${d.getDate().toString().padStart(2, "0")}.${(
+            d.getMonth() + 1
+          )
+            .toString()
+            .padStart(2, "0")}.${d.getFullYear()} ${d
+            .getHours()
+            .toString()
+            .padStart(2, "0")}:${d.getMinutes().toString().padStart(2, "0")}`;
+
+          if (Date.now() >= volunteer.post.locationReveal.getTime()) {
+            addressToShow = volunteer.post.address;
+          }
+
+          return {
+            ...volunteer,
+            post: {
+              ...volunteer.post,
+              address: addressToShow,
+            },
+          };
+        });
       } catch (err) {
         console.error("Error fetching volunteered posts", err);
         throw err;
@@ -226,6 +248,7 @@ export const postResolvers = {
     ) => {
       try {
         const { post } = args;
+        console.log(args);
 
         if (!post) {
           throw new Error("Error creating post");
@@ -268,6 +291,7 @@ export const postResolvers = {
               latitude: lat,
               longitude: lng,
               taskTime: new Date(post.taskTime),
+              locationReveal: new Date(post.locationReveal),
               userId: post.userId,
               volunteersNeeded: post.volunteersNeeded || 1,
               volunteersAlready: 0,
