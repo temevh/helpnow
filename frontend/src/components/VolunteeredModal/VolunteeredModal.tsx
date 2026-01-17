@@ -85,6 +85,7 @@ export const VolunteeredModal = ({
                 key={volunteerData.id}
                 post={volunteerData.post as Post}
                 cancelClicked={cancelClicked}
+                locationInfo={"locationInfo"}
               />
             );
           })

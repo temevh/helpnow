@@ -26,6 +26,7 @@ export type Post = {
   latitude: number;
   longitude: number;
   taskTime: string; // ISO date string
+  locationReveal: string; // ISO date string
   creator: User;
   userId: string;
   volunteers?: Volunteer[];
@@ -52,6 +53,7 @@ export type CreatePostVariables = {
   name: string;
   description: string;
   taskTime: Date;
+  locationReveal: Date;
   volunteersNeeded: number;
   country: string;
   region: string;

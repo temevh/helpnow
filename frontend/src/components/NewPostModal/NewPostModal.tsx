@@ -68,10 +68,14 @@ export const NewPostModal = ({ open, onOpenChange }: NewPostModalProps) => {
       return;
     }
 
+    const locationReveal = new Date(postDate);
+    locationReveal.setHours(locationReveal.getHours() - 1);
+
     const post = {
       name: postName,
       description: postDescription,
       taskTime: postDate,
+      locationReveal: locationReveal,
       volunteersNeeded: Number(volunteersNeeded),
       country: country,
       region: region,

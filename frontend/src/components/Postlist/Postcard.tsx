@@ -18,20 +18,8 @@ interface PostcardProps {
 export const Postcard = ({ post, onOpenPost }: PostcardProps) => {
   const isVisible = post.volunteersAlready < post.volunteersNeeded;
   return (
-    <CardRoot
-      width="400px"
-      maxW="400px"
-      borderRadius="2xl"
-      bg="bg.surface"
-      border="1px solid"
-      borderColor="gray.300"
-    >
-      <CardHeader
-        bgGradient="linear(to-r, blue.500, blue.400)"
-        color="white"
-        borderTopRadius="2xl"
-        p="2"
-      >
+    <CardRoot width="400px" maxW="400px" bg="bg.surface" border="none">
+      <CardHeader color="white" p="2">
         <HStack>
           <Text fontWeight="semibold" fontSize="lg" color="fg.default">
             {post.name}
