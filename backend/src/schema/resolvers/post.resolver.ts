@@ -61,7 +61,15 @@ export const postResolvers = {
         console.log(volunteers);
 
         return volunteers.map((volunteer) => {
-          let addressToShow = volunteer.post.locationReveal.toISOString();
+          const d = volunteer.post.locationReveal;
+          let addressToShow = `${d.getDate().toString().padStart(2, "0")}.${(
+            d.getMonth() + 1
+          )
+            .toString()
+            .padStart(2, "0")}.${d.getFullYear()} ${d
+            .getHours()
+            .toString()
+            .padStart(2, "0")}:${d.getMinutes().toString().padStart(2, "0")}`;
 
           if (Date.now() >= volunteer.post.locationReveal.getTime()) {
             addressToShow = volunteer.post.address;

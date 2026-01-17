@@ -1,6 +1,8 @@
 import { HStack, Text } from "@chakra-ui/react";
 
 const TaskLocationCard = ({ locationInfo }: { locationInfo: string }) => {
+  const isTime = /^\d{2}\.\d{2}\.\d{4} \d{2}:\d{2}$/.test(locationInfo);
+
   return (
     <HStack p={3} bg="blue.50" borderRadius="lg" justify="space-between">
       <HStack>
@@ -10,7 +12,7 @@ const TaskLocationCard = ({ locationInfo }: { locationInfo: string }) => {
         </Text>
       </HStack>
       <Text fontWeight="medium" color="gray.800">
-        Revealed at 18:30
+        {isTime ? `Revealed at ${locationInfo}` : locationInfo}
       </Text>
     </HStack>
   );

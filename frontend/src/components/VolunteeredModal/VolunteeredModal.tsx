@@ -80,12 +80,13 @@ export const VolunteeredModal = ({
       <VStack gap={2} align="stretch">
         {data?.getVolunteeredPosts && data.getVolunteeredPosts.length > 0 ? (
           data.getVolunteeredPosts.map((volunteerData) => {
+            var locationInfo = volunteerData.post.address;
             return (
               <VolunteeredCard
                 key={volunteerData.id}
                 post={volunteerData.post as Post}
                 cancelClicked={cancelClicked}
-                locationInfo={"locationInfo"}
+                locationInfo={locationInfo}
               />
             );
           })
