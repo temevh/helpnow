@@ -31,18 +31,18 @@ export const MapPopUp = ({ post }: MapPopUpProps) => {
 
       <Separator mb={2} />
 
-      <Text fontSize="md" color="gray.700" mb={2}>
+      <Text fontSize="md" color="black" mb={2}>
         {post.description || "No description provided."}
       </Text>
 
-      <Text fontSize="md" color="gray.500" mb={1}>
+      <Text fontSize="md" color="black" fontWeight="bold">
         📅 {convertUnixToDate(post.taskTime)}
       </Text>
 
       <HStack mb={1}>
         <HStack>
           <Text fontSize="sm">🙋‍♂️</Text>
-          <Text fontSize="sm" fontWeight="semibold" color="gray.600">
+          <Text fontSize="sm" fontWeight="semibold" color="black">
             Volunteers
           </Text>
         </HStack>

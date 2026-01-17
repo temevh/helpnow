@@ -16,10 +16,16 @@ export const VolunteeredCard = ({
   cancelClicked: (postId: string) => void;
 }) => {
   return (
-    <Box p={5} bg="gray.200" borderRadius="xl" border="2px solid">
+    <Box p={5} bg="bg.surface">
       <VStack align="stretch" gap={3} mt={1}>
         <HStack justify="space-between" align="start">
-          <Text fontSize="xl" fontWeight="bold" flex={1} lineHeight="1.3">
+          <Text
+            fontSize="xl"
+            fontWeight="bold"
+            flex={1}
+            lineHeight="1.3"
+            color="fg.default"
+          >
             {post.name}
           </Text>
         </HStack>
