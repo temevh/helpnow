@@ -40,16 +40,15 @@ export const VolunteeredCard = ({
           />
           <HStack>
             <TaskTimeCard time={post.taskTime} />
+            <TaskLocationCard locationInfo={locationInfo} />
 
-            {post?.reward && post.reward > 0 && (
-              <TaskRewardCard reward={post.reward} />
-            )}
+            {/* 
             <TaskVolunteerCard
               volunteersAlready={post.volunteersAlready}
               volunteersNeeded={post.volunteersNeeded}
             />
+            */}
           </HStack>
-          <TaskLocationCard locationInfo={locationInfo} />
         </VStack>
         <HStack>
           <CancelVolunteerButton onClick={() => cancelClicked(post.id)} />

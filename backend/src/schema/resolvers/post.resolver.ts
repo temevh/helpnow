@@ -248,6 +248,7 @@ export const postResolvers = {
     ) => {
       try {
         const { post } = args;
+        console.log(args);
 
         if (!post) {
           throw new Error("Error creating post");

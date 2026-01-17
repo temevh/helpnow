@@ -95,10 +95,10 @@ const DateInput = ({
           background-color: var(--chakra-colors-gray-100);
           border-bottom: 1px solid var(--chakra-colors-gray-200);
         }
-        
+
         [data-theme="dark"] .react-datepicker__header {
-           background-color: var(--chakra-colors-gray-800);
-           border-bottom: 1px solid var(--chakra-colors-gray-700);
+          background-color: var(--chakra-colors-gray-800);
+          border-bottom: 1px solid var(--chakra-colors-gray-700);
         }
 
         .react-datepicker__current-month,
@@ -106,31 +106,31 @@ const DateInput = ({
         .react-datepicker__day {
           color: var(--chakra-colors-fg-default);
         }
-        
+
         .react-datepicker__day:hover {
-           background-color: var(--chakra-colors-gray-100);
+          background-color: var(--chakra-colors-gray-100);
         }
-        
+
         [data-theme="dark"] .react-datepicker__day:hover {
-           background-color: var(--chakra-colors-gray-700);
+          background-color: var(--chakra-colors-gray-700);
         }
-        
+
         .react-datepicker__time-container {
-           border-left: 1px solid var(--chakra-colors-gray-200);
-           background-color: var(--chakra-colors-bg-surface);
+          border-left: 1px solid var(--chakra-colors-gray-200);
+          background-color: var(--chakra-colors-bg-surface);
         }
 
         .react-datepicker__time-list-item {
-           color: var(--chakra-colors-fg-default);
-           background-color: var(--chakra-colors-bg-surface) !important;
+          color: var(--chakra-colors-fg-default);
+          background-color: var(--chakra-colors-bg-surface) !important;
         }
-        
+
         .react-datepicker__time-list-item:hover {
-           background-color: var(--chakra-colors-gray-100) !important;
+          background-color: var(--chakra-colors-gray-100) !important;
         }
-        
+
         [data-theme="dark"] .react-datepicker__time-list-item:hover {
-           background-color: var(--chakra-colors-gray-700) !important;
+          background-color: var(--chakra-colors-gray-700) !important;
         }
 
         .react-datepicker__current-month,

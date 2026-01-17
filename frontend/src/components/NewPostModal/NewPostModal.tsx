@@ -68,13 +68,18 @@ export const NewPostModal = ({ open, onOpenChange }: NewPostModalProps) => {
       return;
     }
 
-    const locationReveal = new Date(postDate);
+    // Adjust for timezone to send "local time" as UTC to the backend
+    // This ensures that if user picks 13:00, backend gets 13:00Z (instead of 11:00Z for UTC+2)
+    const timezoneOffset = postDate.getTimezoneOffset() * 60000;
+    const adjustedDate = new Date(postDate.getTime() - timezoneOffset);
+
+    const locationReveal = new Date(adjustedDate);
     locationReveal.setHours(locationReveal.getHours() - 1);
 
     const post = {
       name: postName,
       description: postDescription,
-      taskTime: postDate,
+      taskTime: adjustedDate,
       locationReveal: locationReveal,
       volunteersNeeded: Number(volunteersNeeded),
       country: country,
