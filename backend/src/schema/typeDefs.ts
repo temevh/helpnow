@@ -54,7 +54,7 @@ export const typeDefs = gql`
     posts: [Post!]!
     post(id: ID!): Post
     getVolunteeredPosts(userId: String!): [Volunteer!]!
-    getCreatedPosts(userId: String!): Post
+    getCreatedPosts(userId: String!): [Post!]!
   }
 
   type postCreation {

@@ -6,10 +6,7 @@ import { GET_CREATED_POSTS } from "@/graphql/queries/post";
 import { useEffect } from "react";
 
 interface CreatedPostsData {
-  getCreatedPosts: Array<{
-    id: string;
-    post: Post;
-  }>;
+  getCreatedPosts: Post[];
 }
 
 interface CreatedPostsModalProps {
