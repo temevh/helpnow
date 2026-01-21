@@ -14,6 +14,10 @@ type GetVolunteeredPostsArgs = {
   userId: string;
 };
 
+type GetCreatedPostsArgs = {
+  userId: string;
+};
+
 export const postResolvers = {
   Query: {
     posts: async (_parent: unknown, _args: unknown, context: Context) => {
@@ -38,7 +42,7 @@ export const postResolvers = {
     getVolunteeredPosts: async (
       _parent: unknown,
       args: GetVolunteeredPostsArgs,
-      context: Context
+      context: Context,
     ) => {
       try {
         const { userId } = args;
@@ -88,13 +92,42 @@ export const postResolvers = {
         throw err;
       }
     },
+    getCreatedPosts: async (
+      _parent: unknown,
+      args: GetCreatedPostsArgs,
+      context: Context,
+    ) => {
+      try {
+        const { userId } = args;
+
+        const posts = await context.prisma.post.findMany({
+          where: { userId },
+          include: {
+            creator: true,
+            volunteers: {
+              include: {
+                user: true,
+              },
+            },
+          },
+          orderBy: {
+            createdAt: "desc",
+          },
+        });
+
+        return posts;
+      } catch (err) {
+        console.error("Error fetching created posts", err);
+        throw err;
+      }
+    },
   },
 
   Mutation: {
     volunteerPost: async (
       _parent: unknown,
       args: VolunteerPostArgs,
-      context: Context
+      context: Context,
     ) => {
       try {
         const { postId, userId } = args;
@@ -123,7 +156,7 @@ export const postResolvers = {
 
         // Check if user already volunteered for this post
         const existingVolunteer = post.volunteers.find(
-          (v) => v.userId === userId
+          (v) => v.userId === userId,
         );
         if (existingVolunteer) {
           throw new Error("You have already volunteered for this post");
@@ -171,7 +204,7 @@ export const postResolvers = {
     cancelVolunteer: async (
       _parent: unknown,
       args: VolunteerPostArgs,
-      context: Context
+      context: Context,
     ) => {
       try {
         const { postId, userId } = args;
@@ -195,7 +228,7 @@ export const postResolvers = {
 
         // Check if user has volunteered for this post
         const existingVolunteer = post.volunteers.find(
-          (v) => v.userId === userId
+          (v) => v.userId === userId,
         );
 
         if (!existingVolunteer) {
@@ -244,7 +277,7 @@ export const postResolvers = {
     createPost: async (
       _parent: unknown,
       args: CreatePostArgs,
-      context: Context
+      context: Context,
     ) => {
       try {
         const { post } = args;
@@ -263,7 +296,7 @@ export const postResolvers = {
         const apikey = process.env.GEOCODE_API_KEY;
         // Geocode the address to get latitude and longitude
         const apiResponse = await fetch(
-          `https://maps.googleapis.com/maps/api/geocode/json?address=${postGeocode}&key=${apikey}`
+          `https://maps.googleapis.com/maps/api/geocode/json?address=${postGeocode}&key=${apikey}`,
         );
         const geocodeData = await apiResponse.json();
         if (

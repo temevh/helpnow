@@ -2,8 +2,6 @@ import { HStack, Text, VStack, Box } from "@chakra-ui/react";
 import {
   TaskTimeCard,
   TaskDescriptionCard,
-  TaskRewardCard,
-  TaskVolunteerCard,
   TaskLocationCard,
 } from "../common/infocards";
 import { CancelVolunteerButton, ContactPosterButton } from "../common/buttons";

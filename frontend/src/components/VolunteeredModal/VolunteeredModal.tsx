@@ -32,7 +32,7 @@ export const VolunteeredModal = ({
     {
       variables: { userId: user?.id },
       skip: !user?.id,
-    }
+    },
   );
   const [cancelVolunteer] = useMutation(CANCEL_VOLUNTEER, {
     refetchQueries: [
@@ -80,7 +80,7 @@ export const VolunteeredModal = ({
       <VStack gap={2} align="stretch">
         {data?.getVolunteeredPosts && data.getVolunteeredPosts.length > 0 ? (
           data.getVolunteeredPosts.map((volunteerData) => {
-            var locationInfo = volunteerData.post.address;
+            const locationInfo = volunteerData.post.address;
             return (
               <VolunteeredCard
                 key={volunteerData.id}

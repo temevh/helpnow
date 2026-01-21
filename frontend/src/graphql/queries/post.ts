@@ -47,3 +47,19 @@ export const GET_VOLUNTEERED_POSTS = gql`
     }
   }
 `;
+
+export const GET_CREATED_POSTS = gql`
+  query GetCreatedPosts($userId: String!) {
+    getCreatedPosts(userId: $userId) {
+      id
+      createdAt
+      post {
+        name
+        description
+        address
+        taskTime
+        volunteersNeeded
+      }
+    }
+  }
+`;

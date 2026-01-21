@@ -7,19 +7,22 @@ import {
   LogOut,
   ListCheck,
   CirclePlus,
+  List,
 } from "lucide-react";
 import { signOut, signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { VolunteeredModal } from "../VolunteeredModal/VolunteeredModal";
 import { NewPostModal } from "../NewPostModal/NewPostModal";
+import { CreatedPostsModal } from "../CreatedPostsModal/CreatedPostsModal";
 import { useState } from "react";
 import { ColorModeButton } from "../ui/color-mode";
 import { User as UserType } from "@/types";
 
 const links = [
   { name: "New post", modal: NewPostModal, icon: CirclePlus },
-  { name: "Posts", modal: VolunteeredModal, icon: ListCheck },
+  { name: "VolunteeredPosts", modal: VolunteeredModal, icon: ListCheck },
+  { name: "CreatedPosts", modal: CreatedPostsModal, icon: List },
   { name: "Profile", modal: VolunteeredModal, icon: User },
   { name: "Settings", modal: VolunteeredModal, icon: Settings },
   { name: "Alerts", modal: VolunteeredModal, icon: Bell },
@@ -37,6 +40,7 @@ const MenuLinks = ({
 
   const [isVolunteeredModalOpen, setIsVolunteeredModalOpen] = useState(false);
   const [isNewPostModalOpen, setIsNewPostModalOpen] = useState(false);
+  const [isCreatedPostsModalOpen, setIsCreatedPostsModalOpen] = useState(false);
 
   const handleSignOut = async () => {
     await signOut({
@@ -63,8 +67,11 @@ const MenuLinks = ({
       case "New post":
         setIsNewPostModalOpen(true);
         break;
-      case "Posts":
+      case "VolunteeredPosts":
         setIsVolunteeredModalOpen(true);
+        break;
+      case "CreatedPosts":
+        setIsCreatedPostsModalOpen(true);
         break;
       default:
         break;
@@ -83,6 +90,11 @@ const MenuLinks = ({
           <NewPostModal
             open={isNewPostModalOpen}
             onOpenChange={setIsNewPostModalOpen}
+          />
+          <CreatedPostsModal
+            open={isCreatedPostsModalOpen}
+            onOpenChange={setIsCreatedPostsModalOpen}
+            user={user}
           />
         </>
       )}
