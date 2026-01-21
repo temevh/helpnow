@@ -3,7 +3,8 @@ import { BasicModal } from "../common/modals/BasicModal";
 import { useQuery } from "@apollo/client/react";
 import { Post, User } from "@/types";
 import { GET_CREATED_POSTS } from "@/graphql/queries/post";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import CreatedPostCard from "./CreatedPostCard";
 
 interface CreatedPostsData {
   getCreatedPosts: Post[];
@@ -37,7 +38,15 @@ export const CreatedPostsModal = ({
   console.log("users posts", data);
   return (
     <BasicModal open={open} onOpenChange={onOpenChange} header="Your posts">
-      <VStack gap={2} align="stretch"></VStack>
+      <VStack gap={2} align="stretch">
+        {data?.getCreatedPosts ? (
+          data.getCreatedPosts.map((post) => {
+            return <CreatedPostCard key={post.id} post={post} />;
+          })
+        ) : (
+          <p>You have no posts created</p>
+        )}
+      </VStack>
     </BasicModal>
   );
 };
