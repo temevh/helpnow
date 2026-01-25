@@ -1,17 +1,17 @@
 import { Button, HStack, Text } from "@chakra-ui/react";
-import { Settings } from "lucide-react";
+import { Trash2 } from "lucide-react";
 
-const EditButton = () => {
+const DeleteButton = () => {
   return (
     <Button
       colorScheme="blue"
       size="sm"
       borderRadius="md"
       fontWeight="semibold"
-      bg="blue.500"
+      bg="red.500"
       color="white"
       _hover={{
-        bg: "blue.700",
+        bg: "red.700",
         transform: "translateY(-1px)",
         boxShadow: "sm",
       }}
@@ -22,11 +22,11 @@ const EditButton = () => {
       py={2}
     >
       <HStack>
-        <Settings />
-        <Text>Edit post</Text>
+        <Trash2 />
+        <Text>Delete post</Text>
       </HStack>
     </Button>
   );
 };
 
-export default EditButton;
+export default DeleteButton;

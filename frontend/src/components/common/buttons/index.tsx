@@ -7,6 +7,7 @@ import ContactPosterButton from "./ContactPosterButton";
 import SaveButton from "./SaveButton";
 import JumpToPostButton from "./JumpToPostButton";
 import EditButton from "./EditButton";
+import DeleteButton from "./DeleteButton";
 
 export {
   VolunteerButton,
@@ -18,4 +19,5 @@ export {
   SaveButton,
   JumpToPostButton,
   EditButton,
+  DeleteButton,
 };
