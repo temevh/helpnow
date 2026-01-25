@@ -94,6 +94,7 @@ export const typeDefs = gql`
     ): CreateUserPayload!
     authenticateUser(username: String!, password: String!): AuthPayload!
     cancelVolunteer(postId: String!, userId: String!): Boolean!
+    deletePost(postId: String!, userId: String!): Boolean!
   }
 
   type AuthPayload {

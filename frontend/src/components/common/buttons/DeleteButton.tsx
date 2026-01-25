@@ -1,7 +1,7 @@
 import { Button, HStack, Text } from "@chakra-ui/react";
 import { Trash2 } from "lucide-react";
 
-const DeleteButton = () => {
+const DeleteButton = ({ deletePost }) => {
   return (
     <Button
       colorScheme="blue"
@@ -20,6 +20,7 @@ const DeleteButton = () => {
       }}
       transition="all 0.2s ease"
       py={2}
+      onClick={deletePost}
     >
       <HStack>
         <Trash2 />

@@ -5,7 +5,13 @@ import StatusBadge from "../common/badges/StatusBadge";
 import VolunteerBadge from "../common/badges/VolunteerBadge";
 import { convertUnixToDate } from "@/utils";
 
-const CreatedPostCard = ({ post }: { post: Post }) => {
+const CreatedPostCard = ({
+  post,
+  deletePost,
+}: {
+  post: Post;
+  deletePost: (postId: string) => void;
+}) => {
   return (
     <Box
       borderWidth="1px"
@@ -60,7 +66,7 @@ const CreatedPostCard = ({ post }: { post: Post }) => {
         </VStack>
 
         <HStack justify="flex-end" pt={2}>
-          <DeleteButton />
+          <DeleteButton deletePost={() => deletePost(post.id)} />
           <EditButton />
         </HStack>
       </VStack>

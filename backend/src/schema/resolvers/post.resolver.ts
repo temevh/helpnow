@@ -274,6 +274,40 @@ export const postResolvers = {
         return false;
       }
     },
+    deletePost: async (
+      _parent: unknown,
+      args: VolunteerPostArgs,
+      context: Context,
+    ) => {
+      try {
+        const { postId, userId } = args;
+
+        const post = await context.prisma.post.findUnique({
+          where: { id: postId },
+        });
+
+        if (post?.userId !== userId) {
+          console.error("You are not authorized to delete this post");
+          return false;
+        }
+
+        if (!post) {
+          console.error("Post not found");
+          return false;
+        }
+
+        await context.prisma.post.delete({
+          where: {
+            id: postId,
+          },
+        });
+
+        return true;
+      } catch (err) {
+        console.error("Error cancelling volunteer:", err);
+        return false;
+      }
+    },
     createPost: async (
       _parent: unknown,
       args: CreatePostArgs,

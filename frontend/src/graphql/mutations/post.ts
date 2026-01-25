@@ -46,3 +46,9 @@ export const CANCEL_VOLUNTEER = gql`
     cancelVolunteer(postId: $postId, userId: $userId)
   }
 `;
+
+export const DELETE_POST = gql`
+  mutation DeletePost($postId: String!, $userId: String!) {
+    deletePost(postId: $postId, userId: $userId)
+  }
+`;
