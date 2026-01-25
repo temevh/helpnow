@@ -33,6 +33,26 @@ export const CreatedPostsModal = ({
     },
   );
 
+  const [deletePostMutation] = useMutation(DELETE_POST, {
+    refetchQueries: [
+      {
+        query: GET_CREATED_POSTS,
+        variables: { userId: user?.id },
+      },
+    ],
+    awaitRefetchQueries: true,
+    onCompleted: () => {
+      showToast({
+        message: "Succesfully deleted post",
+        type: "success",
+      });
+    },
+    onError: (error) => {
+      console.error("Error canceling volunteering:", error);
+      showToast({ message: "Failure canceling volunteering", type: "error" });
+    },
+  });
+
   useEffect(() => {
     if (open && user?.id) {
       refetch({ userId: user.id });
@@ -40,28 +60,7 @@ export const CreatedPostsModal = ({
   }, [open, user?.id, data, refetch]);
 
   const deletePost = (postId: string) => {
-    alert(postId);
-
-    const [deletePost] = useMutation(DELETE_POST, {
-      refetchQueries: [
-        {
-          query: GET_CREATED_POSTS,
-          variables: { userId: user?.id },
-          skip: !user?.id,
-        },
-      ],
-      awaitRefetchQueries: true,
-      onCompleted: () => {
-        showToast({
-          message: "Succesfully deleted post",
-          type: "success",
-        });
-      },
-      onError: (error) => {
-        console.error("Error canceling volunteering:", error);
-        showToast({ message: "Failure canceling volunteering", type: "error" });
-      },
-    });
+    deletePostMutation({ variables: { postId, userId: user.id } });
   };
 
   console.log("users posts", data);

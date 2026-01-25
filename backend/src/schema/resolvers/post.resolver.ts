@@ -281,6 +281,7 @@ export const postResolvers = {
     ) => {
       try {
         const { postId, userId } = args;
+        console.log(args);
 
         const post = await context.prisma.post.findUnique({
           where: { id: postId },
