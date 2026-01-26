@@ -1,7 +1,7 @@
 import { Button, HStack, Text } from "@chakra-ui/react";
 import { Settings } from "lucide-react";
 
-const EditButton = () => {
+const EditButton = ({ onClick }: { onClick: () => void }) => {
   return (
     <Button
       colorScheme="blue"
@@ -20,6 +20,7 @@ const EditButton = () => {
       }}
       transition="all 0.2s ease"
       py={2}
+      onClick={onClick}
     >
       <HStack>
         <Settings />

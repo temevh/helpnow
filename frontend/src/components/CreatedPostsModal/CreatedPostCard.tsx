@@ -1,9 +1,12 @@
 import { Post } from "@/types";
-import { Box, HStack, Text, VStack } from "@chakra-ui/react";
+import { Box, HStack, Input, Text, VStack, Button } from "@chakra-ui/react";
 import { DeleteButton, EditButton } from "../common/buttons";
 import StatusBadge from "../common/badges/StatusBadge";
 import VolunteerBadge from "../common/badges/VolunteerBadge";
 import { convertUnixToDate } from "@/utils";
+import ConfirmPopover from "../common/ConfirmPopover";
+import { useState } from "react";
+import { DateInput } from "../common/inputs";
 
 const CreatedPostCard = ({
   post,
@@ -12,62 +15,159 @@ const CreatedPostCard = ({
   post: Post;
   deletePost: (postId: string) => void;
 }) => {
+  const [isEditing, setIsEditing] = useState(false);
+
+  const [editedPost, setEditedPost] = useState({
+    name: post.name,
+    description: post.description ?? "",
+    address: post.address,
+    volunteersNeeded: post.volunteersNeeded,
+    taskTime: post.taskTime,
+  });
+
+  const handleEdit = () => setIsEditing(true);
+
+  const handleCancel = () => {
+    setEditedPost({
+      name: post.name,
+      description: post.description ?? "",
+      address: post.address,
+      taskTime: post.taskTime,
+      volunteersNeeded: post.volunteersNeeded,
+    });
+    setIsEditing(false);
+  };
+
+  const handleSave = () => {
+    console.log("Save payload:", editedPost);
+    // TODO: call update API here
+    setIsEditing(false);
+  };
+
+  console.log(post.taskTime);
   return (
-    <Box
-      borderWidth="1px"
-      borderRadius="lg"
-      p={4}
-      _hover={{ shadow: "md" }}
-      transition="all 0.2s"
-    >
+    <Box borderWidth="1px" borderRadius="lg" p={4} _hover={{ shadow: "md" }}>
       <VStack align="stretch" gap={3}>
         <HStack justify="space-between" align="start">
-          <Text fontSize="lg" fontWeight="bold" flex={1} color="fg.default">
-            {post.name}
-          </Text>
+          {isEditing ? (
+            <Input
+              value={editedPost.name}
+              onChange={(e) =>
+                setEditedPost({ ...editedPost, name: e.target.value })
+              }
+            />
+          ) : (
+            <Text fontSize="lg" fontWeight="bold">
+              {post.name}
+            </Text>
+          )}
           <StatusBadge status={post.status} />
         </HStack>
 
-        {post.description && (
-          <Text fontSize="sm" color="gray.600">
-            {post.description}
-          </Text>
+        {isEditing ? (
+          <Input
+            value={editedPost.description}
+            onChange={(e) =>
+              setEditedPost({ ...editedPost, description: e.target.value })
+            }
+            placeholder="Description"
+          />
+        ) : (
+          post.description && (
+            <Text fontSize="sm" color="gray.600">
+              {post.description}
+            </Text>
+          )
         )}
 
         <VStack align="stretch" gap={2} fontSize="sm">
           <HStack justify="space-between">
-            <Text color="fg.default">📍 Location:</Text>
-            <Text fontWeight="medium" color="fg.default">
-              {post.address}
-            </Text>
+            <Text>📍 Location:</Text>
+            {isEditing ? (
+              <Input
+                value={editedPost.address}
+                onChange={(e) =>
+                  setEditedPost({ ...editedPost, address: e.target.value })
+                }
+              />
+            ) : (
+              <Text fontWeight="medium">{post.address}</Text>
+            )}
           </HStack>
 
           <HStack justify="space-between">
-            <Text color="fg.default">📅 Task Time:</Text>
-            <Text fontWeight="medium" color="fg.default">
-              {convertUnixToDate(post.taskTime)}
-            </Text>
+            <Text>📅 Task Time:</Text>
+            {isEditing ? (
+              <DateInput
+                value={
+                  typeof editedPost.taskTime === "number"
+                    ? new Date(editedPost.taskTime)
+                    : null
+                }
+                onChange={(date) =>
+                  setEditedPost({
+                    ...editedPost,
+                    taskTime: date ? date.getTime() : null,
+                  })
+                }
+              />
+            ) : (
+              <Text fontWeight="medium">
+                {convertUnixToDate(post.taskTime)}
+              </Text>
+            )}
           </HStack>
 
           <HStack justify="space-between">
-            <Text color="fg.default">👥 Volunteers:</Text>
-            <VolunteerBadge
-              volunteersAlready={post.volunteersAlready}
-              volunteersNeeded={post.volunteersNeeded}
-            />
+            <Text>👥 Volunteers Needed:</Text>
+            {isEditing ? (
+              <Input
+                type="number"
+                value={editedPost.volunteersNeeded}
+                onChange={(e) =>
+                  setEditedPost({
+                    ...editedPost,
+                    volunteersNeeded: Number(e.target.value),
+                  })
+                }
+                width="80px"
+              />
+            ) : (
+              <VolunteerBadge
+                volunteersAlready={post.volunteersAlready}
+                volunteersNeeded={post.volunteersNeeded}
+              />
+            )}
           </HStack>
 
           <HStack justify="space-between">
-            <Text color="fg.default">Created:</Text>
-            <Text fontWeight="medium" fontSize="xs" color="fg.default">
-              {convertUnixToDate(post.createdAt)}
-            </Text>
+            <Text>Created:</Text>
+            <Text fontSize="xs">{convertUnixToDate(post.createdAt)}</Text>
           </HStack>
         </VStack>
 
         <HStack justify="flex-end" pt={2}>
-          <DeleteButton deletePost={() => deletePost(post.id)} />
-          <EditButton />
+          {isEditing ? (
+            <>
+              <Button size="sm" onClick={handleCancel} variant="ghost">
+                Cancel
+              </Button>
+              <Button size="sm" colorScheme="blue" onClick={handleSave}>
+                Save
+              </Button>
+            </>
+          ) : (
+            <>
+              <ConfirmPopover
+                onConfirm={() => deletePost(post.id)}
+                title="Delete Post"
+                description="Are you sure you want to delete this post?"
+              >
+                <DeleteButton />
+              </ConfirmPopover>
+              <EditButton onClick={handleEdit} />
+            </>
+          )}
         </HStack>
       </VStack>
     </Box>
