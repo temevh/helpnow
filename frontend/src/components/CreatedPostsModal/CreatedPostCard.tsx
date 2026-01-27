@@ -1,4 +1,4 @@
-import { Post } from "@/types";
+import { EditPostVariables, Post } from "@/types";
 import { Box, HStack, Input, Text, VStack, Button } from "@chakra-ui/react";
 import { DeleteButton, EditButton } from "../common/buttons";
 import StatusBadge from "../common/badges/StatusBadge";
@@ -7,6 +7,9 @@ import { convertUnixToDate } from "@/utils";
 import ConfirmPopover from "../common/ConfirmPopover";
 import { useState } from "react";
 import { DateInput } from "../common/inputs";
+import { EDIT_POST } from "@/graphql/mutations/post";
+import { useMutation } from "@apollo/client/react";
+import { useUser } from "@/hooks";
 
 const CreatedPostCard = ({
   post,
@@ -15,14 +18,22 @@ const CreatedPostCard = ({
   post: Post;
   deletePost: (postId: string) => void;
 }) => {
+  const {user} = useUser();
+  console.log(user);
   const [isEditing, setIsEditing] = useState(false);
-
   const [editedPost, setEditedPost] = useState({
     name: post.name,
     description: post.description ?? "",
     address: post.address,
     volunteersNeeded: post.volunteersNeeded,
     taskTime: post.taskTime,
+  });
+
+  const [editPost, { loading, error, data }] = useMutation<
+    { editPost: boolean },
+    { postId: string; userId: string; post: EditPostVariables }
+  >(EDIT_POST, {
+    refetchQueries: ["GetPosts"],
   });
 
   const handleEdit = () => setIsEditing(true);
@@ -39,12 +50,23 @@ const CreatedPostCard = ({
   };
 
   const handleSave = () => {
-    console.log("Save payload:", editedPost);
-    // TODO: call update API here
+    editPost({
+      variables: {
+        postId: post.id,
+        userId: user?.id,
+        post: {
+          name: editedPost.name,
+          description: editedPost.description,
+          address: editedPost.address,
+          volunteersNeeded: editedPost.volunteersNeeded,
+          taskTime: new Date(editedPost.taskTime),
+        },
+      },
+    });
     setIsEditing(false);
   };
 
-  console.log(post.taskTime);
+  console.log(post);
   return (
     <Box borderWidth="1px" borderRadius="lg" p={4} _hover={{ shadow: "md" }}>
       <VStack align="stretch" gap={3}>

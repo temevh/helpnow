@@ -82,6 +82,14 @@ export const typeDefs = gql`
     postcode: String!
   }
 
+  input EditPostInput {
+    name: String
+    description: String
+    taskTime: String
+    address: String
+    volunteersNeeded: Int
+  }
+
   type Mutation {
     createPost(post: CreatePostInput!): Post!
     volunteerPost(postId: String!, userId: String!): Volunteer!
@@ -95,6 +103,7 @@ export const typeDefs = gql`
     authenticateUser(username: String!, password: String!): AuthPayload!
     cancelVolunteer(postId: String!, userId: String!): Boolean!
     deletePost(postId: String!, userId: String!): Boolean!
+    editPost(postId: String!, userId: String!, post: EditPostInput!): Boolean!
   }
 
   type AuthPayload {

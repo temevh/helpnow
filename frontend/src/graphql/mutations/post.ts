@@ -52,3 +52,9 @@ export const DELETE_POST = gql`
     deletePost(postId: $postId, userId: $userId)
   }
 `;
+
+export const EDIT_POST = gql`
+  mutation EditPost($postId: String!, $userId: String!, $post: EditPostInput!) {
+    editPost(postId: $postId, userId: $userId, post: $post)
+  }
+`;
