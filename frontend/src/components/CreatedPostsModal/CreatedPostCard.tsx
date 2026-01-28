@@ -38,6 +38,36 @@ const CreatedPostCard = ({
 
   const handleEdit = () => setIsEditing(true);
 
+  const getChangedFields = (
+    original: Post,
+    edited: typeof editedPost
+  ): EditPostVariables => {
+    const variables: any = {};
+    
+    if (edited.name !== original.name) {
+      variables.name = edited.name;
+    }
+    
+    const originalDescription = original.description ?? "";
+    if (edited.description !== originalDescription) {
+      variables.description = edited.description;
+    }
+    
+    if (edited.address !== original.address) {
+      variables.address = edited.address;
+    }
+    
+    if (edited.volunteersNeeded !== original.volunteersNeeded) {
+      variables.volunteersNeeded = edited.volunteersNeeded;
+    }
+    
+    if (edited.taskTime !== original.taskTime) {
+      variables.taskTime = new Date(edited.taskTime).toISOString();
+    }
+    
+    return variables;
+  };
+
   const handleCancel = () => {
     setEditedPost({
       name: post.name,
@@ -50,20 +80,18 @@ const CreatedPostCard = ({
   };
 
   const handleSave = () => {
-    editPost({
-      variables: {
-        postId: post.id,
-        userId: user?.id,
-        post: {
-          name: editedPost.name,
-          description: editedPost.description,
-          address: editedPost.address,
-          volunteersNeeded: editedPost.volunteersNeeded,
-          taskTime: new Date(editedPost.taskTime),
-        },
-      },
-    });
-    setIsEditing(false);
+    const changedPost = getChangedFields(post, editedPost);
+
+
+   editPost({
+    variables: {
+      postId: post.id,
+      userId: user?.id,
+      post: changedPost,
+    },
+  });
+
+  setIsEditing(false);
   };
 
   console.log(post);

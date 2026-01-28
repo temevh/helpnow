@@ -1,5 +1,5 @@
 import { PostStatus } from "@prisma/client";
-import { Context } from "../../context";
+import { Context, prisma } from "../../context";
 
 type VolunteerPostArgs = {
   postId: string;
@@ -390,42 +390,64 @@ export const postResolvers = {
       context: Context,
     ) => {
       try {
-        const { post } = args;
-        console.log(args);
+        const { postId, userId, post } = args;
 
-        if (!post) {
-          throw new Error("Error editing post");
+        const existingPost = await context.prisma.post.findUnique({
+          where: { id: postId },
+        });
+
+        if (!existingPost) {
+          throw new Error("Post not found");
         }
 
-        /*
-        const postGeocode = `${post.address}+${post.postcode}+${post.region}+${post.country}`;
-        const apikey = process.env.GEOCODE_API_KEY;
-        // Geocode the address to get latitude and longitude
-        const apiResponse = await fetch(
-          `https://maps.googleapis.com/maps/api/geocode/json?address=${postGeocode}&key=${apikey}`,
-        );
-        const geocodeData = await apiResponse.json();
-        if (
-          geocodeData &&
-          geocodeData.results &&
-          geocodeData.results.length > 0 &&
-          geocodeData.status === "OK"
-        ) {
-          // Create the post
-          const lat =
-            Math.trunc(geocodeData.results[0].geometry.location.lat * 1000) /
-            1000;
-          const lng =
-            Math.trunc(geocodeData.results[0].geometry.location.lng * 1000) /
-            1000;
+        if (existingPost.userId !== userId) {
+          throw new Error("You are not authorized to edit this post");
+        }
 
-          const result = 
+        const updateData: any = {};
+
+        if (post.name) updateData.name = post.name;
+        if (post.description !== undefined) updateData.description = post.description;
+        if (post.volunteersNeeded) updateData.volunteersNeeded = post.volunteersNeeded;
+        if (post.taskTime) updateData.taskTime = new Date(post.taskTime);
+
+        if (post.address && post.address !== existingPost.address) {
+          updateData.address = post.address;
           
-          return newPost;
-        }*/
+          const apikey = process.env.GEOCODE_API_KEY;
+          const apiResponse = await fetch(
+            `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+              post.address,
+            )}&key=${apikey}`,
+          );
+          const geocodeData = await apiResponse.json();
+          
+          if (
+            geocodeData &&
+            geocodeData.results &&
+            geocodeData.results.length > 0 &&
+            geocodeData.status === "OK"
+          ) {
+            const lat =
+              Math.trunc(geocodeData.results[0].geometry.location.lat * 1000) /
+              1000;
+            const lng =
+              Math.trunc(geocodeData.results[0].geometry.location.lng * 1000) /
+              1000;
+
+            updateData.latitude = lat;
+            updateData.longitude = lng;
+          }
+        }
+
+        await context.prisma.post.update({
+          where: { id: postId },
+          data: updateData,
+        });
+
         return true;
       } catch (err) {
-        console.error("Error creating post:", err);
+        console.error("Error editing post:", err);
         throw err;
       }
     },
