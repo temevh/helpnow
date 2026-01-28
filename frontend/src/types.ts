@@ -61,3 +61,11 @@ export type CreatePostVariables = {
   postcode: string;
   userId: string;
 };
+
+export type EditPostVariables = {
+  name: string;
+  description: string;
+  taskTime: Date;
+  address: string;
+  volunteersNeeded: number;
+};

@@ -1,5 +1,5 @@
 import { PostStatus } from "@prisma/client";
-import { Context } from "../../context";
+import { Context, prisma } from "../../context";
 
 type VolunteerPostArgs = {
   postId: string;
@@ -10,7 +10,17 @@ type CreatePostArgs = {
   post: any;
 };
 
+type EditPostArgs = {
+  postId: string;
+  userId: string;
+  post: any;
+};
+
 type GetVolunteeredPostsArgs = {
+  userId: string;
+};
+
+type GetCreatedPostsArgs = {
   userId: string;
 };
 
@@ -38,7 +48,7 @@ export const postResolvers = {
     getVolunteeredPosts: async (
       _parent: unknown,
       args: GetVolunteeredPostsArgs,
-      context: Context
+      context: Context,
     ) => {
       try {
         const { userId } = args;
@@ -88,13 +98,42 @@ export const postResolvers = {
         throw err;
       }
     },
+    getCreatedPosts: async (
+      _parent: unknown,
+      args: GetCreatedPostsArgs,
+      context: Context,
+    ) => {
+      try {
+        const { userId } = args;
+
+        const posts = await context.prisma.post.findMany({
+          where: { userId },
+          include: {
+            creator: true,
+            volunteers: {
+              include: {
+                user: true,
+              },
+            },
+          },
+          orderBy: {
+            createdAt: "desc",
+          },
+        });
+
+        return posts;
+      } catch (err) {
+        console.error("Error fetching created posts", err);
+        throw err;
+      }
+    },
   },
 
   Mutation: {
     volunteerPost: async (
       _parent: unknown,
       args: VolunteerPostArgs,
-      context: Context
+      context: Context,
     ) => {
       try {
         const { postId, userId } = args;
@@ -123,7 +162,7 @@ export const postResolvers = {
 
         // Check if user already volunteered for this post
         const existingVolunteer = post.volunteers.find(
-          (v) => v.userId === userId
+          (v) => v.userId === userId,
         );
         if (existingVolunteer) {
           throw new Error("You have already volunteered for this post");
@@ -171,7 +210,7 @@ export const postResolvers = {
     cancelVolunteer: async (
       _parent: unknown,
       args: VolunteerPostArgs,
-      context: Context
+      context: Context,
     ) => {
       try {
         const { postId, userId } = args;
@@ -195,7 +234,7 @@ export const postResolvers = {
 
         // Check if user has volunteered for this post
         const existingVolunteer = post.volunteers.find(
-          (v) => v.userId === userId
+          (v) => v.userId === userId,
         );
 
         if (!existingVolunteer) {
@@ -241,10 +280,45 @@ export const postResolvers = {
         return false;
       }
     },
+    deletePost: async (
+      _parent: unknown,
+      args: VolunteerPostArgs,
+      context: Context,
+    ) => {
+      try {
+        const { postId, userId } = args;
+        console.log(args);
+
+        const post = await context.prisma.post.findUnique({
+          where: { id: postId },
+        });
+
+        if (post?.userId !== userId) {
+          console.error("You are not authorized to delete this post");
+          return false;
+        }
+
+        if (!post) {
+          console.error("Post not found");
+          return false;
+        }
+
+        await context.prisma.post.delete({
+          where: {
+            id: postId,
+          },
+        });
+
+        return true;
+      } catch (err) {
+        console.error("Error cancelling volunteer:", err);
+        return false;
+      }
+    },
     createPost: async (
       _parent: unknown,
       args: CreatePostArgs,
-      context: Context
+      context: Context,
     ) => {
       try {
         const { post } = args;
@@ -263,7 +337,7 @@ export const postResolvers = {
         const apikey = process.env.GEOCODE_API_KEY;
         // Geocode the address to get latitude and longitude
         const apiResponse = await fetch(
-          `https://maps.googleapis.com/maps/api/geocode/json?address=${postGeocode}&key=${apikey}`
+          `https://maps.googleapis.com/maps/api/geocode/json?address=${postGeocode}&key=${apikey}`,
         );
         const geocodeData = await apiResponse.json();
         if (
@@ -307,6 +381,73 @@ export const postResolvers = {
         }
       } catch (err) {
         console.error("Error creating post:", err);
+        throw err;
+      }
+    },
+    editPost: async (
+      _parent: unknown,
+      args: EditPostArgs,
+      context: Context,
+    ) => {
+      try {
+        const { postId, userId, post } = args;
+
+        const existingPost = await context.prisma.post.findUnique({
+          where: { id: postId },
+        });
+
+        if (!existingPost) {
+          throw new Error("Post not found");
+        }
+
+        if (existingPost.userId !== userId) {
+          throw new Error("You are not authorized to edit this post");
+        }
+
+        const updateData: any = {};
+
+        if (post.name) updateData.name = post.name;
+        if (post.description !== undefined) updateData.description = post.description;
+        if (post.volunteersNeeded) updateData.volunteersNeeded = post.volunteersNeeded;
+        if (post.taskTime) updateData.taskTime = new Date(post.taskTime);
+
+        if (post.address && post.address !== existingPost.address) {
+          updateData.address = post.address;
+          
+          const apikey = process.env.GEOCODE_API_KEY;
+          const apiResponse = await fetch(
+            `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+              post.address,
+            )}&key=${apikey}`,
+          );
+          const geocodeData = await apiResponse.json();
+          
+          if (
+            geocodeData &&
+            geocodeData.results &&
+            geocodeData.results.length > 0 &&
+            geocodeData.status === "OK"
+          ) {
+            const lat =
+              Math.trunc(geocodeData.results[0].geometry.location.lat * 1000) /
+              1000;
+            const lng =
+              Math.trunc(geocodeData.results[0].geometry.location.lng * 1000) /
+              1000;
+
+            updateData.latitude = lat;
+            updateData.longitude = lng;
+          }
+        }
+
+        await context.prisma.post.update({
+          where: { id: postId },
+          data: updateData,
+        });
+
+        return true;
+      } catch (err) {
+        console.error("Error editing post:", err);
         throw err;
       }
     },

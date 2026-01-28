@@ -23,6 +23,7 @@ const DateInput = ({
   value,
   onChange,
 }: DateInputProps) => {
+  console.log("dateInput value", value);
   return (
     <Field.Root required={required}>
       {label && (
@@ -36,7 +37,7 @@ const DateInput = ({
         </Field.Label>
       )}
 
-      <InputGroup startElement={icon}>
+      <InputGroup startElement={icon} width="full" zIndex="popover">
         <DatePicker
           selected={value}
           onChange={(date) => onChange(date)}
@@ -46,6 +47,10 @@ const DateInput = ({
           dateFormat="MMMM d, yyyy HH:mm"
           placeholderText={placeholder}
           className="chakra-datepicker"
+          popperProps={{
+            strategy: "fixed",
+          }}
+          wrapperClassName="w-full"
         />
       </InputGroup>
       {helperText && <Field.HelperText>{helperText}</Field.HelperText>}
@@ -57,7 +62,7 @@ const DateInput = ({
           line-height: 1.5;
           color: var(--chakra-colors-fg-default);
           background-color: var(--chakra-colors-bg-surface);
-          border: 1px solid var(--chakra-colors-gray-200);
+          border: 1px solid var(--chakra-colors-border-default);
           border-radius: 0.375rem;
           outline: none;
           transition: all 0.2s;
@@ -82,23 +87,35 @@ const DateInput = ({
           z-index: 9999 !important;
         }
 
-        .react-datepicker {
-          font-family: inherit;
-          border: 1px solid var(--chakra-colors-gray-200);
-          border-radius: 0.5rem;
-          box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-          background-color: var(--chakra-colors-bg-surface);
-          color: var(--chakra-colors-fg-default);
+        .react-datepicker-wrapper {
+          width: 100%;
         }
 
-        .react-datepicker__header {
-          background-color: var(--chakra-colors-gray-100);
-          border-bottom: 1px solid var(--chakra-colors-gray-200);
+        :root[data-theme="dark"] .chakra-datepicker {
+          background-color: var(--chakra-colors-bg-surface) !important;
+          color: var(--chakra-colors-fg-default) !important;
+          border-color: var(--chakra-colors-border-default) !important;
         }
 
-        [data-theme="dark"] .react-datepicker__header {
-          background-color: var(--chakra-colors-gray-800);
-          border-bottom: 1px solid var(--chakra-colors-gray-700);
+        :root[data-theme="dark"] .react-datepicker {
+          background-color: var(--chakra-colors-gray-800) !important;
+          border-color: var(--chakra-colors-gray-700) !important;
+          color: var(--chakra-colors-fg-default) !important;
+        }
+
+        :root[data-theme="dark"] .react-datepicker__header {
+          background-color: var(--chakra-colors-gray-900) !important;
+          border-bottom-color: var(--chakra-colors-gray-700) !important;
+        }
+
+        :root[data-theme="dark"] .react-datepicker__current-month,
+        :root[data-theme="dark"] .react-datepicker__day-name,
+        :root[data-theme="dark"] .react-datepicker__day {
+          color: var(--chakra-colors-fg-default) !important;
+        }
+
+        [data-theme="dark"] .react-datepicker__day:hover {
+          background-color: var(--chakra-colors-gray-700) !important;
         }
 
         .react-datepicker__current-month,
